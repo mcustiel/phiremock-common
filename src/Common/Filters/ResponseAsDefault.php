@@ -7,6 +7,10 @@ use Mcustiel\SimpleRequest\Interfaces\FilterInterface;
 
 class ResponseAsDefault implements FilterInterface
 {
+    /**
+     * {@inheritDoc}
+     * @see \Mcustiel\SimpleRequest\Interfaces\FilterInterface::filter()
+     */
     public function filter($value)
     {
         if (empty($value)) {

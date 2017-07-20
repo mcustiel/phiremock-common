@@ -128,6 +128,10 @@ class Expectation implements \JsonSerializable
         return $this->scenarioName;
     }
 
+    /**
+     * @param string $scenario
+     * @return \Mcustiel\Phiremock\Domain\Expectation
+     */
     public function setScenarioName($scenario)
     {
         $this->scenarioName = $scenario;
@@ -143,6 +147,10 @@ class Expectation implements \JsonSerializable
         return $this->scenarioStateIs;
     }
 
+    /**
+     * @param string $scenarioStateIs
+     * @return \Mcustiel\Phiremock\Domain\Expectation
+     */
     public function setScenarioStateIs($scenarioStateIs)
     {
         $this->scenarioStateIs = $scenarioStateIs;
@@ -158,6 +166,10 @@ class Expectation implements \JsonSerializable
         return $this->newScenarioState;
     }
 
+    /**
+     * @param string $newScenarioState
+     * @return \Mcustiel\Phiremock\Domain\Expectation
+     */
     public function setNewScenarioState($newScenarioState)
     {
         $this->newScenarioState = $newScenarioState;
@@ -165,6 +177,10 @@ class Expectation implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see JsonSerializable::jsonSerialize()
+     */
     public function jsonSerialize()
     {
         return [

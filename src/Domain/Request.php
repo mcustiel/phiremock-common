@@ -116,6 +116,10 @@ class Request implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see JsonSerializable::jsonSerialize()
+     */
     public function jsonSerialize()
     {
         return [

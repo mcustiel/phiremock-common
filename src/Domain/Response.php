@@ -56,6 +56,10 @@ class Response implements \JsonSerializable
         return $this->statusCode;
     }
 
+    /**
+     * @param int $statusCode
+     * @return \Mcustiel\Phiremock\Domain\Response
+     */
     public function setStatusCode($statusCode)
     {
         $this->statusCode = $statusCode;
@@ -71,6 +75,10 @@ class Response implements \JsonSerializable
         return $this->body;
     }
 
+    /**
+     * @param string $body
+     * @return \Mcustiel\Phiremock\Domain\Response
+     */
     public function setBody($body)
     {
         $this->body = $body;
@@ -86,6 +94,10 @@ class Response implements \JsonSerializable
         return $this->headers;
     }
 
+    /**
+     * @param array $headers
+     * @return \Mcustiel\Phiremock\Domain\Response
+     */
     public function setHeaders($headers)
     {
         $this->headers = $headers;
@@ -101,6 +113,10 @@ class Response implements \JsonSerializable
         return $this->delayMillis;
     }
 
+    /**
+     * @param int $delayMillis
+     * @return \Mcustiel\Phiremock\Domain\Response
+     */
     public function setDelayMillis($delayMillis)
     {
         $this->delayMillis = $delayMillis;
@@ -108,6 +124,10 @@ class Response implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see JsonSerializable::jsonSerialize()
+     */
     public function jsonSerialize()
     {
         return [

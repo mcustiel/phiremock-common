@@ -13,6 +13,10 @@ class Condition implements \JsonSerializable
      */
     private $value;
 
+    /**
+     * @param string $matcher
+     * @param value $value
+     */
     public function __construct($matcher = null, $value = null)
     {
         $this->matcher = $matcher;
@@ -27,6 +31,10 @@ class Condition implements \JsonSerializable
         return $this->matcher;
     }
 
+    /**
+     * @param string $matcher
+     * @return \Mcustiel\Phiremock\Domain\Condition
+     */
     public function setMatcher($matcher)
     {
         $this->matcher = $matcher;
@@ -42,6 +50,10 @@ class Condition implements \JsonSerializable
         return $this->value;
     }
 
+    /**
+     * @param mixed $value
+     * @return \Mcustiel\Phiremock\Domain\Condition
+     */
     public function setValue($value)
     {
         $this->value = $value;
@@ -49,6 +61,10 @@ class Condition implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see JsonSerializable::jsonSerialize()
+     */
     public function jsonSerialize()
     {
         return [$this->matcher => $this->value];

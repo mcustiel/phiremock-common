@@ -11,6 +11,9 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter as Psr6CacheAdapter;
 
 class RequestBuilderFactory
 {
+    /**
+     * @return \Mcustiel\SimpleRequest\RequestBuilder
+     */
     public static function createRequestBuilder()
     {
         return new SimpleRequestBuilder(

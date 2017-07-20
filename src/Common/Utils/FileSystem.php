@@ -4,6 +4,10 @@ namespace Mcustiel\Phiremock\Common\Utils;
 
 class FileSystem
 {
+    /**
+     * @param string $path
+     * @return string
+     */
     public function getRealPath($path)
     {
         $existentPath = $this->normalizePath($path);
@@ -22,6 +26,10 @@ class FileSystem
         );
     }
 
+    /**
+     * @param string $path
+     * @return string
+     */
     private function normalizePath($path)
     {
         $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
