@@ -1,0 +1,38 @@
+{
+    "keywords" : [
+        "http",
+        "mock",
+        "server",
+        "external",
+        "acceptance",
+        "tests"
+    ],
+    "authors" : [
+        {
+            "name" : "Mariano Custiel",
+            "email" : "jmcustiel@gmail.com",
+            "homepage" : "https://github.com/mcustiel",
+            "role" : "Developer"
+        }
+    ],
+    "autoload" : {
+        "psr-4" : {
+            "Mcustiel\\Phiremock\\" : "src"
+        }
+    },
+    "name" : "mcustiel/phiremock-common",
+    "type" : "project",
+    "description" : "Common libraries for Phiremock",
+    "license" : "GPL-3.0+",
+    "require" : {
+        "php" : ">=5.6",
+        "mcustiel/php-simple-request" : "^3.1",
+        "zendframework/zend-diactoros" : "^1.3",
+        "guzzlehttp/guzzle" : "^6.0"
+    },
+    "require-dev" : {
+        "codeception/codeception" : "^2.2.10",
+        "mcustiel/phiremock-client" : "*",
+        "mcustiel/phiremock-server" : "*"
+    }
+}
