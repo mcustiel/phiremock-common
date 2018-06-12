@@ -1,4 +1,20 @@
 <?php
+/**
+ * This file is part of Phiremock.
+ *
+ * Phiremock is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Phiremock is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 namespace Mcustiel\Phiremock\Domain;
 
@@ -35,6 +51,19 @@ class Request implements \JsonSerializable
      * @SRF\CustomFilter(class="\Mcustiel\Phiremock\Server\Http\RequestFilters\HeadersConditionsFilter")
      */
     private $headers;
+
+    public function __toString()
+    {
+        return print_r(
+            [
+                'method'  => $this->method,
+                'url'     => isset($this->url) ? $this->url->__toString() : 'null',
+                'body'    => isset($this->body) ? $this->body->getMatcher() . ' => ' . (isset($this->body->getValue()[5000]) ? '--VERY LONG CONTENTS--' : $this->body->getValue()) : 'null',
+                'headers' => print_r($this->headers, true),
+            ],
+            true
+        );
+    }
 
     /**
      * @return string
@@ -117,8 +146,9 @@ class Request implements \JsonSerializable
     }
 
     /**
-     * {@inheritDoc}
-     * @see JsonSerializable::jsonSerialize()
+     * {@inheritdoc}
+     *
+     * @see \JsonSerializable::jsonSerialize()
      */
     public function jsonSerialize()
     {

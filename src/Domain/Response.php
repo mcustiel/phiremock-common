@@ -1,4 +1,20 @@
 <?php
+/**
+ * This file is part of Phiremock.
+ *
+ * Phiremock is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Phiremock is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 namespace Mcustiel\Phiremock\Domain;
 
@@ -18,6 +34,8 @@ class Response implements \JsonSerializable
      */
     private $statusCode = 200;
     /**
+     * @SRF\CustomFilter(class="\Mcustiel\Phiremock\Server\Http\ResponseFilters\JsonToString")
+     * @SRF\CustomFilter(class="\Mcustiel\Phiremock\Server\Http\ResponseFilters\Base64BodyToString")
      * @SRV\OneOf({
      *      @SRV\Type("string"),
      *      @SRV\Not(@SRV\NotNull)
@@ -48,6 +66,19 @@ class Response implements \JsonSerializable
      */
     private $delayMillis;
 
+    public function __toString()
+    {
+        return print_r(
+            [
+                'statusCode'  => $this->statusCode,
+                'body'        => isset($this->body[5000]) ? '--VERY LONG CONTENTS--' : $this->body,
+                'headers'     => $this->headers,
+                'delayMillis' => $this->delayMillis,
+            ],
+            true
+        );
+    }
+
     /**
      * @return int
      */
@@ -58,6 +89,7 @@ class Response implements \JsonSerializable
 
     /**
      * @param int $statusCode
+     *
      * @return \Mcustiel\Phiremock\Domain\Response
      */
     public function setStatusCode($statusCode)
@@ -77,6 +109,7 @@ class Response implements \JsonSerializable
 
     /**
      * @param string $body
+     *
      * @return \Mcustiel\Phiremock\Domain\Response
      */
     public function setBody($body)
@@ -95,7 +128,8 @@ class Response implements \JsonSerializable
     }
 
     /**
-     * @param array $headers
+     * @param string $headers
+     *
      * @return \Mcustiel\Phiremock\Domain\Response
      */
     public function setHeaders($headers)
@@ -115,6 +149,7 @@ class Response implements \JsonSerializable
 
     /**
      * @param int $delayMillis
+     *
      * @return \Mcustiel\Phiremock\Domain\Response
      */
     public function setDelayMillis($delayMillis)
@@ -125,8 +160,9 @@ class Response implements \JsonSerializable
     }
 
     /**
-     * {@inheritDoc}
-     * @see JsonSerializable::jsonSerialize()
+     * {@inheritdoc}
+     *
+     * @see \JsonSerializable::jsonSerialize()
      */
     public function jsonSerialize()
     {
