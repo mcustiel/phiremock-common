@@ -20,7 +20,7 @@
             "Mcustiel\\Phiremock\\" : "src"
         }
     },
-    "name" : "phiremock/phiremock-common",
+    "name" : "mcustiel/phiremock-common",
     "type" : "library",
     "description" : "Common libraries for Phiremock",
     "license" : "GPL-3.0-or-later",
