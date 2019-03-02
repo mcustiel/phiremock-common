@@ -18,10 +18,12 @@
 
 namespace Mcustiel\Phiremock\Domain;
 
+use Mcustiel\Phiremock\Domain\Conditions\Matcher;
+
 class Condition implements \JsonSerializable
 {
     /**
-     * @var string
+     * @var Matcher
      */
     private $matcher;
     /**
@@ -33,7 +35,7 @@ class Condition implements \JsonSerializable
      * @param string|null $matcher
      * @param mixed       $value
      */
-    public function __construct($matcher = null, $value = null)
+    public function __construct(Matcher $matcher, $value)
     {
         $this->matcher = $matcher;
         $this->value = $value;
@@ -41,27 +43,15 @@ class Condition implements \JsonSerializable
 
     public function __toString()
     {
-        return $this->matcher . ' ' . var_export($this->value, true);
+        return $this->matcher->asString() . ' ' . var_export($this->value, true);
     }
 
     /**
-     * @return string
+     * @return Matcher
      */
     public function getMatcher()
     {
         return $this->matcher;
-    }
-
-    /**
-     * @param string $matcher
-     *
-     * @return \Mcustiel\Phiremock\Domain\Condition
-     */
-    public function setMatcher($matcher)
-    {
-        $this->matcher = $matcher;
-
-        return $this;
     }
 
     /**
@@ -73,24 +63,12 @@ class Condition implements \JsonSerializable
     }
 
     /**
-     * @param mixed $value
-     *
-     * @return \Mcustiel\Phiremock\Domain\Condition
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
-    /**
      * {@inheritdoc}
      *
      * @see \JsonSerializable::jsonSerialize()
      */
     public function jsonSerialize()
     {
-        return [$this->matcher => $this->value];
+        return [$this->matcher->asString() => $this->value];
     }
 }

@@ -18,55 +18,51 @@
 
 namespace Mcustiel\Phiremock\Domain;
 
-use Mcustiel\SimpleRequest\Annotation\Filter as SRF;
-use Mcustiel\SimpleRequest\Annotation\Validator as SRV;
+use Mcustiel\Phiremock\Domain\Conditions\BodyCondition;
+use Mcustiel\Phiremock\Domain\Conditions\HeaderConditionCollection;
+use Mcustiel\Phiremock\Domain\Conditions\UrlCondition;
+use Mcustiel\Phiremock\Domain\Http\Method;
 
 class Request implements \JsonSerializable
 {
     /**
-     * @var string
-     *
-     * @SRF\LowerCase
-     * @SRV\OneOf({
-     *      @SRV\Type("null"),
-     *      @SRV\Enum({"get", "post", "put", "delete", "fetch", "options", "head", "patch"})
-     * })
+     * @var Method
      */
     private $method;
     /**
-     * @var Condition
-     *
-     * @SRF\CustomFilter(class="\Mcustiel\Phiremock\Server\Http\RequestFilters\ConvertToCondition")
+     * @var UrlCondition
      */
     private $url;
     /**
-     * @var Condition
-     *
-     * @SRF\CustomFilter(class="\Mcustiel\Phiremock\Server\Http\RequestFilters\ConvertToCondition")
+     * @var BodyCondition
      */
     private $body;
     /**
-     * @var Condition[]
-     *
-     * @SRF\CustomFilter(class="\Mcustiel\Phiremock\Server\Http\RequestFilters\HeadersConditionsFilter")
+     * @var HeaderConditionCollection
      */
     private $headers;
+
+    public function __construct()
+    {
+        $this->method = Method::get();
+        $this->headers = new HeaderConditionCollection();
+    }
 
     public function __toString()
     {
         return print_r(
             [
-                'method'  => $this->method,
+                'method'  => $this->method->asString(),
                 'url'     => isset($this->url) ? $this->url->__toString() : 'null',
-                'body'    => isset($this->body) ? $this->body->getMatcher() . ' => ' . (isset($this->body->getValue()[5000]) ? '--VERY LONG CONTENTS--' : $this->body->getValue()) : 'null',
-                'headers' => print_r($this->headers, true),
+                'body'    => isset($this->body) ? $this->body->__toString() : 'null',
+                'headers' => $this->headers->__toString(),
             ],
             true
         );
     }
 
     /**
-     * @return string
+     * @return Method
      */
     public function getMethod()
     {
@@ -74,11 +70,11 @@ class Request implements \JsonSerializable
     }
 
     /**
-     * @param string $method
+     * @param Method $method
      *
      * @return \Mcustiel\Phiremock\Domain\Request
      */
-    public function setMethod($method)
+    public function setMethod(Method $method)
     {
         $this->method = $method;
 
@@ -86,7 +82,7 @@ class Request implements \JsonSerializable
     }
 
     /**
-     * @return \Mcustiel\Phiremock\Domain\Condition
+     * @return UrlCondition|null
      */
     public function getUrl()
     {
@@ -94,11 +90,11 @@ class Request implements \JsonSerializable
     }
 
     /**
-     * @param \Mcustiel\Phiremock\Domain\Condition $url
+     * @param UrlCondition $url
      *
      * @return \Mcustiel\Phiremock\Domain\Request
      */
-    public function setUrl($url)
+    public function setUrl(UrlCondition $url)
     {
         $this->url = $url;
 
@@ -106,7 +102,7 @@ class Request implements \JsonSerializable
     }
 
     /**
-     * @return \Mcustiel\Phiremock\Domain\Condition
+     * @return BodyCondition|null
      */
     public function getBody()
     {
@@ -114,11 +110,11 @@ class Request implements \JsonSerializable
     }
 
     /**
-     * @param \Mcustiel\Phiremock\Domain\Condition $body
+     * @param BodyCondition $body
      *
      * @return \Mcustiel\Phiremock\Domain\Request
      */
-    public function setBody($body)
+    public function setBody(BodyCondition $body)
     {
         $this->body = $body;
 
@@ -126,23 +122,11 @@ class Request implements \JsonSerializable
     }
 
     /**
-     * @return \Mcustiel\Phiremock\Domain\Condition[]
+     * @return HeaderConditionCollection
      */
     public function getHeaders()
     {
         return $this->headers;
-    }
-
-    /**
-     * @param \Mcustiel\Phiremock\Domain\Condition[] $headers
-     *
-     * @return \Mcustiel\Phiremock\Domain\Request
-     */
-    public function setHeaders($headers)
-    {
-        $this->headers = $headers;
-
-        return $this;
     }
 
     /**

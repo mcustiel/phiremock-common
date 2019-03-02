@@ -18,69 +18,48 @@
 
 namespace Mcustiel\Phiremock\Domain;
 
-use Mcustiel\SimpleRequest\Annotation\Filter as SRF;
-use Mcustiel\SimpleRequest\Annotation\Validator as SRV;
+use Mcustiel\Phiremock\Domain\Http\Body;
+use Mcustiel\Phiremock\Domain\Http\HeadersCollection;
+use Mcustiel\Phiremock\Domain\Http\StatusCode;
+use Mcustiel\Phiremock\Domain\Options\Delay;
 
 class Response implements \JsonSerializable
 {
-    /**
-     * @SRF\DefaultValue(200)
-     * @SRV\OneOf({
-     *      @SRV\Type("integer"),
-     *      @SRV\Not(@SRV\NotNull)
-     * })
-     *
-     * @var int
-     */
-    private $statusCode = 200;
-    /**
-     * @SRF\CustomFilter(class="\Mcustiel\Phiremock\Server\Http\ResponseFilters\JsonToString")
-     * @SRF\CustomFilter(class="\Mcustiel\Phiremock\Server\Http\ResponseFilters\Base64BodyToString")
-     * @SRV\OneOf({
-     *      @SRV\Type("string"),
-     *      @SRV\Not(@SRV\NotNull)
-     * })
-     *
-     * @var string
-     */
+    /** @var StatusCode */
+    private $statusCode;
+
+    /** @var Body */
     private $body;
-    /**
-     * @SRV\OneOf({
-     *      @SRV\Type("array"),
-     *      @SRV\Not(@SRV\NotNull)
-     * })
-     *
-     * @var array
-     */
+
+    /** @var HeadersCollection */
     private $headers;
-    /**
-     * @SRV\OneOf({
-     *      @SRV\AllOf({
-     *          @SRV\Type("integer"),
-     *          @SRV\Minimum(0)
-     *      }),
-     *      @SRV\Not(@SRV\NotNull)
-     * })
-     *
-     * @var int
-     */
+
+    /** @var Delay */
     private $delayMillis;
+
+    public function __construct()
+    {
+        $this->statusCode = StatusCode::createDefault();
+        $this->headers = new HeadersCollection();
+        $this->delayMillis = Delay::createDefault();
+        $this->body = Body::createEmpty();
+    }
 
     public function __toString()
     {
         return print_r(
             [
-                'statusCode'  => $this->statusCode,
+                'statusCode'  => $this->statusCode->asInt(),
                 'body'        => isset($this->body[5000]) ? '--VERY LONG CONTENTS--' : $this->body,
                 'headers'     => $this->headers,
-                'delayMillis' => $this->delayMillis,
+                'delayMillis' => isset($this->delayMillis) ? $this->delayMillis->asInt() : 'null',
             ],
             true
         );
     }
 
     /**
-     * @return int
+     * @return StatusCode
      */
     public function getStatusCode()
     {
@@ -88,11 +67,11 @@ class Response implements \JsonSerializable
     }
 
     /**
-     * @param int $statusCode
+     * @param StatusCode $statusCode
      *
      * @return \Mcustiel\Phiremock\Domain\Response
      */
-    public function setStatusCode($statusCode)
+    public function setStatusCode(StatusCode $statusCode)
     {
         $this->statusCode = $statusCode;
 
@@ -100,7 +79,7 @@ class Response implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * @return Body
      */
     public function getBody()
     {
@@ -108,11 +87,11 @@ class Response implements \JsonSerializable
     }
 
     /**
-     * @param string $body
+     * @param Body $body
      *
      * @return \Mcustiel\Phiremock\Domain\Response
      */
-    public function setBody($body)
+    public function setBody(Body $body)
     {
         $this->body = $body;
 
@@ -120,7 +99,7 @@ class Response implements \JsonSerializable
     }
 
     /**
-     * @return array
+     * @return HeadersCollection
      */
     public function getHeaders()
     {
@@ -128,19 +107,7 @@ class Response implements \JsonSerializable
     }
 
     /**
-     * @param string $headers
-     *
-     * @return \Mcustiel\Phiremock\Domain\Response
-     */
-    public function setHeaders($headers)
-    {
-        $this->headers = $headers;
-
-        return $this;
-    }
-
-    /**
-     * @return int
+     * @return Delay
      */
     public function getDelayMillis()
     {
@@ -148,11 +115,11 @@ class Response implements \JsonSerializable
     }
 
     /**
-     * @param int $delayMillis
+     * @param Delay $delayMillis
      *
      * @return \Mcustiel\Phiremock\Domain\Response
      */
-    public function setDelayMillis($delayMillis)
+    public function setDelayMillis(Delay $delayMillis)
     {
         $this->delayMillis = $delayMillis;
 
@@ -167,10 +134,10 @@ class Response implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'statusCode'  => $this->statusCode,
-            'body'        => $this->body,
-            'headers'     => $this->headers,
-            'delayMillis' => $this->delayMillis,
+            'statusCode'  => $this->statusCode->asInt(),
+            'body'        => $this->body->asString(),
+            'headers'     => json_encode($this->headers),
+            'delayMillis' => $this->delayMillis->asInt(),
         ];
     }
 }

@@ -18,95 +18,51 @@
 
 namespace Mcustiel\Phiremock\Domain;
 
-use Mcustiel\SimpleRequest\Annotation\Filter as SRF;
-use Mcustiel\SimpleRequest\Annotation\ParseAs;
-use Mcustiel\SimpleRequest\Annotation\Validator as SRV;
+use Mcustiel\Phiremock\Domain\Http\Uri;
+use Mcustiel\Phiremock\Domain\Options\Priority;
+use Mcustiel\Phiremock\Domain\Options\ScenarioName;
+use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class Expectation implements \JsonSerializable
 {
-    /**
-     * @var Request
-     *
-     * @SRV\NotNull
-     * @ParseAs("\Mcustiel\Phiremock\Domain\Request")
-     */
+    /** @var Request */
     private $request;
-    /**
-     * @var Response
-     *
-     * @SRF\CustomFilter(class="\Mcustiel\Phiremock\Common\Filters\ResponseAsDefault")
-     * @ParseAs("\Mcustiel\Phiremock\Domain\Response")
-     */
+
+    /** @var Response */
     private $response;
-    /**
-     * @var string
-     *
-     * @SRV\OneOf({
-     *      @SRV\Not(@SRV\NotEmpty),
-     *      @SRV\Uri
-     * })
-     */
+
+    /** @var Uri */
     private $proxyTo;
-    /**
-     * @var string
-     *
-     * @SRV\OneOf({
-     *      @SRV\Type("null"),
-     *      @SRV\AllOf({
-     *          @SRV\Type("string"),
-     *          @SRV\NotEmpty
-     *      })
-     * })
-     */
+
+    /** @var ScenarioName */
     private $scenarioName;
-    /**
-     * @var string
-     *
-     * @SRV\OneOf({
-     *      @SRV\Type("null"),
-     *      @SRV\AllOf({
-     *          @SRV\Type("string"),
-     *          @SRV\NotEmpty
-     *      })
-     * })
-     */
+
+    /** @var ScenarioState */
     private $scenarioStateIs;
-    /**
-     * @var string
-     *
-     * @SRV\OneOf({
-     *      @SRV\Type("null"),
-     *      @SRV\AllOf({
-     *          @SRV\Type("string"),
-     *          @SRV\NotEmpty
-     *      })
-     * })
-     */
+
+    /** @var ScenarioState */
     private $newScenarioState;
 
-    /**
-     * @var int
-     * @SRV\OneOf({
-     *      @SRV\Type("null"),
-     *      @SRV\AllOf({
-     *          @SRV\TypeInteger,
-     *          @SRV\Minimum(0)
-     *      })
-     * })
-     */
-    private $priority = 0;
+    /** @var Priority */
+    private $priority;
+
+    public function __construct()
+    {
+        $this->priority = Priority::createDefault();
+        $this->request = new Request();
+    }
 
     public function __toString()
     {
         return print_r(
             [
-                'scenarioName'     => $this->scenarioName,
-                'scenarioStateIs'  => $this->scenarioStateIs,
-                'newScenarioState' => $this->newScenarioState,
+                'scenarioName'     => isset($this->scenarioName) ? $this->scenarioName->asString() : 'null',
+                'scenarioStateIs'  => isset($this->scenarioStateIs) ? $this->scenarioStateIs->asString() : 'null',
+                'newScenarioState' => isset($this->newScenarioState) ? $this->newScenarioState->asString() : 'null',
                 'request'          => isset($this->request) ? $this->request->__toString() : 'null',
                 'response'         => isset($this->response) ? $this->response->__toString() : 'null',
-                'proxyTo'          => $this->proxyTo,
-                'priority'         => $this->priority,
+                'proxyTo'          => isset($this->proxyTo) ? $this->proxyTo->asString() : 'null',
+                'priority'         => isset($this->priority) ? $this->priority->asString() : 'null',
             ], true
         );
     }
@@ -124,7 +80,7 @@ class Expectation implements \JsonSerializable
      *
      * @return \Mcustiel\Phiremock\Domain\Expectation
      */
-    public function setRequest($request)
+    public function setRequest(Request $request)
     {
         $this->request = $request;
 
@@ -132,7 +88,7 @@ class Expectation implements \JsonSerializable
     }
 
     /**
-     * @return \Mcustiel\Phiremock\Domain\Response
+     * @return \Mcustiel\Phiremock\Domain\Response|null
      */
     public function getResponse()
     {
@@ -144,7 +100,7 @@ class Expectation implements \JsonSerializable
      *
      * @return \Mcustiel\Phiremock\Domain\Expectation
      */
-    public function setResponse($response)
+    public function setResponse(Response $response)
     {
         $this->response = $response;
 
@@ -152,7 +108,7 @@ class Expectation implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * @return ScenarioName|null
      */
     public function getScenarioName()
     {
@@ -160,11 +116,11 @@ class Expectation implements \JsonSerializable
     }
 
     /**
-     * @param string $scenario
+     * @param ScenarioName $scenario
      *
      * @return \Mcustiel\Phiremock\Domain\Expectation
      */
-    public function setScenarioName($scenario)
+    public function setScenarioName(ScenarioName $scenario)
     {
         $this->scenarioName = $scenario;
 
@@ -172,7 +128,7 @@ class Expectation implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * @return ScenarioState|null
      */
     public function getScenarioStateIs()
     {
@@ -180,11 +136,11 @@ class Expectation implements \JsonSerializable
     }
 
     /**
-     * @param string $scenarioStateIs
+     * @param ScenarioState $scenarioStateIs
      *
      * @return \Mcustiel\Phiremock\Domain\Expectation
      */
-    public function setScenarioStateIs($scenarioStateIs)
+    public function setScenarioStateIs(ScenarioState $scenarioStateIs)
     {
         $this->scenarioStateIs = $scenarioStateIs;
 
@@ -192,7 +148,7 @@ class Expectation implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * @return ScenarioState|null
      */
     public function getNewScenarioState()
     {
@@ -200,11 +156,11 @@ class Expectation implements \JsonSerializable
     }
 
     /**
-     * @param string $newScenarioState
+     * @param ScenarioState $newScenarioState
      *
      * @return \Mcustiel\Phiremock\Domain\Expectation
      */
-    public function setNewScenarioState($newScenarioState)
+    public function setNewScenarioState(ScenarioState $newScenarioState)
     {
         $this->newScenarioState = $newScenarioState;
 
@@ -212,7 +168,7 @@ class Expectation implements \JsonSerializable
     }
 
     /**
-     * @return int
+     * @return Priority|null
      */
     public function getPriority()
     {
@@ -220,11 +176,11 @@ class Expectation implements \JsonSerializable
     }
 
     /**
-     * @param int $priority
+     * @param Priority $priority
      *
      * @return \Mcustiel\Phiremock\Domain\Expectation
      */
-    public function setPriority($priority)
+    public function setPriority(Priority $priority)
     {
         $this->priority = $priority;
 
@@ -232,7 +188,7 @@ class Expectation implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * @return Uri|null
      */
     public function getProxyTo()
     {
@@ -240,11 +196,11 @@ class Expectation implements \JsonSerializable
     }
 
     /**
-     * @param string $proxyTo
+     * @param Uri $proxyTo
      *
      * @return \Mcustiel\Phiremock\Domain\Expectation
      */
-    public function setProxyTo($proxyTo)
+    public function setProxyTo(Uri $proxyTo)
     {
         $this->proxyTo = $proxyTo;
 
