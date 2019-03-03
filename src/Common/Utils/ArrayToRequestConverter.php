@@ -8,6 +8,7 @@ use Mcustiel\Phiremock\Domain\Conditions\Matcher;
 use Mcustiel\Phiremock\Domain\Conditions\UrlCondition;
 use Mcustiel\Phiremock\Domain\Http\Body;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
+use Mcustiel\Phiremock\Domain\Http\HeaderValue;
 use Mcustiel\Phiremock\Domain\Http\Method;
 use Mcustiel\Phiremock\Domain\Http\Url;
 use Mcustiel\Phiremock\Domain\Request;
@@ -57,7 +58,7 @@ class ArrayToRequestConverter
             $headerName,
             new HeaderCondition(
                 new Matcher(key($header)),
-                new Url(current($header))
+                new HeaderValue(current($header))
             )
         );
     }

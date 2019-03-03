@@ -15,10 +15,10 @@ class RequestToArrayConverter
         $this->convertBody($request, $requestArray);
         $this->convertHeaders($request, $requestArray);
 
-        return $request;
+        return $requestArray;
     }
 
-    private function convertHeaders(Request $request, array $requestArray)
+    private function convertHeaders(Request $request, array &$requestArray)
     {
         $headers = $request->getHeaders();
         if (!$headers->isEmpty()) {

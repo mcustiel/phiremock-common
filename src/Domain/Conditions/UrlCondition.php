@@ -9,7 +9,7 @@ class UrlCondition extends Condition
 {
     public function __construct(Matcher $matcher, Url $url)
     {
-        parent::__construct($matcher, $url->asString());
+        parent::__construct($matcher, $url);
     }
 
     public function __toString()

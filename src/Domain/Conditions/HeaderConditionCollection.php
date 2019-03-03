@@ -31,4 +31,12 @@ class HeaderConditionCollection extends AbstractArrayCollection
     {
         return parent::current();
     }
+
+    /**
+     * @return HeaderCondition
+     */
+    public function key()
+    {
+        return new HeaderName(parent::key());
+    }
 }

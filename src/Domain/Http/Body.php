@@ -19,7 +19,7 @@ class Body implements \JsonSerializable
     /**
      * @return Body
      */
-    public function createEmpty()
+    public static function createEmpty()
     {
         return new static('');
     }

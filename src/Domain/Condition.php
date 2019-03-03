@@ -20,7 +20,7 @@ namespace Mcustiel\Phiremock\Domain;
 
 use Mcustiel\Phiremock\Domain\Conditions\Matcher;
 
-class Condition implements \JsonSerializable
+class Condition
 {
     /**
      * @var Matcher
@@ -60,15 +60,5 @@ class Condition implements \JsonSerializable
     public function getValue()
     {
         return $this->value;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \JsonSerializable::jsonSerialize()
-     */
-    public function jsonSerialize()
-    {
-        return [$this->matcher->asString() => $this->value];
     }
 }

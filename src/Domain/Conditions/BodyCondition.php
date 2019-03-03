@@ -11,7 +11,7 @@ class BodyCondition extends Condition
 
     public function __construct(Matcher $matcher, Body $body)
     {
-        parent::__construct($matcher, $body->asString());
+        parent::__construct($matcher, $body);
     }
 
     public function __toString()
@@ -24,6 +24,6 @@ class BodyCondition extends Condition
 
     public static function fromCondition(Condition $condition)
     {
-        return new self($condition->getMatcher(), new Body($condition->getValue()));
+        return new self($condition->getMatcher(), $condition->getValue());
     }
 }

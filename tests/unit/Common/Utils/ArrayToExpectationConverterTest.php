@@ -15,9 +15,9 @@ use PHPUnit\Framework\TestCase;
 
 class ArrayToExpectationConverterTest extends TestCase
 {
-    /** @var ArrayToRequestConverter */
+    /** @var ArrayToRequestConverter|\PHPUnit_Framework_MockObject_MockObject */
     private $requestConverter;
-    /** @var ArrayToResponseConverter */
+    /** @var ArrayToResponseConverter|\PHPUnit_Framework_MockObject_MockObject */
     private $responseConverter;
     /** @var ArrayToExpectationConverter */
     private $expectationConverter;

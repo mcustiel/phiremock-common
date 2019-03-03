@@ -20,10 +20,10 @@ class ResponseToArrayConverter
             $this->convertHeaders($response, $responseArray);
         }
 
-        return $response;
+        return $responseArray;
     }
 
-    private function convertHeaders(Response $response, array $responseArray)
+    private function convertHeaders(Response $response, array &$responseArray)
     {
         $headers = $response->getHeaders();
         $headersArray = [];
