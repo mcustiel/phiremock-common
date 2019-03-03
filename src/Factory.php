@@ -21,6 +21,9 @@ namespace Mcustiel\Phiremock;
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter;
+use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
+use Mcustiel\Phiremock\Common\Utils\RequestToArrayConverter;
+use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter;
 
 class Factory
 {
@@ -29,6 +32,14 @@ class Factory
         return new ArrayToExpectationConverter(
             new ArrayToRequestConverter(),
             new ArrayToResponseConverter()
+        );
+    }
+
+    public function createExpectationToArrayConverter()
+    {
+        return new ExpectationToArrayConverter(
+            new RequestToArrayConverter(),
+            new ResponseToArrayConverter()
         );
     }
 }
