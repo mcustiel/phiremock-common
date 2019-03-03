@@ -19,6 +19,6 @@ class HeaderCondition extends Condition
 
     public static function fromCondition(Condition $condition)
     {
-        return new self($condition->getMatcher(), $condition->getValue());
+        return new self($condition->getMatcher(), new HeaderValue($condition->getValue()));
     }
 }
