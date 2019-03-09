@@ -24,9 +24,11 @@ use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter;
 use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\RequestToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter;
+use Mcustiel\Phiremock\Common\Http\Implementation\GuzzleConnection;
 
 class Factory
 {
+    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter */
     public function createArrayToExpectationConverter()
     {
         return new ArrayToExpectationConverter(
@@ -35,11 +37,18 @@ class Factory
         );
     }
 
+    /** @return \Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter */
     public function createExpectationToArrayConverter()
     {
         return new ExpectationToArrayConverter(
             new RequestToArrayConverter(),
             new ResponseToArrayConverter()
         );
+    }
+
+    /** @return \Mcustiel\Phiremock\Common\Http\Implementation\GuzzleConnection */
+    public function createRemoteConnectionInterface()
+    {
+        return new GuzzleConnection(new GuzzleHttp\Client());
     }
 }
