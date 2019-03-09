@@ -18,13 +18,14 @@
 
 namespace Mcustiel\Phiremock;
 
+use Mcustiel\Phiremock\Common\Http\Implementation\GuzzleConnection;
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter;
+use Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter;
 use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\RequestToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter;
-use Mcustiel\Phiremock\Common\Http\Implementation\GuzzleConnection;
 
 class Factory
 {
@@ -50,5 +51,11 @@ class Factory
     public function createRemoteConnectionInterface()
     {
         return new GuzzleConnection(new GuzzleHttp\Client());
+    }
+
+    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter */
+    public function createArrayToScenarioStateInfoConverter()
+    {
+        return new ArrayToScenarioStateInfoConverter();
     }
 }
