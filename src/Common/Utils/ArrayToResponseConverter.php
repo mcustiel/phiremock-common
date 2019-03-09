@@ -43,8 +43,8 @@ class ArrayToResponseConverter
         foreach ($headers as $headerName => $headerValue) {
             $response->getHeaders()->setHeader(
                 new Header(
-                    new HeaderName(key($headerName)),
-                    new HeaderValue(current($headerValue))
+                    new HeaderName($headerName),
+                    new HeaderValue($headerValue)
                 )
             );
         }
