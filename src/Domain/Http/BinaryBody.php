@@ -13,4 +13,9 @@ class BinaryBody extends Body
     {
         return BinaryInfo::BINARY_BODY_PREFIX . base64_encode(parent::asString());
     }
+
+    public function isTextBody()
+    {
+        return false;
+    }
 }

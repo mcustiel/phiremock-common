@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Tests\Unit\Common\Utils;
 
-use Mcustiel\Phiremock\Common\Utils\RequestToArrayConverter;
+use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
 use Mcustiel\Phiremock\Domain\Conditions\BodyCondition;
 use Mcustiel\Phiremock\Domain\Conditions\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Matcher;
@@ -13,22 +13,22 @@ use Mcustiel\Phiremock\Domain\Http\HeaderName;
 use Mcustiel\Phiremock\Domain\Http\HeaderValue;
 use Mcustiel\Phiremock\Domain\Http\Method;
 use Mcustiel\Phiremock\Domain\Http\Url;
-use Mcustiel\Phiremock\Domain\Request;
+use Mcustiel\Phiremock\Domain\RequestConditions;
 use PHPUnit\Framework\TestCase;
 
 class RequestToArrayConverterTest extends TestCase
 {
-    /** @var RequestToArrayConverter */
+    /** @var RequestConditionToArrayConverter */
     private $converter;
 
     protected function setUp()
     {
-        $this->converter = new RequestToArrayConverter();
+        $this->converter = new RequestConditionToArrayConverter();
     }
 
     public function testConvertsADefaultRequestToArray()
     {
-        $request = new Request();
+        $request = new RequestConditions();
 
         $requestArray = $this->converter->convert($request);
         $this->assertSame(
@@ -39,7 +39,7 @@ class RequestToArrayConverterTest extends TestCase
 
     public function testConvertsARequestWithValuesSetToArray()
     {
-        $request = new Request();
+        $request = new RequestConditions();
         $request->setMethod(new Method('post'));
         $request->setUrl(new UrlCondition(new Matcher(MatchersEnum::CONTAINS), new Url('/potato')));
         $request->setBody(

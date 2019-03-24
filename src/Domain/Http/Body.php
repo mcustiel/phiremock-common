@@ -16,6 +16,11 @@ class Body implements \JsonSerializable
         $this->body = $body;
     }
 
+    public function isTextBody()
+    {
+        return true;
+    }
+
     /**
      * @return Body
      */

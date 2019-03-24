@@ -2,11 +2,11 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\Request;
+use Mcustiel\Phiremock\Domain\RequestConditions;
 
-class RequestToArrayConverter
+class RequestConditionToArrayConverter
 {
-    public function convert(Request $request)
+    public function convert(RequestConditions $request)
     {
         $requestArray = [];
 
@@ -18,7 +18,7 @@ class RequestToArrayConverter
         return $requestArray;
     }
 
-    private function convertHeaders(Request $request, array &$requestArray)
+    private function convertHeaders(RequestConditions $request, array &$requestArray)
     {
         $headers = $request->getHeaders();
         if (!$headers->isEmpty()) {
@@ -34,7 +34,7 @@ class RequestToArrayConverter
         }
     }
 
-    private function convertBody(Request $request, array &$requestArray)
+    private function convertBody(RequestConditions $request, array &$requestArray)
     {
         if (null !== $request->getBody()) {
             $body = $request->getBody();
@@ -44,7 +44,7 @@ class RequestToArrayConverter
         }
     }
 
-    private function convertUrl(Request $request, array &$requestArray)
+    private function convertUrl(RequestConditions $request, array &$requestArray)
     {
         if (null !== $request->getUrl()) {
             $url = $request->getUrl();

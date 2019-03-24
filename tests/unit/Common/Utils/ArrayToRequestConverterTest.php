@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Tests\Unit\Common\Utils;
 
-use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConverter;
+use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
 use Mcustiel\Phiremock\Domain\Conditions\BodyCondition;
 use Mcustiel\Phiremock\Domain\Conditions\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Conditions\HeaderConditionCollection;
@@ -10,17 +10,17 @@ use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
 use Mcustiel\Phiremock\Domain\Conditions\UrlCondition;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 use Mcustiel\Phiremock\Domain\Http\Method;
-use Mcustiel\Phiremock\Domain\Request;
+use Mcustiel\Phiremock\Domain\RequestConditions;
 use PHPUnit\Framework\TestCase;
 
 class ArrayToRequestConverterTest extends TestCase
 {
-    /** @var ArrayToRequestConverter */
+    /** @var ArrayToRequestConditionConverter */
     private $requestConverter;
 
     protected function setUp()
     {
-        $this->requestConverter = new ArrayToRequestConverter();
+        $this->requestConverter = new ArrayToRequestConditionConverter();
     }
 
     public function testConvertsAnArrayWithNullValuesToRequest()
@@ -33,7 +33,7 @@ class ArrayToRequestConverterTest extends TestCase
         ];
 
         $request = $this->requestConverter->convert($requestArray);
-        $this->assertInstanceOf(Request::class, $request);
+        $this->assertInstanceOf(RequestConditions::class, $request);
         $this->assertNull($request->getUrl());
         $this->assertNull($request->getBody());
         $this->assertInstanceOf(Method::class, $request->getMethod());
@@ -47,7 +47,7 @@ class ArrayToRequestConverterTest extends TestCase
         $requestArray = ['method'  => 'get'];
 
         $request = $this->requestConverter->convert($requestArray);
-        $this->assertInstanceOf(Request::class, $request);
+        $this->assertInstanceOf(RequestConditions::class, $request);
         $this->assertNull($request->getUrl());
         $this->assertNull($request->getBody());
         $this->assertInstanceOf(Method::class, $request->getMethod());
@@ -67,7 +67,7 @@ class ArrayToRequestConverterTest extends TestCase
             ],
         ];
         $request = $this->requestConverter->convert($requestArray);
-        $this->assertInstanceOf(Request::class, $request);
+        $this->assertInstanceOf(RequestConditions::class, $request);
         $this->assertInstanceOf(Method::class, $request->getMethod());
         $this->assertSame('GET', $request->getMethod()->asString());
         $this->assertInstanceOf(UrlCondition::class, $request->getUrl());

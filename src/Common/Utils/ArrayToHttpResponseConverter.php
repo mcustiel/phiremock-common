@@ -7,17 +7,17 @@ use Mcustiel\Phiremock\Domain\Http\Header;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 use Mcustiel\Phiremock\Domain\Http\HeaderValue;
 use Mcustiel\Phiremock\Domain\Http\StatusCode;
+use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Options\Delay;
-use Mcustiel\Phiremock\Domain\Response;
 
-class ArrayToResponseConverter
+class ArrayToHttpResponseConverter
 {
     public function convert(array $responseArray)
     {
         if (!isset($responseArray['statusCode'])) {
             throw new \InvalidArgumentException('Status code is not set');
         }
-        $response = new Response(new StatusCode($responseArray['statusCode']));
+        $response = new HttpResponse(new StatusCode($responseArray['statusCode']));
 
         if (!empty($responseArray['body'])) {
             $response->setBody(new Body($responseArray['body']));
@@ -32,7 +32,7 @@ class ArrayToResponseConverter
         return $response;
     }
 
-    private function convertHeaders($headers, Response $response)
+    private function convertHeaders($headers, HttpResponse $response)
     {
         if (!\is_array($headers)) {
             throw new \InvalidArgumentException(

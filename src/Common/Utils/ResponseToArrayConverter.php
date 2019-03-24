@@ -2,11 +2,11 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\Response;
+use Mcustiel\Phiremock\Domain\HttpResponse;
 
 class ResponseToArrayConverter
 {
-    public function convert(Response $response)
+    public function convert(HttpResponse $response)
     {
         $responseArray = [];
 
@@ -22,7 +22,7 @@ class ResponseToArrayConverter
         return $responseArray;
     }
 
-    private function convertHeaders(Response $response, array &$responseArray)
+    private function convertHeaders(HttpResponse $response, array &$responseArray)
     {
         $headers = $response->getHeaders();
         $headersArray = [];

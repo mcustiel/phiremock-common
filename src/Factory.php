@@ -20,11 +20,11 @@ namespace Mcustiel\Phiremock;
 
 use Mcustiel\Phiremock\Common\Http\Implementation\GuzzleConnection;
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter;
+use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter;
+use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter;
 use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
-use Mcustiel\Phiremock\Common\Utils\RequestToArrayConverter;
+use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter;
 
 class Factory
@@ -33,8 +33,8 @@ class Factory
     public function createArrayToExpectationConverter()
     {
         return new ArrayToExpectationConverter(
-            new ArrayToRequestConverter(),
-            new ArrayToResponseConverter()
+            new ArrayToRequestConditionConverter(),
+            new ArrayToHttpResponseConverter()
         );
     }
 
@@ -42,7 +42,7 @@ class Factory
     public function createExpectationToArrayConverter()
     {
         return new ExpectationToArrayConverter(
-            new RequestToArrayConverter(),
+            new RequestConditionToArrayConverter(),
             new ResponseToArrayConverter()
         );
     }

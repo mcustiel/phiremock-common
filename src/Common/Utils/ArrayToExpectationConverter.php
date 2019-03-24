@@ -2,76 +2,73 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\Expectation;
 use Mcustiel\Phiremock\Domain\Http\Uri;
+use Mcustiel\Phiremock\Domain\MockConfig;
 use Mcustiel\Phiremock\Domain\Options\Priority;
-use Mcustiel\Phiremock\Domain\Options\ScenarioName;
-use Mcustiel\Phiremock\Domain\Options\ScenarioState;
+use Mcustiel\Phiremock\Domain\ProxyResponse;
+use Mcustiel\Phiremock\Domain\Response;
 
 class ArrayToExpectationConverter
 {
-    /** @var ArrayToRequestConverter */
+    /** @var ArrayToRequestConditionConverter */
     private $arrayToRequestConverter;
-    /** @var ArrayToResponseConverter */
+    /** @var ArrayToHttpResponseConverter */
     private $arrayToResponseConverter;
+    /** @var ArrayToStateConditionsConverter */
+    private $arrayToStateConditionsConverter;
 
     public function __construct(
-        ArrayToRequestConverter $arrayToRequestConverter,
-        ArrayToResponseConverter $arrayToResponseConverter
+        ArrayToRequestConditionConverter $arrayToRequestConditionsConverter,
+        ArrayToHttpResponseConverter $arrayToResponseConverter,
+        ArrayToStateConditionsConverter $arrayToStateConditionsConverter
     ) {
-        $this->arrayToRequestConverter = $arrayToRequestConverter;
+        $this->arrayToRequestConverter = $arrayToRequestConditionsConverter;
         $this->arrayToResponseConverter = $arrayToResponseConverter;
+        $this->arrayToStateConditionsConverter = $arrayToStateConditionsConverter;
     }
 
     /**
      * @param array $expectationArray
      *
-     * @return Expectation
+     * @return MockConfig
      */
     public function convert(array $expectationArray)
     {
-        $expectation = new Expectation();
-        $this->setRequest($expectationArray, $expectation);
-        $this->ensureResponseXorProxyToAreSet($expectationArray);
+        $request = $this->convertRequest($expectationArray);
+        $response = $this->convertResponse($expectationArray);
+        $stateConditions = $this->arrayToStateConditionsConverter->convert($expectationArray);
 
+        $priority = null;
+        if (!empty($expectationArray['priority'])) {
+            $priority = new Priority((int) $expectationArray['priority']);
+        }
+
+        return new MockConfig($request, $stateConditions, $response, $priority);
+    }
+
+    /**
+     * @param array $expectationArray
+     *
+     * @return Response
+     */
+    private function convertResponse(array $expectationArray)
+    {
         if (isset($expectationArray['response'])) {
-            $response = $this->arrayToResponseConverter->convert($expectationArray['response']);
-            $expectation->setResponse($response);
+            return $this->arrayToResponseConverter->convert($expectationArray['response']);
         }
 
         if (!empty($expectationArray['proxyTo'])) {
-            $expectation->setProxyTo(new Uri($expectationArray['proxyTo']));
+            return new ProxyResponse(new Uri($expectationArray['proxyTo']));
         }
-        if (!empty($expectationArray['newScenarioState'])) {
-            $expectation->setNewScenarioState(new ScenarioState($expectationArray['newScenarioState']));
-        }
-        if (!empty($expectationArray['priority'])) {
-            $expectation->setPriority(new Priority((int) $expectationArray['priority']));
-        }
-        if (!empty($expectationArray['scenarioName'])) {
-            $expectation->setScenarioName(new ScenarioName($expectationArray['scenarioName']));
-        }
-        if (!empty($expectationArray['scenarioStateIs'])) {
-            $expectation->setScenarioStateIs(new ScenarioState($expectationArray['scenarioStateIs']));
-        }
-
-        return $expectation;
+        throw new \InvalidArgumentException('Creating an expectation without response. One of response or proxyTo are needed');
     }
 
-    private function ensureResponseXorProxyToAreSet($expectationArray)
-    {
-        if (!empty($expectationArray['response']) && !empty($expectationArray['proxyTo'])
-            || empty($expectationArray['response']) && empty($expectationArray['proxyTo'])) {
-            throw new \InvalidArgumentException('One of response or proxyTo is needed');
-        }
-    }
-
-    private function setRequest(array $expectationArray, Expectation $expectation)
+    private function convertRequest(array $expectationArray)
     {
         if (!isset($expectationArray['request'])) {
             throw new \InvalidArgumentException('Expectation request is not set');
         }
-        $request = $this->arrayToRequestConverter->convert($expectationArray['request']);
-        $expectation->setRequest($request);
+
+        return $this->arrayToRequestConverter->convert($expectationArray['request']);
     }
 }

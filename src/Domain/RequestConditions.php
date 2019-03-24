@@ -23,7 +23,7 @@ use Mcustiel\Phiremock\Domain\Conditions\HeaderConditionCollection;
 use Mcustiel\Phiremock\Domain\Conditions\UrlCondition;
 use Mcustiel\Phiremock\Domain\Http\Method;
 
-class Request implements \JsonSerializable
+class RequestConditions
 {
     /**
      * @var Method
@@ -42,23 +42,16 @@ class Request implements \JsonSerializable
      */
     private $headers;
 
-    public function __construct()
-    {
-        $this->method = Method::get();
-        $this->headers = new HeaderConditionCollection();
-    }
-
-    public function __toString()
-    {
-        return print_r(
-            [
-                'method'  => $this->method->asString(),
-                'url'     => isset($this->url) ? $this->url->__toString() : 'null',
-                'body'    => isset($this->body) ? $this->body->__toString() : 'null',
-                'headers' => $this->headers->__toString(),
-            ],
-            true
-        );
+    public function __construct(
+        Method $method = null,
+        UrlCondition $url = null,
+        BodyCondition $body = null,
+        HeaderConditionCollection $headers = null
+    ) {
+        $this->method = null !== $method ? $method : Method::get();
+        $this->headers = null !== $headers ? $headers : new HeaderConditionCollection();
+        $this->body = $body;
+        $this->url = $url;
     }
 
     /**
@@ -72,7 +65,7 @@ class Request implements \JsonSerializable
     /**
      * @param Method $method
      *
-     * @return \Mcustiel\Phiremock\Domain\Request
+     * @return \Mcustiel\Phiremock\Domain\RequestConditions
      */
     public function setMethod(Method $method)
     {
@@ -92,7 +85,7 @@ class Request implements \JsonSerializable
     /**
      * @param UrlCondition $url
      *
-     * @return \Mcustiel\Phiremock\Domain\Request
+     * @return \Mcustiel\Phiremock\Domain\RequestConditions
      */
     public function setUrl(UrlCondition $url)
     {
@@ -112,7 +105,7 @@ class Request implements \JsonSerializable
     /**
      * @param BodyCondition $body
      *
-     * @return \Mcustiel\Phiremock\Domain\Request
+     * @return \Mcustiel\Phiremock\Domain\RequestConditions
      */
     public function setBody(BodyCondition $body)
     {
@@ -127,20 +120,5 @@ class Request implements \JsonSerializable
     public function getHeaders()
     {
         return $this->headers;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \JsonSerializable::jsonSerialize()
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'method'  => $this->method,
-            'url'     => $this->url,
-            'body'    => $this->body,
-            'headers' => $this->headers,
-        ];
     }
 }

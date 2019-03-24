@@ -32,7 +32,7 @@ class Uri
             );
         }
 
-        if (!filter_var($uri, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED, FILTER_FLAG_HOST_REQUIRED)) {
+        if (false === filter_var($uri, FILTER_VALIDATE_URL)) {
             throw new \InvalidArgumentException(
                 sprintf('Invalid http uri: %s', var_export($uri, true))
             );

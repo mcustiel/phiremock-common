@@ -2,46 +2,45 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\Expectation;
+use Mcustiel\Phiremock\Domain\MockConfig;
 
 class ExpectationToArrayConverter
 {
-    /** @var RequestToArrayConverter */
+    /** @var RequestConditionToArrayConverter */
     private $requestToArrayConverter;
 
     /** @var ResponseToArrayConverter */
     private $responseToArrayConverter;
 
     public function __construct(
-        RequestToArrayConverter $requestConverter,
+        RequestConditionToArrayConverter $requestConverter,
         ResponseToArrayConverter $responseConverter
     ) {
         $this->requestToArrayConverter = $requestConverter;
         $this->responseToArrayConverter = $responseConverter;
     }
 
-    public function convert(Expectation $expectation)
+    public function convert(MockConfig $expectation)
     {
         $expectationArray = [];
 
         $expectationArray['request'] = $this->requestToArrayConverter->convert($expectation->getRequest());
-        if (null !== $expectation->getResponse()) {
+        if ($expectation->getResponse()->isHttpResponse()) {
             $expectationArray['response'] = $this->responseToArrayConverter->convert($expectation->getResponse());
+        } else {
+            $expectationArray['proxyTo'] = $this->responseToArrayConverter->convert($expectation->getResponse());
         }
         if ($expectation->getPriority()->asInt() > 0) {
             $expectationArray['priority'] = $expectation->getPriority()->asInt();
         }
         if (null !== $expectation->getNewScenarioState()) {
-            $expectationArray['newScenarioState'] = $expectation->getNewScenarioState()->asString();
+            $expectationArray['newScenarioState'] = $expectation->getStateConditions()->getNewScenarioState()->asString();
         }
         if (null !== $expectation->getScenarioStateIs()) {
-            $expectationArray['scenarioStateIs'] = $expectation->getScenarioStateIs()->asString();
+            $expectationArray['scenarioStateIs'] = $expectation->getStateConditions()->getScenarioStateIs()->asString();
         }
         if (null !== $expectation->getScenarioName()) {
-            $expectationArray['scenarioName'] = $expectation->getScenarioName()->asString();
-        }
-        if (null !== $expectation->getProxyTo()) {
-            $expectationArray['proxyTo'] = $expectation->getProxyTo()->asString();
+            $expectationArray['scenarioName'] = $expectation->getStateConditions()->getScenarioName()->asString();
         }
 
         return $expectationArray;

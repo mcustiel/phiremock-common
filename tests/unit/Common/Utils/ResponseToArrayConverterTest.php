@@ -8,7 +8,7 @@ use Mcustiel\Phiremock\Domain\Http\Header;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 use Mcustiel\Phiremock\Domain\Http\HeaderValue;
 use Mcustiel\Phiremock\Domain\Http\StatusCode;
-use Mcustiel\Phiremock\Domain\Response;
+use Mcustiel\Phiremock\Domain\HttpResponse;
 use PHPUnit\Framework\TestCase;
 
 class ResponseToArrayConverterTest extends TestCase
@@ -23,7 +23,7 @@ class ResponseToArrayConverterTest extends TestCase
 
     public function testConvertsADefaultResponseToArray()
     {
-        $response = new Response();
+        $response = new HttpResponse();
 
         $responseArray = $this->converter->convert($response);
         $this->assertSame(
@@ -37,7 +37,7 @@ class ResponseToArrayConverterTest extends TestCase
 
     public function testConvertsAResponseWithValuesSetToArray()
     {
-        $response = new Response();
+        $response = new HttpResponse();
         $response->setStatusCode(new StatusCode(404));
         $response->setBody(new Body('I am the body.'));
         $response->getHeaders()->setHeader(

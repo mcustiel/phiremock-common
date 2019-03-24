@@ -11,16 +11,16 @@ use Mcustiel\Phiremock\Domain\Http\HeaderName;
 use Mcustiel\Phiremock\Domain\Http\HeaderValue;
 use Mcustiel\Phiremock\Domain\Http\Method;
 use Mcustiel\Phiremock\Domain\Http\Url;
-use Mcustiel\Phiremock\Domain\Request;
+use Mcustiel\Phiremock\Domain\RequestConditions;
 
-class ArrayToRequestConverter
+class ArrayToRequestConditionConverter
 {
     public function convert(array $requestArray)
     {
         if (!isset($requestArray['method'])) {
             throw new \InvalidArgumentException('Method is not set');
         }
-        $request = new Request(new Method($requestArray['method']));
+        $request = new RequestConditions(new Method($requestArray['method']));
 
         if (!empty($requestArray['body'])) {
             $this->convertBodyCondition($requestArray['body'], $request);
@@ -35,7 +35,7 @@ class ArrayToRequestConverter
         return $request;
     }
 
-    private function convertHeadersConditions($headers, Request $request)
+    private function convertHeadersConditions($headers, RequestConditions $request)
     {
         if (!\is_array($headers)) {
             throw new \InvalidArgumentException(
@@ -47,7 +47,7 @@ class ArrayToRequestConverter
         }
     }
 
-    private function convertHeaderCondition(HeaderName $headerName, $header, Request $request)
+    private function convertHeaderCondition(HeaderName $headerName, $header, RequestConditions $request)
     {
         if (!\is_array($header)) {
             throw new \InvalidArgumentException(
@@ -63,7 +63,7 @@ class ArrayToRequestConverter
         );
     }
 
-    private function convertUrlCondition($url, Request $request)
+    private function convertUrlCondition($url, RequestConditions $request)
     {
         if (!\is_array($url)) {
             throw new \InvalidArgumentException(
@@ -75,7 +75,7 @@ class ArrayToRequestConverter
         );
     }
 
-    private function convertBodyCondition($body, Request $request)
+    private function convertBodyCondition($body, RequestConditions $request)
     {
         if (!\is_array($body)) {
             throw new \InvalidArgumentException(

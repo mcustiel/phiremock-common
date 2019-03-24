@@ -21,7 +21,7 @@ namespace Mcustiel\Phiremock\Domain;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
-class ScenarioStateInfo implements \JsonSerializable
+class ScenarioStateInfo
 {
     /** @var ScenarioName */
     private $scenarioName;
@@ -81,18 +81,5 @@ class ScenarioStateInfo implements \JsonSerializable
         $this->scenarioState = $scenarioState;
 
         return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see \JsonSerializable::jsonSerialize()
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'scenarioName'   => $this->scenarioName->asString(),
-            'scenarioState'  => $this->scenarioState->asString(),
-        ];
     }
 }
