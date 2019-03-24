@@ -13,17 +13,12 @@ class StateConditions
     /** @var ScenarioState */
     private $scenarioStateIs;
 
-    /** @var ScenarioState */
-    private $newScenarioState;
-
     public function __construct(
         ScenarioName $scenarioName = null,
-        ScenarioState $currentScenarioState = null,
-        ScenarioState $newScenarioState = null
+        ScenarioState $currentScenarioState = null
     ) {
         $this->scenarioName = $scenarioName;
         $this->scenarioStateIs = $currentScenarioState;
-        $this->newScenarioState = $newScenarioState;
     }
 
     /**
@@ -40,13 +35,5 @@ class StateConditions
     public function getScenarioStateIs()
     {
         return $this->scenarioStateIs;
-    }
-
-    /**
-     * @return ScenarioState|null
-     */
-    public function getNewScenarioState()
-    {
-        return $this->newScenarioState;
     }
 }

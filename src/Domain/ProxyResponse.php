@@ -19,14 +19,16 @@
 namespace Mcustiel\Phiremock\Domain;
 
 use Mcustiel\Phiremock\Domain\Http\Uri;
+use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class ProxyResponse extends Response
 {
     /** @var Uri */
     private $uri;
 
-    public function __construct(Uri $uri)
+    public function __construct(Uri $uri, ScenarioState $newScenarioState)
     {
+        parent::__construct($newScenarioState);
         $this->uri = $uri;
     }
 

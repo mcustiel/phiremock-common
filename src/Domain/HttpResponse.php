@@ -22,6 +22,7 @@ use Mcustiel\Phiremock\Domain\Http\Body;
 use Mcustiel\Phiremock\Domain\Http\HeadersCollection;
 use Mcustiel\Phiremock\Domain\Http\StatusCode;
 use Mcustiel\Phiremock\Domain\Options\Delay;
+use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class HttpResponse extends Response
 {
@@ -41,8 +42,10 @@ class HttpResponse extends Response
         StatusCode $statusCode = null,
         Body $body = null,
         HeadersCollection $headers = null,
-        Delay $delayMillis = null
+        Delay $delayMillis = null,
+        ScenarioState $newScenarioState = null
     ) {
+        parent::__construct($newScenarioState);
         $this->statusCode = null !== $statusCode ? $statusCode : StatusCode::createDefault();
         $this->headers = null !== $headers ? $headers : new HeadersCollection();
         $this->delayMillis = null !== $delayMillis ? $delayMillis : Delay::createDefault();

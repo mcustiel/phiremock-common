@@ -20,11 +20,6 @@ class ArrayToStateConditionsConverter
             $currentScenarioState = new ScenarioState($stateInfoArray['body']);
         }
 
-        $newScenarioState = null;
-        if (!empty($stateInfoArray['newScenarioState'])) {
-            $newScenarioState = new ScenarioState($stateInfoArray['newScenarioState']);
-        }
-
-        return new StateConditions($scenarioName, $currentScenarioState, $newScenarioState);
+        return new StateConditions($scenarioName, $currentScenarioState);
     }
 }

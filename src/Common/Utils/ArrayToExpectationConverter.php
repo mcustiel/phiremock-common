@@ -5,6 +5,7 @@ namespace Mcustiel\Phiremock\Common\Utils;
 use Mcustiel\Phiremock\Domain\Http\Uri;
 use Mcustiel\Phiremock\Domain\MockConfig;
 use Mcustiel\Phiremock\Domain\Options\Priority;
+use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\ProxyResponse;
 use Mcustiel\Phiremock\Domain\Response;
 
@@ -49,16 +50,37 @@ class ArrayToExpectationConverter
     /**
      * @param array $expectationArray
      *
+     * @return null|\Mcustiel\Phiremock\Domain\Options\ScenarioState
+     */
+    private function getNewScenarioState(array $expectationArray)
+    {
+        $newScenarioState = null;
+        if (!empty($expectationArray['newScenarioState'])) {
+            $newScenarioState = new ScenarioState($expectationArray['newScenarioState']);
+        }
+
+        return $newScenarioState;
+    }
+
+    /**
+     * @param array $expectationArray
+     *
      * @return Response
      */
     private function convertResponse(array $expectationArray)
     {
         if (isset($expectationArray['response'])) {
-            return $this->arrayToResponseConverter->convert($expectationArray['response']);
+            return $this->arrayToResponseConverter->convert(
+                $expectationArray['response'],
+                $this->getNewScenarioState($expectationArray)
+            );
         }
 
         if (!empty($expectationArray['proxyTo'])) {
-            return new ProxyResponse(new Uri($expectationArray['proxyTo']));
+            return new ProxyResponse(
+                new Uri($expectationArray['proxyTo']),
+                $this->getNewScenarioState($expectationArray)
+            );
         }
         throw new \InvalidArgumentException('Creating an expectation without response. One of response or proxyTo are needed');
     }
