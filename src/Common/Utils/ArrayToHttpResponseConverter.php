@@ -42,7 +42,7 @@ class ArrayToHttpResponseConverter
         );
     }
 
-    private function convertHeaders($headers, HttpResponse $response)
+    private function convertHeaders($headers)
     {
         if (!\is_array($headers)) {
             throw new \InvalidArgumentException(
