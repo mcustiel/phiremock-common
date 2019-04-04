@@ -33,13 +33,13 @@ class ExpectationToArrayConverter
         if ($expectation->getPriority()->asInt() > 0) {
             $expectationArray['priority'] = $expectation->getPriority()->asInt();
         }
-        if (null !== $expectation->getNewScenarioState()) {
-            $expectationArray['newScenarioState'] = $expectation->getStateConditions()->getNewScenarioState()->asString();
+        if (null !== $expectation->getResponse()->getNewScenarioState()) {
+            $expectationArray['newScenarioState'] = $expectation->getResponse()->getNewScenarioState()->asString();
         }
-        if (null !== $expectation->getScenarioStateIs()) {
+        if (null !== $expectation->getStateConditions()->getScenarioStateIs()) {
             $expectationArray['scenarioStateIs'] = $expectation->getStateConditions()->getScenarioStateIs()->asString();
         }
-        if (null !== $expectation->getScenarioName()) {
+        if (null !== $expectation->getStateConditions()->getScenarioName()) {
             $expectationArray['scenarioName'] = $expectation->getStateConditions()->getScenarioName()->asString();
         }
 
