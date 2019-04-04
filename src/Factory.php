@@ -26,6 +26,7 @@ use Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter;
 use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter;
+use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter;
 
 class Factory
 {
@@ -34,7 +35,8 @@ class Factory
     {
         return new ArrayToExpectationConverter(
             new ArrayToRequestConditionConverter(),
-            new ArrayToHttpResponseConverter()
+            new ArrayToHttpResponseConverter(),
+            new ArrayToStateConditionsConverter()
         );
     }
 
