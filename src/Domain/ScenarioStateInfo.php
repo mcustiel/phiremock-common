@@ -29,18 +29,10 @@ class ScenarioStateInfo
     /** @var ScenarioState */
     private $scenarioState;
 
-    /**
-     * @param string $name
-     * @param string $state
-     */
-    public function __construct(ScenarioName $name = null, ScenarioState $state = null)
+    public function __construct(ScenarioName $name, ScenarioState $state)
     {
-        if (null === $name) {
-            $this->scenarioName = new ScenarioName();
-        }
-        if (null === $state) {
-            $this->scenarioState = new ScenarioState();
-        }
+        $this->scenarioName = $name;
+        $this->scenarioState = $state;
     }
 
     /**
