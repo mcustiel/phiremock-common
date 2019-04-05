@@ -24,6 +24,16 @@ class Uri
         return $this->uri;
     }
 
+    /**
+     * @param Uri $other
+     *
+     * @return bool
+     */
+    public function equals(self $other)
+    {
+        return $this->asString() === $other->asString();
+    }
+
     private function ensureIsValidUri($uri)
     {
         if (!\is_string($uri)) {

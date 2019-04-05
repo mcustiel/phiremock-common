@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Domain\Http;
 
-class HeaderValue implements \JsonSerializable
+class HeaderValue
 {
     /** @var string * */
     private $headerValue;
@@ -20,11 +20,6 @@ class HeaderValue implements \JsonSerializable
      * @return string
      */
     public function asString()
-    {
-        return $this->headerValue;
-    }
-
-    public function jsonSerialize()
     {
         return $this->headerValue;
     }

@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Domain\Options;
 
-class ScenarioName implements \JsonSerializable
+class ScenarioName
 {
     /** @var string * */
     private $name;
@@ -20,11 +20,6 @@ class ScenarioName implements \JsonSerializable
      * @return string
      */
     public function asString()
-    {
-        return $this->name;
-    }
-
-    public function jsonSerialize()
     {
         return $this->name;
     }

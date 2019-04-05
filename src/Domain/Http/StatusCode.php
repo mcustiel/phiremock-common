@@ -29,6 +29,16 @@ class StatusCode
         return $this->statusCode;
     }
 
+    /**
+     * @param StatusCode $other
+     *
+     * @return bool
+     */
+    public function equals(self $other)
+    {
+        return $this->asInt() === $other->asInt();
+    }
+
     private function ensureIsValidStatusCode($statusCode)
     {
         if (!\is_int($statusCode)) {

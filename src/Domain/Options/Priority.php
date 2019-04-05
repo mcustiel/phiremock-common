@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Domain\Options;
 
-class Priority implements \JsonSerializable
+class Priority
 {
     /** @var int * */
     private $priority;
@@ -35,11 +35,6 @@ class Priority implements \JsonSerializable
     public function asString()
     {
         return sprintf('%d', $this->priority);
-    }
-
-    public function jsonSerialize()
-    {
-        return $this->priority;
     }
 
     private function ensureIsValidPriority($priority)

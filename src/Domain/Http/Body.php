@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Domain\Http;
 
-class Body implements \JsonSerializable
+class Body
 {
     /** @var string * */
     private $body;
@@ -37,9 +37,14 @@ class Body implements \JsonSerializable
         return $this->body;
     }
 
-    public function jsonSerialize()
+    /**
+     * @param Body $other
+     *
+     * @return bool
+     */
+    public function equals(self $other)
     {
-        return $this->asString();
+        return $this->asString() === $other->asString();
     }
 
     private function ensureIsValidBody($body)

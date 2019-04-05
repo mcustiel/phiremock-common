@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Domain\Http;
 
-class Header implements \JsonSerializable
+class Header
 {
     /** @var HeaderName * */
     private $name;
@@ -30,10 +30,5 @@ class Header implements \JsonSerializable
     public function getValue()
     {
         return $this->value;
-    }
-
-    public function jsonSerialize()
-    {
-        return [$this->name => $this->value];
     }
 }

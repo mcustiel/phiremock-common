@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Domain\Options;
 
-class Delay implements \JsonSerializable
+class Delay
 {
     /** @var int * */
     private $delay;
@@ -25,11 +25,6 @@ class Delay implements \JsonSerializable
      * @return int
      */
     public function asInt()
-    {
-        return $this->delay;
-    }
-
-    public function jsonSerialize()
     {
         return $this->delay;
     }

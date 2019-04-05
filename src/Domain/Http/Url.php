@@ -26,6 +26,16 @@ class Url
         return $this->url;
     }
 
+    /**
+     * @param Url $other
+     *
+     * @return bool
+     */
+    public function equals(self $other)
+    {
+        return $this->asString() === $other->asString();
+    }
+
     private function ensureIsValidUrl($url)
     {
         if (!\is_string($url)) {

@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Domain\Options;
 
-class ScenarioState implements \JsonSerializable
+class ScenarioState
 {
     const INITIAL_SCENARIO = 'Scenario.START';
 
@@ -31,9 +31,14 @@ class ScenarioState implements \JsonSerializable
         return $this->state;
     }
 
-    public function jsonSerialize()
+    /**
+     * @param ScenarioState $other
+     *
+     * @return bool
+     */
+    public function equals(self $other)
     {
-        return $this->state;
+        return $other->asString() === $this->asString();
     }
 
     private function ensureIsValidState($state)

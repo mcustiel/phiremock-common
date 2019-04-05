@@ -64,6 +64,16 @@ class Method
         return $this->method;
     }
 
+    /**
+     * @param Method $other
+     *
+     * @return bool
+     */
+    public function equals(self $other)
+    {
+        return $this->asString() === $other->asString();
+    }
+
     private function ensureIsValidHttpMethod($method)
     {
         if (!\is_string($method)) {

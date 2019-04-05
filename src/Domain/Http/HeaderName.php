@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Domain\Http;
 
-class HeaderName implements \JsonSerializable
+class HeaderName
 {
     /** @var string * */
     private $headerName;
@@ -24,9 +24,14 @@ class HeaderName implements \JsonSerializable
         return $this->headerName;
     }
 
-    public function jsonSerialize()
+    /**
+     * @param HeaderName $other
+     *
+     * @return bool
+     */
+    public function equals(self $other)
     {
-        return $this->headerName;
+        return $other->asString() === $this->asString();
     }
 
     private function ensureIsValidHeaderName($headerName)
