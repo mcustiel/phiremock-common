@@ -35,9 +35,6 @@ class HttpResponse extends Response
     /** @var HeadersCollection */
     private $headers;
 
-    /** @var Delay */
-    private $delayMillis;
-
     public function __construct(
         StatusCode $statusCode = null,
         Body $body = null,
@@ -45,7 +42,7 @@ class HttpResponse extends Response
         Delay $delayMillis = null,
         ScenarioState $newScenarioState = null
     ) {
-        parent::__construct($newScenarioState);
+        parent::__construct($newScenarioState, $delayMillis);
         $this->statusCode = null !== $statusCode ? $statusCode : StatusCode::createDefault();
         $this->headers = null !== $headers ? $headers : new HeadersCollection();
         $this->delayMillis = null !== $delayMillis ? $delayMillis : Delay::createDefault();
@@ -61,18 +58,6 @@ class HttpResponse extends Response
     }
 
     /**
-     * @param StatusCode $statusCode
-     *
-     * @return self
-     */
-    public function setStatusCode(StatusCode $statusCode)
-    {
-        $this->statusCode = $statusCode;
-
-        return $this;
-    }
-
-    /**
      * @return Body
      */
     public function getBody()
@@ -80,46 +65,17 @@ class HttpResponse extends Response
         return $this->body;
     }
 
-    /**
-     * @param Body $body
-     *
-     * @return self
-     */
-    public function setBody(Body $body)
-    {
-        $this->body = $body;
-
-        return $this;
-    }
-
-    /**
-     * @return HeadersCollection
-     */
+    /** @return HeadersCollection */
     public function getHeaders()
     {
         return $this->headers;
     }
 
     /**
-     * @return Delay
-     */
-    public function getDelayMillis()
-    {
-        return $this->delayMillis;
-    }
-
-    /**
-     * @param Delay $delayMillis
+     * {@inheritdoc}
      *
-     * @return self
+     * @see \Mcustiel\Phiremock\Domain\Response::isHttpResponse()
      */
-    public function setDelayMillis(Delay $delayMillis)
-    {
-        $this->delayMillis = $delayMillis;
-
-        return $this;
-    }
-
     public function isHttpResponse()
     {
         return true;

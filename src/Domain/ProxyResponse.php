@@ -19,6 +19,7 @@
 namespace Mcustiel\Phiremock\Domain;
 
 use Mcustiel\Phiremock\Domain\Http\Uri;
+use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class ProxyResponse extends Response
@@ -26,25 +27,32 @@ class ProxyResponse extends Response
     /** @var Uri */
     private $uri;
 
-    public function __construct(Uri $uri, ScenarioState $newScenarioState)
-    {
-        parent::__construct($newScenarioState);
+    public function __construct(
+        Uri $uri,
+        ScenarioState $newScenarioState,
+        Delay $delayMillis = null
+    ) {
+        parent::__construct($newScenarioState, $delayMillis);
         $this->uri = $uri;
     }
 
+    /** @return string */
     public function __toString()
     {
         return $this->uri->asString();
     }
 
-    /**
-     * @return Uri
-     */
+    /** @return Uri */
     public function getUri()
     {
         return $this->uri;
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Mcustiel\Phiremock\Domain\Response::isProxyResponse()
+     */
     public function isProxyResponse()
     {
         return true;
