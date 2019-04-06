@@ -18,34 +18,37 @@ class Matcher
         $this->matcher = $matcher;
     }
 
+    /** @return self */
     public static function equalTo()
     {
         return new self(MatchersEnum::EQUAL_TO);
     }
 
+    /** @return self */
     public static function sameString()
     {
         return new self(MatchersEnum::SAME_STRING);
     }
 
+    /** @return self */
     public static function sameJson()
     {
         return new self(MatchersEnum::SAME_JSON);
     }
 
+    /** @return self */
     public static function contains()
     {
         return new self(MatchersEnum::CONTAINS);
     }
 
+    /** @return self */
     public static function matches()
     {
         return new self(MatchersEnum::MATCHES);
     }
 
-    /**
-     * @return string
-     */
+    /** @return string */
     public function asString()
     {
         return $this->matcher;

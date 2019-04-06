@@ -34,19 +34,49 @@ class Factory
     public function createArrayToExpectationConverter()
     {
         return new ArrayToExpectationConverter(
-            new ArrayToRequestConditionConverter(),
-            new ArrayToHttpResponseConverter(),
-            new ArrayToStateConditionsConverter()
+            $this->createArrayToRequestConditionConverter(),
+            $this->createArrayToHttpResponseConverter(),
+            $this->createArrayToStateConditionsConverter()
         );
+    }
+
+    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter */
+    public function createArrayToStateConditionsConverter()
+    {
+        return new ArrayToStateConditionsConverter();
+    }
+
+    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter */
+    public function createArrayToHttpResponseConverter()
+    {
+        return new ArrayToHttpResponseConverter();
+    }
+
+    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter */
+    public function createArrayToRequestConditionConverter()
+    {
+        return new ArrayToRequestConditionConverter();
     }
 
     /** @return \Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter */
     public function createExpectationToArrayConverter()
     {
         return new ExpectationToArrayConverter(
-            new RequestConditionToArrayConverter(),
-            new ResponseToArrayConverter()
+            $this->createRequestConditionToArrayConverter(),
+            $this->createResponseToArrayConverter()
         );
+    }
+
+    /** @return \Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter */
+    public function createResponseToArrayConverter()
+    {
+        return new ResponseToArrayConverter();
+    }
+
+    /** @return \Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter */
+    public function createRequestConditionToArrayConverter()
+    {
+        return new RequestConditionToArrayConverter();
     }
 
     /** @return \Mcustiel\Phiremock\Common\Http\Implementation\GuzzleConnection */
