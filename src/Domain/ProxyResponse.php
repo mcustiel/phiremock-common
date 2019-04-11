@@ -29,10 +29,10 @@ class ProxyResponse extends Response
 
     public function __construct(
         Uri $uri,
-        ScenarioState $newScenarioState,
-        Delay $delayMillis = null
+        Delay $delayMillis,
+        ScenarioState $newScenarioState = null
     ) {
-        parent::__construct($newScenarioState, $delayMillis);
+        parent::__construct($delayMillis, $newScenarioState);
         $this->uri = $uri;
     }
 

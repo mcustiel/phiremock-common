@@ -7,31 +7,26 @@ class Body
     /** @var string * */
     private $body;
 
-    /**
-     * @param string $body
-     */
+    /** @param string $body */
     public function __construct($body)
     {
         $this->ensureIsValidBody($body);
         $this->body = $body;
     }
 
+    /** @return bool */
     public function isTextBody()
     {
         return true;
     }
 
-    /**
-     * @return Body
-     */
+    /** @return Body */
     public static function createEmpty()
     {
         return new static('');
     }
 
-    /**
-     * @return string
-     */
+    /** @return string */
     public function asString()
     {
         return $this->body;
@@ -42,7 +37,7 @@ class Body
      *
      * @return bool
      */
-    public function equals(self $other)
+    public function equals($other)
     {
         return $this->asString() === $other->asString();
     }

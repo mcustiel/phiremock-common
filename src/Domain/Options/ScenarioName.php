@@ -7,18 +7,14 @@ class ScenarioName
     /** @var string * */
     private $name;
 
-    /**
-     * @param string $name
-     */
+    /** @param string $name */
     public function __construct($name)
     {
         $this->ensureIsValidScenarioName($name);
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
+    /** @return string */
     public function asString()
     {
         return $this->name;

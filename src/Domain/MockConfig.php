@@ -46,33 +46,31 @@ class MockConfig
         $this->response = null !== $response ? $response : new HttpResponse();
     }
 
-    /**
-     * @return \Mcustiel\Phiremock\Domain\RequestConditions
-     */
+    /** @return \Mcustiel\Phiremock\Domain\RequestConditions */
     public function getRequest()
     {
         return $this->requestConditions;
     }
 
-    /**
-     * @return \Mcustiel\Phiremock\Domain\StateConditions
-     */
+    /** @return \Mcustiel\Phiremock\Domain\StateConditions */
     public function getStateConditions()
     {
         return $this->stateConditions;
     }
 
-    /**
-     * @return \Mcustiel\Phiremock\Domain\Response
-     */
+    /** @return \Mcustiel\Phiremock\Domain\Response */
     public function getResponse()
     {
         return $this->response;
     }
 
-    /**
-     * @return Priority|null
-     */
+    /** @return bool */
+    public function hasPriority()
+    {
+        return null !== $this->priority;
+    }
+
+    /** @return Priority|null */
     public function getPriority()
     {
         return $this->priority;

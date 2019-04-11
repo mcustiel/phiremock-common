@@ -18,8 +18,6 @@ class BodyCondition extends Condition
     {
         $value = $this->getValue()->asString();
 
-        return $value;
-
         return $this->getMatcher()->asString() . ' => ' .
             (isset($value[2000]) ? self::LONG_CONTENT : $value);
     }

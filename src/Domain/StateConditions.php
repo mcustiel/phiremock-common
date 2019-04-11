@@ -21,17 +21,25 @@ class StateConditions
         $this->scenarioStateIs = $currentScenarioState;
     }
 
-    /**
-     * @return ScenarioName
-     */
+    /** @return bool */
+    public function hasScenarioName()
+    {
+        return null !== $this->scenarioName;
+    }
+
+    /** @return ScenarioName|null */
     public function getScenarioName()
     {
         return $this->scenarioName;
     }
 
-    /**
-     * @return ScenarioState|null
-     */
+    /** @return bool */
+    public function hasScenarioStateIs()
+    {
+        return null !== $this->scenarioStateIs;
+    }
+
+    /** @return ScenarioState|null */
     public function getScenarioStateIs()
     {
         return $this->scenarioStateIs;

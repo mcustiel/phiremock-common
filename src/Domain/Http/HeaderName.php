@@ -29,7 +29,7 @@ class HeaderName
      *
      * @return bool
      */
-    public function equals(self $other)
+    public function equals($other)
     {
         return $other->asString() === $this->asString();
     }

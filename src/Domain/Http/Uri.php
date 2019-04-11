@@ -29,7 +29,7 @@ class Uri
      *
      * @return bool
      */
-    public function equals(self $other)
+    public function equals($other)
     {
         return $this->asString() === $other->asString();
     }

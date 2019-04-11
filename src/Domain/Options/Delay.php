@@ -7,23 +7,20 @@ class Delay
     /** @var int * */
     private $delay;
 
-    /**
-     * @param int $delay
-     */
+    /** @param int $delay */
     public function __construct($delay)
     {
         $this->ensureIsValidDelay($delay);
         $this->delay = $delay;
     }
 
+    /** @return \Mcustiel\Phiremock\Domain\Options\Delay */
     public static function createDefault()
     {
         return new self(0);
     }
 
-    /**
-     * @return int
-     */
+    /** @return int */
     public function asInt()
     {
         return $this->delay;

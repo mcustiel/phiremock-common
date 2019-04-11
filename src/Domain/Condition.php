@@ -22,13 +22,9 @@ use Mcustiel\Phiremock\Domain\Conditions\Matcher;
 
 class Condition
 {
-    /**
-     * @var Matcher
-     */
+    /** @var Matcher */
     private $matcher;
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     private $value;
 
     /**

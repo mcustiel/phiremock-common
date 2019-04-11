@@ -4,14 +4,10 @@ namespace Mcustiel\Phiremock\Domain\Conditions;
 
 class Matcher
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $matcher;
 
-    /**
-     * @param string $matcher
-     */
+    /** @param string $matcher */
     public function __construct($matcher)
     {
         $this->ensureIsValidMatcher($matcher);

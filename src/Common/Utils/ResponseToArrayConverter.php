@@ -11,7 +11,7 @@ class ResponseToArrayConverter
         $responseArray = [];
 
         $responseArray['statusCode'] = $response->getStatusCode()->asInt();
-        if ($response->getDelayMillis() !== null) {
+        if (null !== $response->getDelayMillis()) {
             $responseArray['delayMillis'] = $response->getDelayMillis()->asInt();
         }
         $responseArray['body'] = $response->getBody()->asString();

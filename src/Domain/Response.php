@@ -13,11 +13,17 @@ abstract class Response
     private $delayMillis;
 
     public function __construct(
-        ScenarioState $newScenarioState = null,
-        Delay $delayMillis = null
+        Delay $delayMillis,
+        ScenarioState $newScenarioState = null
     ) {
         $this->newScenarioState = $newScenarioState;
         $this->delayMillis = $delayMillis;
+    }
+
+    /** @return bool */
+    public function hasNewScenarioState()
+    {
+        return null !== $this->newScenarioState;
     }
 
     /** @return \Mcustiel\Phiremock\Domain\Options\ScenarioState */

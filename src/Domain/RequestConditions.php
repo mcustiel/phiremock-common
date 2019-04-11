@@ -43,55 +43,39 @@ class RequestConditions
     private $headers;
 
     public function __construct(
-        Method $method = null,
+        Method $method,
         UrlCondition $url = null,
         BodyCondition $body = null,
         HeaderConditionCollection $headers = null
     ) {
-        $this->method = null !== $method ? $method : Method::get();
+        $this->method = $method;
         $this->headers = null !== $headers ? $headers : new HeaderConditionCollection();
         $this->body = $body;
         $this->url = $url;
     }
 
-    /**
-     * @return Method
-     */
+    /** @return Method */
     public function getMethod()
     {
         return $this->method;
     }
 
-    /**
-     * @param Method $method
-     *
-     * @return \Mcustiel\Phiremock\Domain\RequestConditions
-     */
-    public function setMethod(Method $method)
+    /** @return bool */
+    public function hasUrl()
     {
-        $this->method = $method;
-
-        return $this;
+        return null !== $this->url;
     }
 
-    /**
-     * @return UrlCondition|null
-     */
+    /** @return UrlCondition|null */
     public function getUrl()
     {
         return $this->url;
     }
 
-    /**
-     * @param UrlCondition $url
-     *
-     * @return \Mcustiel\Phiremock\Domain\RequestConditions
-     */
-    public function setUrl(UrlCondition $url)
+    /** @return bool */
+    public function hasBody()
     {
-        $this->url = $url;
-
-        return $this;
+        return null !== $this->body;
     }
 
     /**
@@ -102,21 +86,7 @@ class RequestConditions
         return $this->body;
     }
 
-    /**
-     * @param BodyCondition $body
-     *
-     * @return \Mcustiel\Phiremock\Domain\RequestConditions
-     */
-    public function setBody(BodyCondition $body)
-    {
-        $this->body = $body;
-
-        return $this;
-    }
-
-    /**
-     * @return HeaderConditionCollection
-     */
+    /** @return HeaderConditionCollection */
     public function getHeaders()
     {
         return $this->headers;

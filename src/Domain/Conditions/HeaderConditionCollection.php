@@ -5,6 +5,9 @@ namespace Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\AbstractArrayCollection;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 
+/**
+ * @method HeaderCondition current()
+ */
 class HeaderConditionCollection extends AbstractArrayCollection
 {
     public function __toString()
@@ -25,15 +28,7 @@ class HeaderConditionCollection extends AbstractArrayCollection
     }
 
     /**
-     * @return HeaderCondition
-     */
-    public function current()
-    {
-        return parent::current();
-    }
-
-    /**
-     * @return HeaderCondition
+     * @return HeaderName
      */
     public function key()
     {

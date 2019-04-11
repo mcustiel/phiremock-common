@@ -7,9 +7,7 @@ class Method
     /** @var string * */
     private $method;
 
-    /**
-     * @param string $method
-     */
+    /** @param string $method */
     public function __construct($method)
     {
         $this->ensureIsValidHttpMethod($method);
@@ -69,7 +67,7 @@ class Method
      *
      * @return bool
      */
-    public function equals(self $other)
+    public function equals($other)
     {
         return $this->asString() === $other->asString();
     }

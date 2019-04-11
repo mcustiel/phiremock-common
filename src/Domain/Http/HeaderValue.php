@@ -7,18 +7,14 @@ class HeaderValue
     /** @var string * */
     private $headerValue;
 
-    /**
-     * @param string $headerValue
-     */
+    /** @param string $headerValue */
     public function __construct($headerValue)
     {
         $this->ensureIsValidHeaderValue($headerValue);
         $this->headerValue = $headerValue;
     }
 
-    /**
-     * @return string
-     */
+    /** @return string */
     public function asString()
     {
         return $this->headerValue;

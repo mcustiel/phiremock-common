@@ -16,17 +16,13 @@ class Header
         $this->value = $value;
     }
 
-    /**
-     * @return HeaderName
-     */
+    /** @return HeaderName */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @return HeaderValue
-     */
+    /** @return HeaderValue */
     public function getValue()
     {
         return $this->value;

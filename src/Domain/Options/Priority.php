@@ -7,15 +7,14 @@ class Priority
     /** @var int * */
     private $priority;
 
-    /**
-     * @param int $priority
-     */
+    /** @param int $priority */
     public function __construct($priority)
     {
         $this->ensureIsValidPriority($priority);
         $this->priority = $priority;
     }
 
+    /** @return \Mcustiel\Phiremock\Domain\Options\Priority */
     public static function createDefault()
     {
         return new self(0);
@@ -29,9 +28,7 @@ class Priority
         return $this->priority;
     }
 
-    /**
-     * @return string
-     */
+    /** @return string */
     public function asString()
     {
         return sprintf('%d', $this->priority);

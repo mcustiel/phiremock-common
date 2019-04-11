@@ -44,34 +44,10 @@ class ScenarioStateInfo
     }
 
     /**
-     * @param ScenarioName $scenario
-     *
-     * @return self
-     */
-    public function setScenarioName(ScenarioName $scenario)
-    {
-        $this->scenarioName = $scenario;
-
-        return $this;
-    }
-
-    /**
      * @return ScenarioState
      */
     public function getScenarioState()
     {
         return $this->scenarioState;
-    }
-
-    /**
-     * @param ScenarioState $scenarioState
-     *
-     * @return self
-     */
-    public function setScenarioState(ScenarioState $scenarioState)
-    {
-        $this->scenarioState = $scenarioState;
-
-        return $this;
     }
 }
