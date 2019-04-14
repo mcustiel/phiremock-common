@@ -27,6 +27,8 @@ use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter;
 use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter;
+use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator;
+use Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter;
 
 class Factory
 {
@@ -35,7 +37,7 @@ class Factory
     {
         return new ArrayToExpectationConverter(
             $this->createArrayToRequestConditionConverter(),
-            $this->createArrayToHttpResponseConverter(),
+            $this->createArrayToResponseConverterLocator(),
             $this->createArrayToStateConditionsConverter()
         );
     }
@@ -46,10 +48,22 @@ class Factory
         return new ArrayToStateConditionsConverter();
     }
 
+    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator */
+    public function createArrayToResponseConverterLocator()
+    {
+        return new ArrayToResponseConverterLocator($this);
+    }
+
     /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter */
     public function createArrayToHttpResponseConverter()
     {
         return new ArrayToHttpResponseConverter();
+    }
+
+    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter*/
+    public function createArrayToProxyResponseConverter()
+    {
+        return new ArrayToProxyResponseConverter();
     }
 
     /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter */

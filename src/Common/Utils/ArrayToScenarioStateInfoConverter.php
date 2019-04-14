@@ -2,17 +2,16 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\MockConfig;
+use Mcustiel\Phiremock\Domain\ScenarioStateInfo;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
-use Mcustiel\Phiremock\Domain\ScenarioStateInfo;
 
 class ArrayToScenarioStateInfoConverter
 {
     /**
      * @param array $expectationArray
      *
-     * @return MockConfig
+     * @return ScenarioStateInfo
      */
     public function convert(array $expectationArray)
     {

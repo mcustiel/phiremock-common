@@ -49,6 +49,16 @@ class HttpResponse extends Response
         $this->body = $body;
     }
 
+    public static function createEmpty()
+    {
+        return new self(
+            new StatusCode(204),
+            new Body(''),
+            new HeadersCollection(),
+            new Delay(0)
+        );
+    }
+
     /**
      * @return StatusCode
      */

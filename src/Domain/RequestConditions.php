@@ -22,36 +22,33 @@ use Mcustiel\Phiremock\Domain\Conditions\BodyCondition;
 use Mcustiel\Phiremock\Domain\Conditions\HeaderConditionCollection;
 use Mcustiel\Phiremock\Domain\Conditions\UrlCondition;
 use Mcustiel\Phiremock\Domain\Http\Method;
+use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class RequestConditions
 {
-    /**
-     * @var Method
-     */
+    /** @var Method */
     private $method;
-    /**
-     * @var UrlCondition
-     */
+    /** @var UrlCondition */
     private $url;
-    /**
-     * @var BodyCondition
-     */
+    /** @var BodyCondition */
     private $body;
-    /**
-     * @var HeaderConditionCollection
-     */
+    /** @var HeaderConditionCollection */
     private $headers;
+    /** @var ScenarioState */
+    private $scenarioState;
 
     public function __construct(
         Method $method,
         UrlCondition $url = null,
         BodyCondition $body = null,
-        HeaderConditionCollection $headers = null
+        HeaderConditionCollection $headers = null,
+        ScenarioState $scenarioState = null
     ) {
         $this->method = $method;
         $this->headers = null !== $headers ? $headers : new HeaderConditionCollection();
         $this->body = $body;
         $this->url = $url;
+        $this->scenarioState = $scenarioState;
     }
 
     /** @return Method */
@@ -78,9 +75,7 @@ class RequestConditions
         return null !== $this->body;
     }
 
-    /**
-     * @return BodyCondition|null
-     */
+    /** @return BodyCondition|null */
     public function getBody()
     {
         return $this->body;
@@ -90,5 +85,17 @@ class RequestConditions
     public function getHeaders()
     {
         return $this->headers;
+    }
+
+    /** @return boolean */
+    public function hasScenarioState()
+    {
+        return $this->scenarioState !== null;
+    }
+
+    /** @return ScenarioState|null */
+    public function getScenarioState()
+    {
+        return $this->scenarioState;
     }
 }

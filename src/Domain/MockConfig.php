@@ -19,14 +19,15 @@
 namespace Mcustiel\Phiremock\Domain;
 
 use Mcustiel\Phiremock\Domain\Options\Priority;
+use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 
 class MockConfig
 {
     /** @var RequestConditions */
     private $requestConditions;
 
-    /** @var StateConditions */
-    private $stateConditions;
+    /** @var ScenarioName */
+    private $scenarioName;
 
     /** @var Response */
     private $response;
@@ -36,13 +37,13 @@ class MockConfig
 
     public function __construct(
         RequestConditions $requestConditions = null,
-        StateConditions $stateconditions = null,
+        ScenarioName $scenarioName = null,
         Response $response = null,
         Priority $priority = null
     ) {
         $this->priority = null !== $priority ? $priority : Priority::createDefault();
         $this->requestConditions = null !== $requestConditions ? $requestConditions : new RequestConditions();
-        $this->stateConditions = null !== $stateconditions ? $stateconditions : new StateConditions();
+        $this->scenarioName = scenarioName;
         $this->response = null !== $response ? $response : new HttpResponse();
     }
 
@@ -52,10 +53,10 @@ class MockConfig
         return $this->requestConditions;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\StateConditions */
-    public function getStateConditions()
+    /** @return \Mcustiel\Phiremock\Domain\Options\ScenarioName */
+    public function getScenarioName()
     {
-        return $this->stateConditions;
+        return $this->scenarioName;
     }
 
     /** @return \Mcustiel\Phiremock\Domain\Response */

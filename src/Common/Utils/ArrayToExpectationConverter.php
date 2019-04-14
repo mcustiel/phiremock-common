@@ -8,23 +8,24 @@ use Mcustiel\Phiremock\Domain\Options\Priority;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\ProxyResponse;
 use Mcustiel\Phiremock\Domain\Response;
+use Mcustiel\Phiremock\Domain\Options\Delay;
 
 class ArrayToExpectationConverter
 {
     /** @var ArrayToRequestConditionConverter */
     private $arrayToRequestConverter;
-    /** @var ArrayToHttpResponseConverter */
-    private $arrayToResponseConverter;
+    /** @var ArrayToResponseConverterLocator */
+    private $arrayToResponseConverterLocator;
     /** @var ArrayToStateConditionsConverter */
     private $arrayToStateConditionsConverter;
 
     public function __construct(
         ArrayToRequestConditionConverter $arrayToRequestConditionsConverter,
-        ArrayToHttpResponseConverter $arrayToResponseConverter,
+        ArrayToResponseConverterLocator $arrayToResponseConverterLocator,
         ArrayToStateConditionsConverter $arrayToStateConditionsConverter
     ) {
         $this->arrayToRequestConverter = $arrayToRequestConditionsConverter;
-        $this->arrayToResponseConverter = $arrayToResponseConverter;
+        $this->arrayToResponseConverterLocator = $arrayToResponseConverterLocator;
         $this->arrayToStateConditionsConverter = $arrayToStateConditionsConverter;
     }
 
@@ -69,20 +70,13 @@ class ArrayToExpectationConverter
      */
     private function convertResponse(array $expectationArray)
     {
-        if (isset($expectationArray['response'])) {
-            return $this->arrayToResponseConverter->convert(
-                $expectationArray['response'],
-                $this->getNewScenarioState($expectationArray)
-            );
+        if (!isset($expectationArray['response'])) {
+            throw new \InvalidArgumentException('Creating an expectation without response.');
         }
 
-        if (!empty($expectationArray['proxyTo'])) {
-            return new ProxyResponse(
-                new Uri($expectationArray['proxyTo']),
-                $this->getNewScenarioState($expectationArray)
-            );
-        }
-        throw new \InvalidArgumentException('Creating an expectation without response. One of response or proxyTo are needed');
+        return $this->arrayToResponseConverterLocator
+            ->locate($expectationArray['response'])
+            ->convert($expectationArray['response']);
     }
 
     private function convertRequest(array $expectationArray)

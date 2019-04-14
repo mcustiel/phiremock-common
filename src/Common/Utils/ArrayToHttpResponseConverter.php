@@ -14,13 +14,15 @@ use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
-class ArrayToHttpResponseConverter
+class ArrayToHttpResponseConverter extends ArrayToResponseConverter
 {
     const STRING_START = 0;
-    const NO_DELAY = 0;
 
-    public function convert(array $responseArray, ScenarioState $newScenarioState = null)
-    {
+    protected function convertResponse(
+        array $responseArray,
+        Delay $delay,
+        ScenarioState $newScenarioState = null
+    ) {
         if (!isset($responseArray['statusCode'])) {
             throw new \InvalidArgumentException('Status code is not set');
         }
@@ -29,7 +31,7 @@ class ArrayToHttpResponseConverter
             new StatusCode((int) $responseArray['statusCode']),
             $this->getBody($responseArray),
             $this->getHeaders($responseArray),
-            $this->getDelay($responseArray),
+            $delay,
             $newScenarioState
         );
     }
@@ -42,16 +44,6 @@ class ArrayToHttpResponseConverter
         }
 
         return new HeadersCollection();
-    }
-
-    /** @return \Mcustiel\Phiremock\Domain\Options\Delay */
-    private function getDelay(array $responseArray)
-    {
-        if (!empty($responseArray['delayMillis'])) {
-            return new Delay($responseArray['delayMillis']);
-        }
-
-        return new Delay(self::NO_DELAY);
     }
 
     /** @return \Mcustiel\Phiremock\Domain\Http\Body */
