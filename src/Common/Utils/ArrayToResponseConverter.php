@@ -20,7 +20,7 @@ abstract class ArrayToResponseConverter
 
     abstract protected function convertResponse(
         array $response,
-        Delay $delay,
+        Delay $delay = null,
         ScenarioState $newScenarioState = null
     );
 
@@ -31,7 +31,7 @@ abstract class ArrayToResponseConverter
             return new Delay($responseArray['delayMillis']);
         }
 
-        return new Delay(self::NO_DELAY);
+        return null;
     }
 
     /** @return null|\Mcustiel\Phiremock\Domain\Options\ScenarioState */

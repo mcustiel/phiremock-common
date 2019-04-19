@@ -11,7 +11,7 @@ class ArrayToProxyResponseConverter extends ArrayToResponseConverter
 {
     protected function convertResponse(
         array $responseArray,
-        Delay $delay,
+        Delay $delay = null,
         ScenarioState $newScenarioState = null
     ) {
         if (empty($responseArray['proxyTo'])) {
