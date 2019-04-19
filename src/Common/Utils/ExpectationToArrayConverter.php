@@ -31,7 +31,7 @@ class ExpectationToArrayConverter
         if ($expectation->hasScenarioName()) {
             $expectationArray['scenarioName'] = $expectation->getScenarioName()->asString();
         }
-        if ($expectation->getPriority()->asInt() > 0) {
+        if ($expectation->hasPriority()) {
             $expectationArray['priority'] = $expectation->getPriority()->asInt();
         }
 
