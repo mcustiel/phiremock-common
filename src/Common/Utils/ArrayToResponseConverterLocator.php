@@ -1,4 +1,5 @@
 <?php
+
 namespace Mcustiel\Phiremock\Common\Utils;
 
 use Mcustiel\Phiremock\Factory;
@@ -19,6 +20,7 @@ class ArrayToResponseConverterLocator
         if (isset($responseArray['proxyTo'])) {
             return $this->factory->createArrayToProxyResponseConverter();
         }
+
         return $this->factory->createArrayToHttpResponseConverter();
     }
 }

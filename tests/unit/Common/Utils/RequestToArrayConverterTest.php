@@ -28,7 +28,7 @@ class RequestToArrayConverterTest extends TestCase
 
     public function testConvertsADefaultRequestToArray()
     {
-        $request = new RequestConditions();
+        $request = new RequestConditions(new Method('get'));
 
         $requestArray = $this->converter->convert($request);
         $this->assertSame(
@@ -39,10 +39,9 @@ class RequestToArrayConverterTest extends TestCase
 
     public function testConvertsARequestWithValuesSetToArray()
     {
-        $request = new RequestConditions();
-        $request->setMethod(new Method('post'));
-        $request->setUrl(new UrlCondition(new Matcher(MatchersEnum::CONTAINS), new Url('/potato')));
-        $request->setBody(
+        $request = new RequestConditions(
+            new Method('post'),
+            new UrlCondition(new Matcher(MatchersEnum::CONTAINS), new Url('/potato')),
             new BodyCondition(new Matcher(MatchersEnum::MATCHES), new Body('I am the body.'))
         );
         $request->getHeaders()->setHeaderCondition(

@@ -43,7 +43,7 @@ class MockConfig
     ) {
         $this->priority = null !== $priority ? $priority : Priority::createDefault();
         $this->requestConditions = null !== $requestConditions ? $requestConditions : new RequestConditions();
-        $this->scenarioName = scenarioName;
+        $this->scenarioName = $scenarioName;
         $this->response = null !== $response ? $response : new HttpResponse();
     }
 

@@ -21,14 +21,14 @@ namespace Mcustiel\Phiremock;
 use Mcustiel\Phiremock\Common\Http\Implementation\GuzzleConnection;
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter;
+use Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
+use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter;
 use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator;
-use Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter;
 
 class Factory
 {

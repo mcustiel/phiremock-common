@@ -2,13 +2,10 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\Http\Uri;
 use Mcustiel\Phiremock\Domain\MockConfig;
 use Mcustiel\Phiremock\Domain\Options\Priority;
-use Mcustiel\Phiremock\Domain\Options\ScenarioState;
-use Mcustiel\Phiremock\Domain\ProxyResponse;
+use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Response;
-use Mcustiel\Phiremock\Domain\Options\Delay;
 
 class ArrayToExpectationConverter
 {
@@ -16,17 +13,13 @@ class ArrayToExpectationConverter
     private $arrayToRequestConverter;
     /** @var ArrayToResponseConverterLocator */
     private $arrayToResponseConverterLocator;
-    /** @var ArrayToStateConditionsConverter */
-    private $arrayToStateConditionsConverter;
 
     public function __construct(
         ArrayToRequestConditionConverter $arrayToRequestConditionsConverter,
-        ArrayToResponseConverterLocator $arrayToResponseConverterLocator,
-        ArrayToStateConditionsConverter $arrayToStateConditionsConverter
+        ArrayToResponseConverterLocator $arrayToResponseConverterLocator
     ) {
         $this->arrayToRequestConverter = $arrayToRequestConditionsConverter;
         $this->arrayToResponseConverterLocator = $arrayToResponseConverterLocator;
-        $this->arrayToStateConditionsConverter = $arrayToStateConditionsConverter;
     }
 
     /**
@@ -38,29 +31,40 @@ class ArrayToExpectationConverter
     {
         $request = $this->convertRequest($expectationArray);
         $response = $this->convertResponse($expectationArray);
-        $stateConditions = $this->arrayToStateConditionsConverter->convert($expectationArray);
+        $scenarioName = $this->getScenarioName($expectationArray);
+        $priority = $this->getPriority($expectationArray);
 
-        $priority = null;
-        if (!empty($expectationArray['priority'])) {
-            $priority = new Priority((int) $expectationArray['priority']);
-        }
-
-        return new MockConfig($request, $stateConditions, $response, $priority);
+        return new MockConfig($request, $scenarioName, $response, $priority);
     }
 
     /**
      * @param array $expectationArray
      *
-     * @return null|\Mcustiel\Phiremock\Domain\Options\ScenarioState
+     * @return null|\Mcustiel\Phiremock\Domain\Options\Priority
      */
-    private function getNewScenarioState(array $expectationArray)
+    private function getPriority(array $expectationArray)
     {
-        $newScenarioState = null;
-        if (!empty($expectationArray['newScenarioState'])) {
-            $newScenarioState = new ScenarioState($expectationArray['newScenarioState']);
+        $priority = null;
+        if (!empty($expectationArray['priority'])) {
+            $priority = new Priority((int) $expectationArray['priority']);
         }
 
-        return $newScenarioState;
+        return $priority;
+    }
+
+    /**
+     * @param array $expectationArray
+     *
+     * @return null|\Mcustiel\Phiremock\Domain\Options\ScenarioName
+     */
+    private function getScenarioName(array $expectationArray)
+    {
+        $scenarioName = null;
+        if (!empty($expectationArray['scenarioName'])) {
+            $scenarioName = new ScenarioName($expectationArray['scenarioName']);
+        }
+
+        return $scenarioName;
     }
 
     /**

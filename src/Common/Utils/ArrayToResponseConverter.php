@@ -44,5 +44,4 @@ abstract class ArrayToResponseConverter
 
         return $newScenarioState;
     }
-
 }

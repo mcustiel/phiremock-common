@@ -4,6 +4,7 @@ namespace Mcustiel\Phiremock\Common\Utils;
 
 use Mcustiel\Phiremock\Domain\Conditions\BodyCondition;
 use Mcustiel\Phiremock\Domain\Conditions\HeaderCondition;
+use Mcustiel\Phiremock\Domain\Conditions\HeaderConditionCollection;
 use Mcustiel\Phiremock\Domain\Conditions\Matcher;
 use Mcustiel\Phiremock\Domain\Conditions\UrlCondition;
 use Mcustiel\Phiremock\Domain\Http\Body;
@@ -11,9 +12,8 @@ use Mcustiel\Phiremock\Domain\Http\HeaderName;
 use Mcustiel\Phiremock\Domain\Http\HeaderValue;
 use Mcustiel\Phiremock\Domain\Http\Method;
 use Mcustiel\Phiremock\Domain\Http\Url;
-use Mcustiel\Phiremock\Domain\RequestConditions;
-use Mcustiel\Phiremock\Domain\Conditions\HeaderConditionCollection;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
+use Mcustiel\Phiremock\Domain\RequestConditions;
 
 class ArrayToRequestConditionConverter
 {
@@ -44,8 +44,8 @@ class ArrayToRequestConditionConverter
             $headersCollection = new HeaderConditionCollection();
             foreach ($headers as $headerName => $header) {
                 $headersCollection->setHeaderCondition(
+                    new HeaderName($headerName),
                     $this->convertHeaderCondition(
-                        new HeaderName($headerName),
                         $header
                     )
                 );
@@ -57,7 +57,7 @@ class ArrayToRequestConditionConverter
         return null;
     }
 
-    private function convertHeaderCondition(HeaderName $headerName, $header)
+    private function convertHeaderCondition($header)
     {
         if (!\is_array($header)) {
             throw new \InvalidArgumentException(
@@ -83,6 +83,7 @@ class ArrayToRequestConditionConverter
 
             return new UrlCondition(new Matcher(key($url)), new Url(current($url)));
         }
+
         return null;
     }
 
@@ -97,8 +98,8 @@ class ArrayToRequestConditionConverter
             }
 
             return new BodyCondition(new Matcher(key($body)), new Body(current($body)));
-
         }
+
         return null;
     }
 
@@ -108,6 +109,7 @@ class ArrayToRequestConditionConverter
         if (!empty($requestArray['scenarioStateIs'])) {
             return new ScenarioState($requestArray['scenarioStateIs']);
         }
+
         return null;
     }
 }

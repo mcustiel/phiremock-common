@@ -52,7 +52,7 @@ class HttpResponse extends Response
     public static function createEmpty()
     {
         return new self(
-            new StatusCode(204),
+            new StatusCode(200),
             new Body(''),
             new HeadersCollection(),
             new Delay(0)

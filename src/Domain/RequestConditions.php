@@ -87,7 +87,7 @@ class RequestConditions
         return $this->headers;
     }
 
-    /** @return boolean */
+    /** @return bool */
     public function hasScenarioState()
     {
         return $this->scenarioState !== null;
