@@ -25,12 +25,14 @@ class ExpectationToArrayConverter
         $expectationArray = [];
 
         $expectationArray['request'] = $this->requestToArrayConverter->convert($expectation->getRequest());
-        $expectationArray['response'] = $this->responseConverterLocator->convert($expectation->getResponse());
-        if ($expectation->getPriority()->asInt() > 0) {
-            $expectationArray['priority'] = $expectation->getPriority()->asInt();
-        }
+        $expectationArray['response'] = $this->responseConverterLocator
+            ->locate($expectation->getResponse())
+            ->convert($expectation->getResponse());
         if ($expectation->hasScenarioName()) {
             $expectationArray['scenarioName'] = $expectation->getScenarioName()->asString();
+        }
+        if ($expectation->getPriority()->asInt() > 0) {
+            $expectationArray['priority'] = $expectation->getPriority()->asInt();
         }
 
         return $expectationArray;
