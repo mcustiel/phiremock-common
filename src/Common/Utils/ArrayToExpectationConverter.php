@@ -34,7 +34,7 @@ class ArrayToExpectationConverter
         $scenarioName = $this->getScenarioName($expectationArray);
         $priority = $this->getPriority($expectationArray);
 
-        return new MockConfig($request, $scenarioName, $response, $priority);
+        return new MockConfig($request, $response, $scenarioName, $priority);
     }
 
     /**

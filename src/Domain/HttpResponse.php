@@ -39,7 +39,7 @@ class HttpResponse extends Response
         StatusCode $statusCode,
         Body $body,
         HeadersCollection $headers,
-        Delay $delayMillis,
+        Delay $delayMillis = null,
         ScenarioState $newScenarioState = null
     ) {
         parent::__construct($delayMillis, $newScenarioState);
@@ -54,8 +54,7 @@ class HttpResponse extends Response
         return new self(
             new StatusCode(200),
             new Body(''),
-            new HeadersCollection(),
-            new Delay(0)
+            new HeadersCollection()
         );
     }
 

@@ -29,7 +29,7 @@ class ProxyResponse extends Response
 
     public function __construct(
         Uri $uri,
-        Delay $delayMillis,
+        Delay $delayMillis = null,
         ScenarioState $newScenarioState = null
     ) {
         parent::__construct($delayMillis, $newScenarioState);
@@ -39,7 +39,7 @@ class ProxyResponse extends Response
     /** @return string */
     public function __toString()
     {
-        return $this->uri->asString();
+        return 'proxy to: ' . $this->uri->asString();
     }
 
     /** @return Uri */

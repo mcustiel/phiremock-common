@@ -70,9 +70,8 @@ class ArrayToExpectationConverterTest extends TestCase
         $this->assertInstanceOf(MockConfig::class, $expectation);
         $this->assertSame($request, $expectation->getRequest());
         $this->assertSame($response, $expectation->getResponse());
-        $this->assertNull($expectation->getScenarioName());
-        $this->assertInstanceOf(Priority::class, $expectation->getPriority());
-        $this->assertSame(0, $expectation->getPriority()->asInt());
+        $this->assertFalse($expectation->hasScenarioName());
+        $this->assertFalse($expectation->hasPriority());
     }
 
     public function testConvertsAnArrayWithUnsetValuesToExpectation()
@@ -104,9 +103,8 @@ class ArrayToExpectationConverterTest extends TestCase
         $this->assertInstanceOf(MockConfig::class, $expectation);
         $this->assertSame($request, $expectation->getRequest());
         $this->assertSame($response, $expectation->getResponse());
-        $this->assertNull($expectation->getScenarioName());
-        $this->assertInstanceOf(Priority::class, $expectation->getPriority());
-        $this->assertSame(0, $expectation->getPriority()->asInt());
+        $this->assertFalse($expectation->hasScenarioName());
+        $this->assertFalse($expectation->hasPriority());
     }
 
     public function testConvertsAnArrayWithoutNullValuesToExpectation()

@@ -36,21 +36,27 @@ class MockConfig
     private $priority;
 
     public function __construct(
-        RequestConditions $requestConditions = null,
+        RequestConditions $requestConditions,
+        Response $response,
         ScenarioName $scenarioName = null,
-        Response $response = null,
         Priority $priority = null
     ) {
-        $this->priority = null !== $priority ? $priority : Priority::createDefault();
-        $this->requestConditions = null !== $requestConditions ? $requestConditions : new RequestConditions();
+        $this->priority = $priority;
+        $this->requestConditions = $requestConditions;
         $this->scenarioName = $scenarioName;
-        $this->response = null !== $response ? $response : new HttpResponse();
+        $this->response = $response;
     }
 
     /** @return \Mcustiel\Phiremock\Domain\RequestConditions */
     public function getRequest()
     {
         return $this->requestConditions;
+    }
+
+    /** @return bool */
+    public function hasScenarioName()
+    {
+        return $this->scenarioName !== null;
     }
 
     /** @return \Mcustiel\Phiremock\Domain\Options\ScenarioName */

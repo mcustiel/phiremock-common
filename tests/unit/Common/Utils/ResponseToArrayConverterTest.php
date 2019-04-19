@@ -31,7 +31,6 @@ class ResponseToArrayConverterTest extends TestCase
         $this->assertSame(
             [
                 'statusCode'  => 200,
-                'delayMillis' => 0,
                 'body'        => '',
             ],
             $responseArray
