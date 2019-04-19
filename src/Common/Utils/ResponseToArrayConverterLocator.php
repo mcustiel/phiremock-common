@@ -15,17 +15,15 @@ class ResponseToArrayConverterLocator
         $this->factory = $factory;
     }
 
+    /**
+     * @return \Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter
+     */
     public function locate(Response $response)
     {
-        $responseArray = [];
-
         if ($response->isHttpResponse()) {
-            $responseArray['delayMillis'] = $response->getDelayMillis()->asInt();
-        }
-        if ($response->hasNewScenarioState()) {
-            $responseArray['newScenarioState'] = $response->getNewScenarioState()->asString();
+            return $this->factory->createHttpResponseToArrayConverter();
         }
 
-        return $responseArray;
+        return $this->factory->createProxyResponseToArrayConverter();
     }
 }
