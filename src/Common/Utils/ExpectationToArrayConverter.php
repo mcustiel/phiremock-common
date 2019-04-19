@@ -9,15 +9,15 @@ class ExpectationToArrayConverter
     /** @var RequestConditionToArrayConverter */
     private $requestToArrayConverter;
 
-    /** @var ResponseToArrayConverter */
-    private $responseToArrayConverter;
+    /** @var ResponseToArrayConverterLocator */
+    private $responseConverterLocator;
 
     public function __construct(
         RequestConditionToArrayConverter $requestConverter,
-        ResponseToArrayConverter $responseConverter
+        ResponseToArrayConverterLocator $responseConverterLocator
     ) {
         $this->requestToArrayConverter = $requestConverter;
-        $this->responseToArrayConverter = $responseConverter;
+        $this->responseConverterLocator = $responseConverterLocator;
     }
 
     public function convert(MockConfig $expectation)
@@ -25,22 +25,12 @@ class ExpectationToArrayConverter
         $expectationArray = [];
 
         $expectationArray['request'] = $this->requestToArrayConverter->convert($expectation->getRequest());
-        if ($expectation->getResponse()->isHttpResponse()) {
-            $expectationArray['response'] = $this->responseToArrayConverter->convert($expectation->getResponse());
-        } else {
-            $expectationArray['proxyTo'] = $this->responseToArrayConverter->convert($expectation->getResponse());
-        }
+        $expectationArray['response'] = $this->responseConverterLocator->convert($expectation->getResponse());
         if ($expectation->getPriority()->asInt() > 0) {
             $expectationArray['priority'] = $expectation->getPriority()->asInt();
         }
-        if (null !== $expectation->getResponse()->getNewScenarioState()) {
-            $expectationArray['newScenarioState'] = $expectation->getResponse()->getNewScenarioState()->asString();
-        }
-        if (null !== $expectation->getStateConditions()->getScenarioStateIs()) {
-            $expectationArray['scenarioStateIs'] = $expectation->getStateConditions()->getScenarioStateIs()->asString();
-        }
-        if (null !== $expectation->getStateConditions()->getScenarioName()) {
-            $expectationArray['scenarioName'] = $expectation->getStateConditions()->getScenarioName()->asString();
+        if ($expectation->hasScenarioName()) {
+            $expectationArray['scenarioName'] = $expectation->getScenarioName()->asString();
         }
 
         return $expectationArray;

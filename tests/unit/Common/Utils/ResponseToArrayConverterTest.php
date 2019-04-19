@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Tests\Unit\Common\Utils;
 
-use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter;
+use Mcustiel\Phiremock\Common\Utils\HttpResponseToArrayConverter;
 use Mcustiel\Phiremock\Domain\Http\Body;
 use Mcustiel\Phiremock\Domain\Http\Header;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
@@ -15,12 +15,12 @@ use PHPUnit\Framework\TestCase;
 
 class ResponseToArrayConverterTest extends TestCase
 {
-    /** @var ResponseToArrayConverter */
+    /** @var HttpResponseToArrayConverter */
     private $converter;
 
     protected function setUp()
     {
-        $this->converter = new ResponseToArrayConverter();
+        $this->converter = new HttpResponseToArrayConverter();
     }
 
     public function testConvertsADefaultResponseToArray()
@@ -57,11 +57,11 @@ class ResponseToArrayConverterTest extends TestCase
         $this->assertSame(
             [
                 'statusCode'  => 404,
-                'delayMillis' => 0,
                 'body'        => 'I am the body.',
                 'headers'     => [
                     'Content-Type' => 'text/plain',
                 ],
+                'delayMillis' => 0,
             ],
             $responseArray
         );

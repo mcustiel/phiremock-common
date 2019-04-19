@@ -2,34 +2,20 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\HttpResponse;
+use Mcustiel\Phiremock\Domain\Response;
 
 class ResponseToArrayConverter
 {
-    public function convert(HttpResponse $response)
+    public function convert(Response $response)
     {
         $responseArray = [];
-
-        $responseArray['statusCode'] = $response->getStatusCode()->asInt();
-        if (null !== $response->getDelayMillis()) {
-            $responseArray['delayMillis'] = $response->getDelayMillis()->asInt();
+        if ($response->hasNewScenarioState()) {
+            $responseArray['newScenarioState'] = $response->getNewScenarioState()->asString();
         }
-        $responseArray['body'] = $response->getBody()->asString();
-        if (!$response->getHeaders()->isEmpty()) {
-            $this->convertHeaders($response, $responseArray);
+        if ($response->hasDelayMillis()) {
+            $responseArray['delayMillis'] = $response->getDelayMillis()->asInt();
         }
 
         return $responseArray;
-    }
-
-    private function convertHeaders(HttpResponse $response, array &$responseArray)
-    {
-        $headers = $response->getHeaders();
-        $headersArray = [];
-        /** @var Header $header */
-        foreach ($headers as $header) {
-            $headersArray[$header->getName()->asString()] = $header->getValue()->asString();
-        }
-        $responseArray['headers'] = $headersArray;
     }
 }
