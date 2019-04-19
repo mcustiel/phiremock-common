@@ -45,10 +45,10 @@ class HttpResponse extends Response
         parent::__construct($delayMillis, $newScenarioState);
         $this->statusCode = $statusCode;
         $this->headers = $headers;
-        $this->delayMillis = $delayMillis;
         $this->body = $body;
     }
 
+    /** @return \Mcustiel\Phiremock\Domain\HttpResponse */
     public static function createEmpty()
     {
         return new self(
@@ -59,17 +59,13 @@ class HttpResponse extends Response
         );
     }
 
-    /**
-     * @return StatusCode
-     */
+    /** @return StatusCode */
     public function getStatusCode()
     {
         return $this->statusCode;
     }
 
-    /**
-     * @return Body
-     */
+    /** @return Body */
     public function getBody()
     {
         return $this->body;
