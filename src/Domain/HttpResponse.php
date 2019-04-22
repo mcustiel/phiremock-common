@@ -48,7 +48,7 @@ class HttpResponse extends Response
         $this->body = $body;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\HttpResponse */
+    /** @return self */
     public static function createEmpty()
     {
         return new self(

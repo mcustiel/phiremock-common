@@ -5,7 +5,7 @@ namespace Mcustiel\Phiremock\Domain;
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
-abstract class Response
+class Response
 {
     /** @var ScenarioState */
     private $newScenarioState;
@@ -18,6 +18,12 @@ abstract class Response
     ) {
         $this->newScenarioState = $newScenarioState;
         $this->delayMillis = $delayMillis;
+    }
+
+    /** @return self */
+    public static function createEmpty()
+    {
+        return new self();
     }
 
     /** @return bool */
