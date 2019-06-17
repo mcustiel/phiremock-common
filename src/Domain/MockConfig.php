@@ -82,4 +82,9 @@ class MockConfig
     {
         return $this->priority;
     }
+
+    public function setPriority(Priority $priority)
+    {
+        return $this->priority = $priority;
+    }
 }
