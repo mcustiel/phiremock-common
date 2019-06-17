@@ -60,7 +60,7 @@ class Matcher
 
         if (!MatchersEnum::isValidMatcher($matcher)) {
             throw new \InvalidArgumentException(
-                sprintf('Invalid matcher: %s', $matcher)
+                sprintf('Invalid condition matcher specified: %s', $matcher)
             );
         }
     }
