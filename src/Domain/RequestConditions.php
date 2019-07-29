@@ -20,13 +20,13 @@ namespace Mcustiel\Phiremock\Domain;
 
 use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionCollection;
+use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
-use Mcustiel\Phiremock\Domain\Http\Method;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class RequestConditions
 {
-    /** @var Method */
+    /** @var MethodCondition */
     private $method;
     /** @var UrlCondition */
     private $url;
@@ -38,7 +38,7 @@ class RequestConditions
     private $scenarioState;
 
     public function __construct(
-        Method $method,
+        MethodCondition $method,
         UrlCondition $url = null,
         BodyCondition $body = null,
         HeaderConditionCollection $headers = null,
@@ -51,7 +51,7 @@ class RequestConditions
         $this->scenarioState = $scenarioState;
     }
 
-    /** @return Method */
+    /** @return MethodCondition */
     public function getMethod()
     {
         return $this->method;
