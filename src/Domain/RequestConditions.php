@@ -45,9 +45,9 @@ class RequestConditions
         ScenarioState $scenarioState = null
     ) {
         $this->method = $method;
-        $this->headers = null !== $headers ? $headers : new HeaderConditionCollection();
-        $this->body = $body;
         $this->url = $url;
+        $this->body = $body;
+        $this->headers = null !== $headers ? $headers : new HeaderConditionCollection();
         $this->scenarioState = $scenarioState;
     }
 

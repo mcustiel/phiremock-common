@@ -5,7 +5,7 @@ namespace Mcustiel\Phiremock\Domain\Conditions\Body;
 use Mcustiel\Phiremock\Domain\Conditions\Matcher;
 use Mcustiel\Phiremock\Domain\Conditions\StringValue;
 
-class BodyIsEqualTo extends BodyCondition
+final class BodyIsEqualTo extends BodyCondition
 {
     public function __construct(StringValue $string)
     {

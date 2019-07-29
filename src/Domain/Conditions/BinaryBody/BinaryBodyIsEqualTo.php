@@ -1,11 +1,11 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Conditions\Url;
+namespace Mcustiel\Phiremock\Domain\Conditions\BinaryBody;
 
 use Mcustiel\Phiremock\Domain\Conditions\Matcher;
 use Mcustiel\Phiremock\Domain\Conditions\StringValue;
 
-final class UrlIsEqualTo extends UrlCondition
+final class BinaryBodyIsEqualTo extends BinaryBodyCondition
 {
     public function __construct(StringValue $string)
     {

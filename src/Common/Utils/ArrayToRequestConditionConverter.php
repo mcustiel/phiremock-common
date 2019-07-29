@@ -3,11 +3,13 @@
 namespace Mcustiel\Phiremock\Common\Utils;
 
 use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
+use Mcustiel\Phiremock\Domain\Conditions\Body\BodyMatcher;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionCollection;
-use Mcustiel\Phiremock\Domain\Conditions\Matcher;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderMatcher;
 use Mcustiel\Phiremock\Domain\Conditions\StringValue;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
+use Mcustiel\Phiremock\Domain\Conditions\Url\UrlMatcher;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 use Mcustiel\Phiremock\Domain\Http\Method;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
@@ -64,7 +66,7 @@ class ArrayToRequestConditionConverter
         }
 
         return new HeaderCondition(
-            new Matcher(key($header)),
+            new HeaderMatcher(key($header)),
             new StringValue(current($header))
         );
     }
@@ -79,7 +81,7 @@ class ArrayToRequestConditionConverter
                 );
             }
 
-            return new UrlCondition(new Matcher(key($url)), new StringValue(current($url)));
+            return new UrlCondition(new UrlMatcher(key($url)), new StringValue(current($url)));
         }
 
         return null;
@@ -95,7 +97,7 @@ class ArrayToRequestConditionConverter
                 );
             }
 
-            return new BodyCondition(new Matcher(key($body)), new StringValue(current($body)));
+            return new BodyCondition(new BodyMatcher(key($body)), new StringValue(current($body)));
         }
 
         return null;

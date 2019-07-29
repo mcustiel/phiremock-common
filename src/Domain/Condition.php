@@ -21,17 +21,13 @@ namespace Mcustiel\Phiremock\Domain;
 use Mcustiel\Phiremock\Domain\Conditions\Matcher;
 use Mcustiel\Phiremock\Domain\Conditions\StringValue;
 
-class Condition
+abstract class Condition
 {
     /** @var Matcher */
     private $matcher;
     /** @var StringValue */
     private $value;
 
-    /**
-     * @param string|null $matcher
-     * @param mixed       $value
-     */
     public function __construct(Matcher $matcher, StringValue $value)
     {
         $this->matcher = $matcher;
