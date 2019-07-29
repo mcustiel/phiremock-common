@@ -1,6 +1,6 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Conditions;
+namespace Mcustiel\Phiremock\Domain\Conditions\Header;
 
 use Mcustiel\Phiremock\Domain\AbstractArrayCollection;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;

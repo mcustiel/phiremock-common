@@ -34,7 +34,7 @@ abstract class ArrayToResponseConverter
         return null;
     }
 
-    /** @return null|\Mcustiel\Phiremock\Domain\Options\ScenarioState */
+    /** @return \Mcustiel\Phiremock\Domain\Options\ScenarioState|null */
     private function getNewScenarioState(array $expectationArray)
     {
         $newScenarioState = null;

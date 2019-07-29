@@ -3,16 +3,14 @@
 namespace Mcustiel\Phiremock\Tests\Unit\Common\Utils;
 
 use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
-use Mcustiel\Phiremock\Domain\Conditions\BodyCondition;
-use Mcustiel\Phiremock\Domain\Conditions\HeaderCondition;
+use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Matcher;
 use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
-use Mcustiel\Phiremock\Domain\Conditions\UrlCondition;
-use Mcustiel\Phiremock\Domain\Http\Body;
+use Mcustiel\Phiremock\Domain\Conditions\StringValue;
+use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
-use Mcustiel\Phiremock\Domain\Http\HeaderValue;
 use Mcustiel\Phiremock\Domain\Http\Method;
-use Mcustiel\Phiremock\Domain\Http\Url;
 use Mcustiel\Phiremock\Domain\RequestConditions;
 use PHPUnit\Framework\TestCase;
 
@@ -41,14 +39,14 @@ class RequestToArrayConverterTest extends TestCase
     {
         $request = new RequestConditions(
             new Method('post'),
-            new UrlCondition(new Matcher(MatchersEnum::CONTAINS), new Url('/potato')),
-            new BodyCondition(new Matcher(MatchersEnum::MATCHES), new Body('I am the body.'))
+            new UrlCondition(new Matcher(MatchersEnum::CONTAINS), new StringValue('/potato')),
+            new BodyCondition(new Matcher(MatchersEnum::MATCHES), new StringValue('I am the body.'))
         );
         $request->getHeaders()->setHeaderCondition(
             new HeaderName('Content-Type'),
             new HeaderCondition(
                 new Matcher(MatchersEnum::SAME_STRING),
-                new HeaderValue('text/plain')
+                new StringValue('text/plain')
             )
         );
 

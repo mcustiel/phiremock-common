@@ -40,7 +40,7 @@ class ArrayToExpectationConverter
     /**
      * @param array $expectationArray
      *
-     * @return null|\Mcustiel\Phiremock\Domain\Options\Priority
+     * @return \Mcustiel\Phiremock\Domain\Options\Priority|null
      */
     private function getPriority(array $expectationArray)
     {
@@ -55,7 +55,7 @@ class ArrayToExpectationConverter
     /**
      * @param array $expectationArray
      *
-     * @return null|\Mcustiel\Phiremock\Domain\Options\ScenarioName
+     * @return \Mcustiel\Phiremock\Domain\Options\ScenarioName|null
      */
     private function getScenarioName(array $expectationArray)
     {

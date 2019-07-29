@@ -3,11 +3,11 @@
 namespace Mcustiel\Phiremock\Tests\Unit\Common\Utils;
 
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
-use Mcustiel\Phiremock\Domain\Conditions\BodyCondition;
-use Mcustiel\Phiremock\Domain\Conditions\HeaderCondition;
-use Mcustiel\Phiremock\Domain\Conditions\HeaderConditionCollection;
+use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionCollection;
 use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
-use Mcustiel\Phiremock\Domain\Conditions\UrlCondition;
+use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 use Mcustiel\Phiremock\Domain\Http\Method;
 use Mcustiel\Phiremock\Domain\RequestConditions;
