@@ -9,12 +9,15 @@ final class MethodMatcher extends Matcher
 {
     const VALID_MATCHERS = [
         MatchersEnum::EQUAL_TO,
+        MatchersEnum::SAME_STRING,
         MatchersEnum::MATCHES,
     ];
 
     public function __construct($matcherName)
     {
-        parent::__construct($matcherName);
+        parent::__construct(
+            $matcherName === MatchersEnum::EQUAL_TO ? MatchersEnum::SAME_STRING : $matcherName
+        );
         $this->ensureIsValidMatcher($matcherName);
     }
 

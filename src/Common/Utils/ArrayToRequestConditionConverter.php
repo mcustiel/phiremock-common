@@ -7,11 +7,12 @@ use Mcustiel\Phiremock\Domain\Conditions\Body\BodyMatcher;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionCollection;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderMatcher;
+use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
+use Mcustiel\Phiremock\Domain\Conditions\Method\MethodMatcher;
 use Mcustiel\Phiremock\Domain\Conditions\StringValue;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlMatcher;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
-use Mcustiel\Phiremock\Domain\Http\Method;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\RequestConditions;
 
@@ -24,7 +25,7 @@ class ArrayToRequestConditionConverter
         }
 
         return new RequestConditions(
-            new Method($requestArray['method']),
+            $this->convertMethodCondition($requestArray),
             $this->convertUrlCondition($requestArray),
             $this->convertBodyCondition($requestArray),
             $this->convertHeadersConditions($requestArray),
@@ -87,6 +88,21 @@ class ArrayToRequestConditionConverter
         return null;
     }
 
+    private function convertMethodCondition(array $requestArray)
+    {
+        $method = $requestArray['method'];
+        if (!\is_array($method)) {
+            throw new \InvalidArgumentException(
+                'Method condition is invalid: ' . var_export($method, true)
+            );
+        }
+
+        return new MethodCondition(
+            new MethodMatcher(key($method)),
+            new StringValue(current($method))
+        );
+    }
+
     private function convertBodyCondition(array $requestArray)
     {
         if (!empty($requestArray['body'])) {
@@ -97,7 +113,10 @@ class ArrayToRequestConditionConverter
                 );
             }
 
-            return new BodyCondition(new BodyMatcher(key($body)), new StringValue(current($body)));
+            return new BodyCondition(
+                new BodyMatcher(key($body)),
+                new StringValue(current($body))
+            );
         }
 
         return null;

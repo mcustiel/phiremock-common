@@ -10,7 +10,7 @@ class RequestConditionToArrayConverter
     {
         $requestArray = [];
 
-        $requestArray['method'] = $request->getMethod()->asString();
+        $this->convertMethod($request, $requestArray);
         $this->convertUrl($request, $requestArray);
         $this->convertBody($request, $requestArray);
         $this->convertHeaders($request, $requestArray);
@@ -52,5 +52,13 @@ class RequestConditionToArrayConverter
                 $url->getMatcher()->asString() => $url->getValue()->asString(),
             ];
         }
+    }
+
+    private function convertMethod(RequestConditions $request, array &$requestArray)
+    {
+        $method = $request->getMethod();
+        $requestArray['method'] = [
+            $method->getMatcher()->asString() => $method->getValue()->asString(),
+        ];
     }
 }

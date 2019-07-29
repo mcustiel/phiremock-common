@@ -20,11 +20,11 @@ class ConditionTest extends TestCase
     public function classesProvider()
     {
         return [
-            [MethodCondition::class, MethodMatcher::equalTo()],
-            [BinaryBodyCondition::class, BinaryBodyMatcher::equalTo()],
-            [BodyCondition::class, BodyMatcher::contains()],
-            [UrlCondition::class, UrlMatcher::contains()],
-            [HeaderCondition::class, HeaderMatcher::contains()],
+            'method'      => [MethodCondition::class, MethodMatcher::equalTo()],
+            'binary body' => [BinaryBodyCondition::class, BinaryBodyMatcher::equalTo()],
+            'body'        => [BodyCondition::class, BodyMatcher::contains()],
+            'url'         => [UrlCondition::class, UrlMatcher::contains()],
+            'header'      => [HeaderCondition::class, HeaderMatcher::contains()],
         ];
     }
 
