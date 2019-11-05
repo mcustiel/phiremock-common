@@ -19,82 +19,74 @@
 namespace Mcustiel\Phiremock\Domain;
 
 use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
-use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionCollection;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionIterator;
 use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class RequestConditions
 {
-    /** @var MethodCondition */
+    /** @var MethodCondition|null */
     private $method;
-    /** @var UrlCondition */
+    /** @var UrlCondition|null */
     private $url;
-    /** @var BodyCondition */
+    /** @var BodyCondition|null */
     private $body;
-    /** @var HeaderConditionCollection */
+    /** @var HeaderConditionIterator|null */
     private $headers;
-    /** @var ScenarioState */
+    /** @var ScenarioState|null */
     private $scenarioState;
 
     public function __construct(
-        MethodCondition $method,
-        UrlCondition $url = null,
-        BodyCondition $body = null,
-        HeaderConditionCollection $headers = null,
-        ScenarioState $scenarioState = null
+        ?MethodCondition $method = null,
+        ?UrlCondition $url = null,
+        ?BodyCondition $body = null,
+        ?HeaderConditionIterator $headers = null,
+        ?ScenarioState $scenarioState = null
     ) {
         $this->method = $method;
         $this->url = $url;
         $this->body = $body;
-        $this->headers = null !== $headers ? $headers : new HeaderConditionCollection();
+        $this->headers = $headers;
         $this->scenarioState = $scenarioState;
     }
 
-    /** @return MethodCondition */
-    public function getMethod()
+    public function getMethod(): ?MethodCondition
     {
         return $this->method;
     }
 
-    /** @return bool */
-    public function hasUrl()
+    public function hasUrl(): bool
     {
         return null !== $this->url;
     }
 
-    /** @return UrlCondition|null */
-    public function getUrl()
+    public function getUrl(): ?UrlCondition
     {
         return $this->url;
     }
 
-    /** @return bool */
-    public function hasBody()
+    public function hasBody(): bool
     {
         return null !== $this->body;
     }
 
-    /** @return BodyCondition|null */
-    public function getBody()
+    public function getBody(): ?BodyCondition
     {
         return $this->body;
     }
 
-    /** @return HeaderConditionCollection */
-    public function getHeaders()
+    public function getHeaders(): ?HeaderConditionIterator
     {
         return $this->headers;
     }
 
-    /** @return bool */
-    public function hasScenarioState()
+    public function hasScenarioState(): bool
     {
         return $this->scenarioState !== null;
     }
 
-    /** @return ScenarioState|null */
-    public function getScenarioState()
+    public function getScenarioState(): ?ScenarioState
     {
         return $this->scenarioState;
     }

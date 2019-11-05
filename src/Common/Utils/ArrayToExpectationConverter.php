@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\MockConfig;
+use Mcustiel\Phiremock\Domain\Expectation;
 use Mcustiel\Phiremock\Domain\Options\Priority;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Response;
@@ -23,9 +23,7 @@ class ArrayToExpectationConverter
     }
 
     /**
-     * @param array $expectationArray
-     *
-     * @return MockConfig
+     * @return Expectation
      */
     public function convert(array $expectationArray)
     {
@@ -34,12 +32,10 @@ class ArrayToExpectationConverter
         $scenarioName = $this->getScenarioName($expectationArray);
         $priority = $this->getPriority($expectationArray);
 
-        return new MockConfig($request, $response, $scenarioName, $priority);
+        return new Expectation($request, $response, $scenarioName, $priority);
     }
 
     /**
-     * @param array $expectationArray
-     *
      * @return \Mcustiel\Phiremock\Domain\Options\Priority|null
      */
     private function getPriority(array $expectationArray)
@@ -53,8 +49,6 @@ class ArrayToExpectationConverter
     }
 
     /**
-     * @param array $expectationArray
-     *
      * @return \Mcustiel\Phiremock\Domain\Options\ScenarioName|null
      */
     private function getScenarioName(array $expectationArray)
@@ -68,8 +62,6 @@ class ArrayToExpectationConverter
     }
 
     /**
-     * @param array $expectationArray
-     *
      * @return Response
      */
     private function convertResponse(array $expectationArray)

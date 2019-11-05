@@ -8,6 +8,7 @@ use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Body\BodyMatcher;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderMatcher;
+use Mcustiel\Phiremock\Domain\Conditions\Matcher;
 use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Method\MethodMatcher;
 use Mcustiel\Phiremock\Domain\Conditions\StringValue;
@@ -17,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 
 class ConditionTest extends TestCase
 {
-    public function classesProvider()
+    public function classesProvider(): array
     {
         return [
             'method'      => [MethodCondition::class, MethodMatcher::equalTo()],
@@ -29,7 +30,7 @@ class ConditionTest extends TestCase
     }
 
     /** @dataProvider classesProvider */
-    public function testGettersWorksCorrectly($className, $matcher)
+    public function testGettersWorksCorrectly(string $className, Matcher $matcher): void
     {
         $value = new StringValue('potato');
         $condition = new $className($matcher, $value);

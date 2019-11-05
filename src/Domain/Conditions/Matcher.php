@@ -53,15 +53,11 @@ class Matcher
     private function ensureIsValidMatcher($matcher)
     {
         if (!\is_string($matcher)) {
-            throw new \InvalidArgumentException(
-                sprintf('Matcher must be a string. Got: %s', \gettype($matcher))
-            );
+            throw new \InvalidArgumentException(sprintf('Matcher must be a string. Got: %s', \gettype($matcher)));
         }
 
         if (!MatchersEnum::isValidMatcher($matcher)) {
-            throw new \InvalidArgumentException(
-                sprintf('Invalid condition matcher specified: %s', $matcher)
-            );
+            throw new \InvalidArgumentException(sprintf('Invalid condition matcher specified: %s', $matcher));
         }
     }
 }

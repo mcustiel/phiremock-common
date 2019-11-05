@@ -30,9 +30,7 @@ class StringValue
     private function assertString($pattern)
     {
         if (!\is_string($pattern)) {
-            throw new InvalidArgumentException(
-                sprintf('Expected string got: %s', \gettype($pattern))
-            );
+            throw new InvalidArgumentException(sprintf('Expected string got: %s', \gettype($pattern)));
         }
     }
 }

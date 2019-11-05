@@ -5,7 +5,7 @@ namespace Mcustiel\Phiremock\Tests\Unit\Common\Utils;
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
 use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
-use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionCollection;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionIterator;
 use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
 use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
@@ -18,12 +18,12 @@ class ArrayToResponseConverterTest extends TestCase
     /** @var ArrayToRequestConditionConverter */
     private $requestConverter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requestConverter = new ArrayToRequestConditionConverter();
     }
 
-    public function testConvertsAnArrayWithNullValuesToRequest()
+    public function testConvertsAnArrayWithNullValuesToRequest(): void
     {
         $requestArray = [
             'method'  => [MatchersEnum::EQUAL_TO => 'GET'],
@@ -39,11 +39,10 @@ class ArrayToResponseConverterTest extends TestCase
         $this->assertInstanceOf(MethodCondition::class, $request->getMethod());
         $this->assertSame('isSameString', $request->getMethod()->getMatcher()->asString());
         $this->assertSame('GET', $request->getMethod()->getValue()->asString());
-        $this->assertInstanceOf(HeaderConditionCollection::class, $request->getHeaders());
-        $this->assertTrue($request->getHeaders()->isEmpty());
+        $this->assertNull($request->getHeaders());
     }
 
-    public function testConvertsAnArrayWithUnsetValuesToRequest()
+    public function testConvertsAnArrayWithUnsetValuesToRequest(): void
     {
         $requestArray = ['method'  => [MatchersEnum::EQUAL_TO => 'GET']];
 
@@ -54,11 +53,10 @@ class ArrayToResponseConverterTest extends TestCase
         $this->assertInstanceOf(MethodCondition::class, $request->getMethod());
         $this->assertSame('isSameString', $request->getMethod()->getMatcher()->asString());
         $this->assertSame('GET', $request->getMethod()->getValue()->asString());
-        $this->assertInstanceOf(HeaderConditionCollection::class, $request->getHeaders());
-        $this->assertTrue($request->getHeaders()->isEmpty());
+        $this->assertNull($request->getHeaders());
     }
 
-    public function testConvertsAnArrayWithoutNullValuesToRequest()
+    public function testConvertsAnArrayWithoutNullValuesToRequest(): void
     {
         $requestArray = [
             'method'  => [MatchersEnum::EQUAL_TO => 'GET'],
@@ -79,7 +77,7 @@ class ArrayToResponseConverterTest extends TestCase
         $this->assertInstanceOf(BodyCondition::class, $request->getBody());
         $this->assertSame(MatchersEnum::EQUAL_TO, $request->getBody()->getMatcher()->asString());
         $this->assertSame('A tomato.', $request->getBody()->getValue()->asString());
-        $this->assertInstanceOf(HeaderConditionCollection::class, $request->getHeaders());
+        $this->assertInstanceOf(HeaderConditionIterator::class, $request->getHeaders());
         $this->assertCount(1, $request->getHeaders());
         $request->getHeaders()->rewind();
         $headerName = $request->getHeaders()->key();

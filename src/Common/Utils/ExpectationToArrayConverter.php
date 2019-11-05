@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\MockConfig;
+use Mcustiel\Phiremock\Domain\Expectation;
 
 class ExpectationToArrayConverter
 {
@@ -20,7 +20,7 @@ class ExpectationToArrayConverter
         $this->responseConverterLocator = $responseConverterLocator;
     }
 
-    public function convert(MockConfig $expectation)
+    public function convert(Expectation $expectation)
     {
         $expectationArray = [];
 

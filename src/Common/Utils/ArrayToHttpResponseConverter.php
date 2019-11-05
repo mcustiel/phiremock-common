@@ -80,9 +80,7 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
     private function convertHeaders($headers)
     {
         if (!\is_array($headers)) {
-            throw new \InvalidArgumentException(
-                'Response headers are invalid: ' . var_export($headers, true)
-            );
+            throw new \InvalidArgumentException('Response headers are invalid: ' . var_export($headers, true));
         }
 
         $headerCollection = new HeadersCollection();

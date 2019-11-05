@@ -37,9 +37,7 @@ class HeaderName
     private function ensureIsValidHeaderName($headerName)
     {
         if (!\is_string($headerName)) {
-            throw new \InvalidArgumentException(
-                sprintf('Header name must be a string. Got: %s', \gettype($headerName))
-            );
+            throw new \InvalidArgumentException(sprintf('Header name must be a string. Got: %s', \gettype($headerName)));
         }
     }
 }

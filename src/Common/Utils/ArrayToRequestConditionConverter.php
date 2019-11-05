@@ -38,9 +38,7 @@ class ArrayToRequestConditionConverter
         if (!empty($requestArray['headers'])) {
             $headers = $requestArray['headers'];
             if (!\is_array($headers)) {
-                throw new \InvalidArgumentException(
-                    'Headers condition is invalid: ' . var_export($headers, true)
-                );
+                throw new \InvalidArgumentException('Headers condition is invalid: ' . var_export($headers, true));
             }
             $headersCollection = new HeaderConditionCollection();
             foreach ($headers as $headerName => $header) {
@@ -52,7 +50,7 @@ class ArrayToRequestConditionConverter
                 );
             }
 
-            return $headersCollection;
+            return $headersCollection->iterator();
         }
 
         return null;
@@ -61,9 +59,7 @@ class ArrayToRequestConditionConverter
     private function convertHeaderCondition($header)
     {
         if (!\is_array($header)) {
-            throw new \InvalidArgumentException(
-                'Headers condition is invalid: ' . var_export($header, true)
-            );
+            throw new \InvalidArgumentException('Headers condition is invalid: ' . var_export($header, true));
         }
 
         return new HeaderCondition(
@@ -77,9 +73,7 @@ class ArrayToRequestConditionConverter
         if (!empty($requestArray['url'])) {
             $url = $requestArray['url'];
             if (!\is_array($url)) {
-                throw new \InvalidArgumentException(
-                    'Url condition is invalid: ' . var_export($url, true)
-                );
+                throw new \InvalidArgumentException('Url condition is invalid: ' . var_export($url, true));
             }
 
             return new UrlCondition(new UrlMatcher(key($url)), new StringValue(current($url)));
@@ -92,9 +86,7 @@ class ArrayToRequestConditionConverter
     {
         $method = $requestArray['method'];
         if (!\is_array($method)) {
-            throw new \InvalidArgumentException(
-                'Method condition is invalid: ' . var_export($method, true)
-            );
+            throw new \InvalidArgumentException('Method condition is invalid: ' . var_export($method, true));
         }
 
         return new MethodCondition(
@@ -108,9 +100,7 @@ class ArrayToRequestConditionConverter
         if (!empty($requestArray['body'])) {
             $body = $requestArray['body'];
             if (!\is_array($body)) {
-                throw new \InvalidArgumentException(
-                    'Body condition is invalid: ' . var_export($body, true)
-                );
+                throw new \InvalidArgumentException('Body condition is invalid: ' . var_export($body, true));
             }
 
             return new BodyCondition(

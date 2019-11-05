@@ -21,9 +21,7 @@ class Pattern extends StringValue
     private function assertRegex($pattern)
     {
         if ($pattern[0] !== $pattern[\strlen($pattern) - 1]) {
-            throw new InvalidArgumentException(
-                sprintf('Invalid regular expression received: %s', $pattern)
-            );
+            throw new InvalidArgumentException(sprintf('Invalid regular expression received: %s', $pattern));
         }
     }
 }

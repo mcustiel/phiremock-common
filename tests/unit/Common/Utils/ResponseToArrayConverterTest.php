@@ -18,12 +18,12 @@ class ResponseToArrayConverterTest extends TestCase
     /** @var HttpResponseToArrayConverter */
     private $converter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->converter = new HttpResponseToArrayConverter();
     }
 
-    public function testConvertsADefaultResponseToArray()
+    public function testConvertsADefaultResponseToArray(): void
     {
         $response = HttpResponse::createEmpty();
 
@@ -37,7 +37,7 @@ class ResponseToArrayConverterTest extends TestCase
         );
     }
 
-    public function testConvertsAResponseWithValuesSetToArray()
+    public function testConvertsAResponseWithValuesSetToArray(): void
     {
         $headersCollection = new HeadersCollection();
         $headersCollection->setHeader(

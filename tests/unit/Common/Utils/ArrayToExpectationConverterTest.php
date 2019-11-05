@@ -7,25 +7,26 @@ use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter;
+use Mcustiel\Phiremock\Domain\Expectation;
 use Mcustiel\Phiremock\Domain\HttpResponse;
-use Mcustiel\Phiremock\Domain\MockConfig;
 use Mcustiel\Phiremock\Domain\Options\Priority;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\RequestConditions;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ArrayToExpectationConverterTest extends TestCase
 {
-    /** @var ArrayToRequestConditionConverter|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ArrayToRequestConditionConverter|MockObject */
     private $requestConverter;
-    /** @var ArrayToHttpResponseConverter|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ArrayToHttpResponseConverter|MockObject */
     private $responseConverter;
-    /** @var ArrayToStateConditionsConverter|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ArrayToStateConditionsConverter|MockObject */
     private $locator;
     /** @var ArrayToExpectationConverter */
     private $expectationConverter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requestConverter = $this->createMock(ArrayToRequestConditionConverter::class);
         $this->locator = $this->createMock(ArrayToResponseConverterLocator::class);
@@ -36,7 +37,7 @@ class ArrayToExpectationConverterTest extends TestCase
         );
     }
 
-    public function testConvertsAnArrayWithNullValuesToExpectation()
+    public function testConvertsAnArrayWithNullValuesToExpectation(): void
     {
         $requestArray = ['tomato'];
         $responseArray = ['potato'];
@@ -67,14 +68,14 @@ class ArrayToExpectationConverterTest extends TestCase
             ->willReturn($response);
 
         $expectation = $this->expectationConverter->convert($expectationArray);
-        $this->assertInstanceOf(MockConfig::class, $expectation);
+        $this->assertInstanceOf(Expectation::class, $expectation);
         $this->assertSame($request, $expectation->getRequest());
         $this->assertSame($response, $expectation->getResponse());
         $this->assertFalse($expectation->hasScenarioName());
         $this->assertFalse($expectation->hasPriority());
     }
 
-    public function testConvertsAnArrayWithUnsetValuesToExpectation()
+    public function testConvertsAnArrayWithUnsetValuesToExpectation(): void
     {
         $requestArray = ['tomato'];
         $responseArray = ['potato'];
@@ -100,14 +101,14 @@ class ArrayToExpectationConverterTest extends TestCase
             ->willReturn($response);
 
         $expectation = $this->expectationConverter->convert($expectationArray);
-        $this->assertInstanceOf(MockConfig::class, $expectation);
+        $this->assertInstanceOf(Expectation::class, $expectation);
         $this->assertSame($request, $expectation->getRequest());
         $this->assertSame($response, $expectation->getResponse());
         $this->assertFalse($expectation->hasScenarioName());
         $this->assertFalse($expectation->hasPriority());
     }
 
-    public function testConvertsAnArrayWithoutNullValuesToExpectation()
+    public function testConvertsAnArrayWithoutNullValuesToExpectation(): void
     {
         $requestArray = ['tomato'];
         $responseArray = ['potato'];
@@ -137,7 +138,7 @@ class ArrayToExpectationConverterTest extends TestCase
             ->willReturn($response);
 
         $expectation = $this->expectationConverter->convert($expectationArray);
-        $this->assertInstanceOf(MockConfig::class, $expectation);
+        $this->assertInstanceOf(Expectation::class, $expectation);
         $this->assertSame($request, $expectation->getRequest());
         $this->assertSame($response, $expectation->getResponse());
         $this->assertInstanceOf(ScenarioName::class, $expectation->getScenarioName());

@@ -75,15 +75,11 @@ class Method
     private function ensureIsValidHttpMethod($method)
     {
         if (!\is_string($method)) {
-            throw new \InvalidArgumentException(
-                sprintf('Http method must be a string. Got: %s', \gettype($method))
-            );
+            throw new \InvalidArgumentException(sprintf('Http method must be a string. Got: %s', \gettype($method)));
         }
 
         if (!MethodsEnum::isValid($method)) {
-            throw new \InvalidArgumentException(
-                sprintf('Invalid http method: %s', var_export($method, true))
-            );
+            throw new \InvalidArgumentException(sprintf('Invalid http method: %s', var_export($method, true)));
         }
     }
 }

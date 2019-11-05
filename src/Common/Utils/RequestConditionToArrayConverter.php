@@ -21,7 +21,7 @@ class RequestConditionToArrayConverter
     private function convertHeaders(RequestConditions $request, array &$requestArray)
     {
         $headers = $request->getHeaders();
-        if (!$headers->isEmpty()) {
+        if ($headers !== null && !$headers->isEmpty()) {
             $headersArray = [];
             /** @var HeaderName $headerName */
             /** @var HeaderCondition $headerCondition */

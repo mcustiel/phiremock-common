@@ -44,9 +44,7 @@ class ScenarioState
     private function ensureIsValidState($state)
     {
         if (!\is_string($state)) {
-            throw new \InvalidArgumentException(
-                sprintf('Scenario state must be a string. Got: %s', \gettype($state))
-            );
+            throw new \InvalidArgumentException(sprintf('Scenario state must be a string. Got: %s', \gettype($state)));
         }
     }
 }

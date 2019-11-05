@@ -42,14 +42,10 @@ class StatusCode
     private function ensureIsValidStatusCode($statusCode)
     {
         if (!\is_int($statusCode)) {
-            throw new \InvalidArgumentException(
-                sprintf('Status code must be an integer. Got: %s', \gettype($statusCode))
-            );
+            throw new \InvalidArgumentException(sprintf('Status code must be an integer. Got: %s', \gettype($statusCode)));
         }
         if ($statusCode < 100 || $statusCode >= 600) {
-            throw new \InvalidArgumentException(
-                sprintf('Invalid status code: %d', $statusCode)
-            );
+            throw new \InvalidArgumentException(sprintf('Invalid status code: %d', $statusCode));
         }
     }
 }

@@ -6,6 +6,7 @@ use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
 use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Body\BodyMatcher;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionCollection;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderMatcher;
 use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
 use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
@@ -22,12 +23,12 @@ class RequestToArrayConverterTest extends TestCase
     /** @var RequestConditionToArrayConverter */
     private $converter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->converter = new RequestConditionToArrayConverter();
     }
 
-    public function testConvertsADefaultRequestToArray()
+    public function testConvertsADefaultRequestToArray(): void
     {
         $request = new RequestConditions(new MethodCondition(new MethodMatcher(MatchersEnum::EQUAL_TO), new StringValue('GET')));
 
@@ -38,19 +39,21 @@ class RequestToArrayConverterTest extends TestCase
         );
     }
 
-    public function testConvertsARequestWithValuesSetToArray()
+    public function testConvertsARequestWithValuesSetToArray(): void
     {
-        $request = new RequestConditions(
-            new MethodCondition(new MethodMatcher(MatchersEnum::EQUAL_TO), new StringValue('POST')),
-            new UrlCondition(new UrlMatcher(MatchersEnum::CONTAINS), new StringValue('/potato')),
-            new BodyCondition(new BodyMatcher(MatchersEnum::MATCHES), new StringValue('I am the body.'))
-        );
-        $request->getHeaders()->setHeaderCondition(
+        $headers = new HeaderConditionCollection();
+        $headers->setHeaderCondition(
             new HeaderName('Content-Type'),
             new HeaderCondition(
                 new HeaderMatcher(MatchersEnum::SAME_STRING),
                 new StringValue('text/plain')
-            )
+                )
+            );
+        $request = new RequestConditions(
+            new MethodCondition(new MethodMatcher(MatchersEnum::EQUAL_TO), new StringValue('POST')),
+            new UrlCondition(new UrlMatcher(MatchersEnum::CONTAINS), new StringValue('/potato')),
+            new BodyCondition(new BodyMatcher(MatchersEnum::MATCHES), new StringValue('I am the body.')),
+            $headers->iterator()
         );
 
         $requestArray = $this->converter->convert($request);

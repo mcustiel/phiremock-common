@@ -45,9 +45,7 @@ class Body
     private function ensureIsString($body)
     {
         if (!\is_string($body)) {
-            throw new \InvalidArgumentException(
-                sprintf('Body must be a string. Got: %s', \gettype($body))
-            );
+            throw new \InvalidArgumentException(sprintf('Body must be a string. Got: %s', \gettype($body)));
         }
     }
 }

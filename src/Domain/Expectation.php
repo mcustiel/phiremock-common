@@ -21,7 +21,7 @@ namespace Mcustiel\Phiremock\Domain;
 use Mcustiel\Phiremock\Domain\Options\Priority;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 
-class MockConfig
+class Expectation
 {
     /** @var RequestConditions */
     private $requestConditions;
