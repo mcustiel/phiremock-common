@@ -23,7 +23,7 @@ use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 
 class Expectation
 {
-    /** @var RequestConditions */
+    /** @var Conditions */
     private $requestConditions;
 
     /** @var ScenarioName */
@@ -36,7 +36,7 @@ class Expectation
     private $priority;
 
     public function __construct(
-        RequestConditions $requestConditions,
+        Conditions $requestConditions,
         Response $response,
         ScenarioName $scenarioName = null,
         Priority $priority = null
@@ -47,7 +47,7 @@ class Expectation
         $this->response = $response;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\RequestConditions */
+    /** @return Conditions */
     public function getRequest()
     {
         return $this->requestConditions;

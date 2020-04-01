@@ -2,11 +2,13 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\RequestConditions;
+use Mcustiel\Phiremock\Domain\Conditions;
+use Mcustiel\Phiremock\Domain\Http\HeaderName;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
 
 class RequestConditionToArrayConverter
 {
-    public function convert(RequestConditions $request)
+    public function convert(Conditions $request)
     {
         $requestArray = [];
 
@@ -18,7 +20,7 @@ class RequestConditionToArrayConverter
         return $requestArray;
     }
 
-    private function convertHeaders(RequestConditions $request, array &$requestArray)
+    private function convertHeaders(Conditions $request, array &$requestArray)
     {
         $headers = $request->getHeaders();
         if ($headers !== null && !$headers->isEmpty()) {
@@ -34,7 +36,7 @@ class RequestConditionToArrayConverter
         }
     }
 
-    private function convertBody(RequestConditions $request, array &$requestArray)
+    private function convertBody(Conditions $request, array &$requestArray)
     {
         if (null !== $request->getBody()) {
             $body = $request->getBody();
@@ -44,7 +46,7 @@ class RequestConditionToArrayConverter
         }
     }
 
-    private function convertUrl(RequestConditions $request, array &$requestArray)
+    private function convertUrl(Conditions $request, array &$requestArray)
     {
         if (null !== $request->getUrl()) {
             $url = $request->getUrl();
@@ -54,7 +56,7 @@ class RequestConditionToArrayConverter
         }
     }
 
-    private function convertMethod(RequestConditions $request, array &$requestArray)
+    private function convertMethod(Conditions $request, array &$requestArray)
     {
         $method = $request->getMethod();
         $requestArray['method'] = [

@@ -15,7 +15,7 @@ use Mcustiel\Phiremock\Domain\Conditions\StringValue;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlMatcher;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
-use Mcustiel\Phiremock\Domain\RequestConditions;
+use Mcustiel\Phiremock\Domain\Conditions;
 use PHPUnit\Framework\TestCase;
 
 class RequestToArrayConverterTest extends TestCase
@@ -30,7 +30,7 @@ class RequestToArrayConverterTest extends TestCase
 
     public function testConvertsADefaultRequestToArray(): void
     {
-        $request = new RequestConditions(new MethodCondition(new MethodMatcher(MatchersEnum::EQUAL_TO), new StringValue('GET')));
+        $request = new Conditions(new MethodCondition(new MethodMatcher(MatchersEnum::EQUAL_TO), new StringValue('GET')));
 
         $requestArray = $this->converter->convert($request);
         $this->assertSame(
@@ -49,7 +49,7 @@ class RequestToArrayConverterTest extends TestCase
                 new StringValue('text/plain')
                 )
             );
-        $request = new RequestConditions(
+        $request = new Conditions(
             new MethodCondition(new MethodMatcher(MatchersEnum::EQUAL_TO), new StringValue('POST')),
             new UrlCondition(new UrlMatcher(MatchersEnum::CONTAINS), new StringValue('/potato')),
             new BodyCondition(new BodyMatcher(MatchersEnum::MATCHES), new StringValue('I am the body.')),

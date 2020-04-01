@@ -13,6 +13,7 @@ use Mcustiel\Phiremock\Domain\Http\StatusCode;
 use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
+use Mcustiel\Phiremock\Domain\Response;
 
 class ArrayToHttpResponseConverter extends ArrayToResponseConverter
 {
@@ -22,9 +23,9 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
         array $responseArray,
         Delay $delay = null,
         ScenarioState $newScenarioState = null
-    ) {
+    ): Response {
         if (!isset($responseArray['statusCode'])) {
-            throw new \InvalidArgumentException('Status code is not set');
+            $responseArray['statusCode'] = 200;
         }
 
         return new HttpResponse(

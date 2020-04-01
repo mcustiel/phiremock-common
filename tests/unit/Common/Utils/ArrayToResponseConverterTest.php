@@ -10,7 +10,7 @@ use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
 use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
-use Mcustiel\Phiremock\Domain\RequestConditions;
+use Mcustiel\Phiremock\Domain\Conditions;
 use PHPUnit\Framework\TestCase;
 
 class ArrayToResponseConverterTest extends TestCase
@@ -33,7 +33,7 @@ class ArrayToResponseConverterTest extends TestCase
         ];
 
         $request = $this->requestConverter->convert($requestArray);
-        $this->assertInstanceOf(RequestConditions::class, $request);
+        $this->assertInstanceOf(Conditions::class, $request);
         $this->assertNull($request->getUrl());
         $this->assertNull($request->getBody());
         $this->assertInstanceOf(MethodCondition::class, $request->getMethod());
@@ -47,7 +47,7 @@ class ArrayToResponseConverterTest extends TestCase
         $requestArray = ['method'  => [MatchersEnum::EQUAL_TO => 'GET']];
 
         $request = $this->requestConverter->convert($requestArray);
-        $this->assertInstanceOf(RequestConditions::class, $request);
+        $this->assertInstanceOf(Conditions::class, $request);
         $this->assertNull($request->getUrl());
         $this->assertNull($request->getBody());
         $this->assertInstanceOf(MethodCondition::class, $request->getMethod());
@@ -67,7 +67,7 @@ class ArrayToResponseConverterTest extends TestCase
             ],
         ];
         $request = $this->requestConverter->convert($requestArray);
-        $this->assertInstanceOf(RequestConditions::class, $request);
+        $this->assertInstanceOf(Conditions::class, $request);
         $this->assertInstanceOf(MethodCondition::class, $request->getMethod());
         $this->assertSame('isSameString', $request->getMethod()->getMatcher()->asString());
         $this->assertSame('GET', $request->getMethod()->getValue()->asString());

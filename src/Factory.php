@@ -23,6 +23,7 @@ use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
+use Mcustiel\Phiremock\Common\Utils\V2\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterV2;
 use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter;
@@ -31,6 +32,7 @@ use Mcustiel\Phiremock\Common\Utils\HttpResponseToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\ProxyResponseToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverterLocator;
+use Mcustiel\Phiremock\Common\Utils\ArrayToConditionsConverterLocator;
 
 class Factory
 {
@@ -56,6 +58,12 @@ class Factory
         return new ArrayToResponseConverterLocator($this);
     }
 
+    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator */
+    public function createArrayToConditionsConverterLocator()
+    {
+        return new ArrayToConditionsConverterLocator($this);
+    }
+
     /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter */
     public function createArrayToHttpResponseConverter()
     {
@@ -72,6 +80,11 @@ class Factory
     public function createArrayToRequestConditionConverter()
     {
         return new ArrayToRequestConditionConverter();
+    }
+
+    public function createArrayToRequestConditionV2Converter()
+    {
+        return new ArrayToRequestConditionConverterV2();
     }
 
     /** @return \Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter */
@@ -110,7 +123,7 @@ class Factory
     /** @return \Mcustiel\Phiremock\Common\Http\Implementation\GuzzleConnection */
     public function createRemoteConnectionInterface()
     {
-        return new GuzzleConnection(new GuzzleHttp\Client());
+        return new GuzzleConnection(new \GuzzleHttp\Client());
     }
 
     /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter */

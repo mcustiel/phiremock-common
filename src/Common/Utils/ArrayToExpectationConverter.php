@@ -6,6 +6,7 @@ use Mcustiel\Phiremock\Domain\Expectation;
 use Mcustiel\Phiremock\Domain\Options\Priority;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Response;
+use Mcustiel\Phiremock\Domain\Version;
 
 class ArrayToExpectationConverter
 {
@@ -27,12 +28,22 @@ class ArrayToExpectationConverter
      */
     public function convert(array $expectationArray)
     {
+        $version = $this->getVersion($expectationArray);
+
         $request = $this->convertRequest($expectationArray);
         $response = $this->convertResponse($expectationArray);
         $scenarioName = $this->getScenarioName($expectationArray);
         $priority = $this->getPriority($expectationArray);
 
         return new Expectation($request, $response, $scenarioName, $priority);
+    }
+
+    private function getVersion(array $expectationArray): Version
+    {
+        if (isset($expectationArray['version'])) {
+            return new Version((int) $expectationArray['version']);
+        }
+        return new Version(1);
     }
 
     /**
@@ -61,10 +72,7 @@ class ArrayToExpectationConverter
         return $scenarioName;
     }
 
-    /**
-     * @return Response
-     */
-    private function convertResponse(array $expectationArray)
+    private function convertResponse(array $expectationArray): Response
     {
         if (!isset($expectationArray['response'])) {
             throw new \InvalidArgumentException('Creating an expectation without response.');

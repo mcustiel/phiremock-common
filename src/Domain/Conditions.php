@@ -24,7 +24,7 @@ use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
-class RequestConditions
+class Conditions
 {
     /** @var MethodCondition|null */
     private $method;

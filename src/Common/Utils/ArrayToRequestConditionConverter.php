@@ -14,17 +14,14 @@ use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlMatcher;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
-use Mcustiel\Phiremock\Domain\RequestConditions;
+use Mcustiel\Phiremock\Domain\Conditions;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionIterator;
 
 class ArrayToRequestConditionConverter
 {
-    public function convert(array $requestArray)
+    public function convert(array $requestArray): Conditions
     {
-        if (!isset($requestArray['method'])) {
-            throw new \InvalidArgumentException('Method is not set');
-        }
-
-        return new RequestConditions(
+        return new Conditions(
             $this->convertMethodCondition($requestArray),
             $this->convertUrlCondition($requestArray),
             $this->convertBodyCondition($requestArray),
@@ -33,7 +30,7 @@ class ArrayToRequestConditionConverter
         );
     }
 
-    private function convertHeadersConditions(array $requestArray)
+    protected function convertHeadersConditions(array $requestArray): ?HeaderConditionIterator
     {
         if (!empty($requestArray['headers'])) {
             $headers = $requestArray['headers'];
@@ -56,7 +53,7 @@ class ArrayToRequestConditionConverter
         return null;
     }
 
-    private function convertHeaderCondition($header)
+    protected function convertHeaderCondition($header): HeaderCondition
     {
         if (!\is_array($header)) {
             throw new \InvalidArgumentException('Headers condition is invalid: ' . var_export($header, true));
@@ -68,7 +65,7 @@ class ArrayToRequestConditionConverter
         );
     }
 
-    private function convertUrlCondition(array $requestArray)
+    protected function convertUrlCondition(array $requestArray): ?UrlCondition
     {
         if (!empty($requestArray['url'])) {
             $url = $requestArray['url'];
@@ -82,20 +79,20 @@ class ArrayToRequestConditionConverter
         return null;
     }
 
-    private function convertMethodCondition(array $requestArray)
+    protected function convertMethodCondition(array $requestArray): ?MethodCondition
     {
-        $method = $requestArray['method'];
-        if (!\is_array($method)) {
-            throw new \InvalidArgumentException('Method condition is invalid: ' . var_export($method, true));
-        }
 
-        return new MethodCondition(
-            new MethodMatcher(key($method)),
-            new StringValue(current($method))
-        );
+        if (!empty($requestArray['method'])) {
+            $method = $requestArray['method'];
+            return new MethodCondition(
+                MethodMatcher::equalTo(),
+                new StringValue($method)
+            );
+        }
+        return null;
     }
 
-    private function convertBodyCondition(array $requestArray)
+    protected function convertBodyCondition(array $requestArray): ?BodyCondition
     {
         if (!empty($requestArray['body'])) {
             $body = $requestArray['body'];
@@ -113,7 +110,7 @@ class ArrayToRequestConditionConverter
     }
 
     /** @return \Mcustiel\Phiremock\Domain\Options\ScenarioState|null */
-    private function convertScenarioState(array $requestArray)
+    protected function convertScenarioState(array $requestArray)
     {
         if (!empty($requestArray['scenarioStateIs'])) {
             return new ScenarioState($requestArray['scenarioStateIs']);

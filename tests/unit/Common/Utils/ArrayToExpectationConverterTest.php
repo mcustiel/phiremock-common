@@ -11,7 +11,7 @@ use Mcustiel\Phiremock\Domain\Expectation;
 use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Options\Priority;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
-use Mcustiel\Phiremock\Domain\RequestConditions;
+use Mcustiel\Phiremock\Domain\Conditions;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -42,7 +42,7 @@ class ArrayToExpectationConverterTest extends TestCase
         $requestArray = ['tomato'];
         $responseArray = ['potato'];
 
-        $request = $this->createMock(RequestConditions::class);
+        $request = $this->createMock(Conditions::class);
         $response = $this->createMock(HttpResponse::class);
 
         $expectationArray = [
@@ -80,7 +80,7 @@ class ArrayToExpectationConverterTest extends TestCase
         $requestArray = ['tomato'];
         $responseArray = ['potato'];
 
-        $request = $this->createMock(RequestConditions::class);
+        $request = $this->createMock(Conditions::class);
         $response = $this->createMock(HttpResponse::class);
 
         $expectationArray = [
@@ -113,7 +113,7 @@ class ArrayToExpectationConverterTest extends TestCase
         $requestArray = ['tomato'];
         $responseArray = ['potato'];
 
-        $request = $this->createMock(RequestConditions::class);
+        $request = $this->createMock(Conditions::class);
         $response = $this->createMock(HttpResponse::class);
 
         $expectationArray = [
