@@ -18,7 +18,7 @@
 
 namespace Mcustiel\Phiremock\Common;
 
-use Zend\Diactoros\Stream;
+use Laminas\Diactoros\Stream;
 
 class StringStream extends Stream
 {
