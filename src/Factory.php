@@ -40,7 +40,7 @@ class Factory
     public function createArrayToExpectationConverter()
     {
         return new ArrayToExpectationConverter(
-            $this->createArrayToRequestConditionConverter(),
+            $this->createArrayToConditionsConverterLocator(),
             $this->createArrayToResponseConverterLocator(),
             $this->createArrayToStateConditionsConverter()
         );

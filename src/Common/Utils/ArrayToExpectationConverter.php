@@ -10,16 +10,16 @@ use Mcustiel\Phiremock\Domain\Version;
 
 class ArrayToExpectationConverter
 {
-    /** @var ArrayToRequestConditionConverter */
-    private $arrayToRequestConverter;
+    /** @var ArrayToConditionsConverterLocator */
+    private $arrayToConditionsConverterLocator;
     /** @var ArrayToResponseConverterLocator */
     private $arrayToResponseConverterLocator;
 
     public function __construct(
-        ArrayToRequestConditionConverter $arrayToRequestConditionsConverter,
+        ArrayToConditionsConverterLocator $arrayToConditionsConverterLocator,
         ArrayToResponseConverterLocator $arrayToResponseConverterLocator
     ) {
-        $this->arrayToRequestConverter = $arrayToRequestConditionsConverter;
+        $this->arrayToConditionsConverterLocator = $arrayToConditionsConverterLocator;
         $this->arrayToResponseConverterLocator = $arrayToResponseConverterLocator;
     }
 
@@ -30,7 +30,7 @@ class ArrayToExpectationConverter
     {
         $version = $this->getVersion($expectationArray);
 
-        $request = $this->convertRequest($expectationArray);
+        $request = $this->convertRequest($expectationArray, $version);
         $response = $this->convertResponse($expectationArray);
         $scenarioName = $this->getScenarioName($expectationArray);
         $priority = $this->getPriority($expectationArray);
@@ -83,12 +83,14 @@ class ArrayToExpectationConverter
             ->convert($expectationArray['response']);
     }
 
-    private function convertRequest(array $expectationArray)
+    private function convertRequest(array $expectationArray, Version $version)
     {
         if (!isset($expectationArray['request'])) {
             throw new \InvalidArgumentException('Expectation request is not set');
         }
 
-        return $this->arrayToRequestConverter->convert($expectationArray['request']);
+        return $this->arrayToConditionsConverterLocator
+            ->locate($version)
+            ->convert($expectationArray['request']);
     }
 }

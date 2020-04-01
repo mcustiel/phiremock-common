@@ -14,8 +14,7 @@ class ArrayToResponseConverterLocator
         $this->factory = $factory;
     }
 
-    /** @return ArrayToResponseConverter */
-    public function locate(array $responseArray)
+    public function locate(array $responseArray): ArrayToResponseConverter
     {
         if (isset($responseArray['proxyTo'])) {
             return $this->factory->createArrayToProxyResponseConverter();

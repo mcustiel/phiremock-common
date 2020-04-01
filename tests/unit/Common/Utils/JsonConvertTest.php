@@ -6,6 +6,7 @@ use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator;
 use Mcustiel\Phiremock\Factory;
+use Mcustiel\Phiremock\Common\Utils\ArrayToConditionsConverterLocator;
 
 class JsonConvertTest extends TestCase
 {
@@ -42,9 +43,10 @@ class JsonConvertTest extends TestCase
 
     protected function setUp(): void
     {
+        $factory = new Factory();
         $this->converter = new ArrayToExpectationConverter(
-            new ArrayToRequestConditionConverter(),
-            new ArrayToResponseConverterLocator(new Factory())
+            new ArrayToConditionsConverterLocator($factory),
+            new ArrayToResponseConverterLocator($factory)
         );
     }
 

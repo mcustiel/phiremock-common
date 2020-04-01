@@ -15,8 +15,7 @@ class ArrayToConditionsConverterLocator
         $this->factory = $factory;
     }
 
-    /** @return ArrayToResponseConverter */
-    public function locate(Version $version)
+    public function locate(Version $version): ArrayToRequestConditionConverter
     {
         switch ($version->asInt()) {
             case 1:
