@@ -33,7 +33,6 @@ class ResponseToArrayConverterTest extends TestCase
             [
                 'statusCode'       => 200,
                 'body'             => '',
-                'newScenarioState' => null,
                 'delayMillis'      => null,
             ],
             $responseArray
@@ -65,7 +64,6 @@ class ResponseToArrayConverterTest extends TestCase
                 'headers'     => [
                     'Content-Type' => 'text/plain',
                 ],
-                'newScenarioState' => 'potato',
                 'delayMillis'      => 0,
             ],
             $responseArray

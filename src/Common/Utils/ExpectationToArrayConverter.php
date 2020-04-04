@@ -33,6 +33,18 @@ class ExpectationToArrayConverter
         } else {
             $expectationArray['scenarioName'] = null;
         }
+        if ($expectation->getRequest()->hasScenarioState()) {
+            $expectationArray['scenarioStateIs'] = $expectation->getRequest()->getScenarioState()->asString();
+        } else {
+            $expectationArray['scenarioStateIs'] = null;
+        }
+
+        if ($expectation->getResponse()->hasNewScenarioState()) {
+            $expectationArray['newScenarioState'] = $expectation->getResponse()->getNewScenarioState()->asString();
+        } else {
+            $expectationArray['newScenarioState'] = null;
+        }
+
         if ($expectation->hasPriority()) {
             $expectationArray['priority'] = $expectation->getPriority()->asInt();
         } else {
