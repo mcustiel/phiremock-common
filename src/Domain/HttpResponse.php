@@ -37,10 +37,10 @@ class HttpResponse extends Response
 
     public function __construct(
         StatusCode $statusCode,
-        Body $body,
-        HeadersCollection $headers,
-        Delay $delayMillis = null,
-        ScenarioState $newScenarioState = null
+        ?Body $body,
+        ?HeadersCollection $headers,
+        ?Delay $delayMillis = null,
+        ?ScenarioState $newScenarioState = null
     ) {
         parent::__construct($delayMillis, $newScenarioState);
         $this->statusCode = $statusCode;

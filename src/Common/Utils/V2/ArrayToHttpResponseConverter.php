@@ -1,6 +1,6 @@
 <?php
 
-namespace Mcustiel\Phiremock\Common\Utils;
+namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Domain\BinaryInfo;
 use Mcustiel\Phiremock\Domain\Http\BinaryBody;
@@ -44,7 +44,7 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
             return $this->convertHeaders($responseArray['headers']);
         }
 
-        return null;
+        return new HeadersCollection();
     }
 
     /** @return \Mcustiel\Phiremock\Domain\Http\Body */
@@ -58,7 +58,7 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
             return new Body($responseArray['body']);
         }
 
-        return null;
+        return Body::createEmpty();
     }
 
     /**

@@ -29,7 +29,7 @@ class ArrayToHttpResponseConverterTest extends TestCase
         $this->assertSame(200, $response->getStatusCode()->asInt());
         $this->assertNull($response->getDelayMillis());
         $this->assertNull($response->getNewScenarioState());
-        $this->assertSame('', $response->getBody()->asString());
-        $this->assertTrue($response->getHeaders()->isEmpty());
+        $this->assertNull($response->getBody());
+        $this->assertNull($response->getHeaders());
     }
 }
