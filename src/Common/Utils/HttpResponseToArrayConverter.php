@@ -17,15 +17,15 @@ class HttpResponseToArrayConverter extends ResponseToArrayConverter
         $responseArray['body'] = $body === null ? null : $body->asString();
         $headers = $response->getHeaders();
         if ($headers && !$headers->isEmpty()) {
-            $this->convertHeaders($response, $responseArray);
+            $responseArray['headers'] = $this->getConvertHeaders($response, $responseArray);
         } else {
-            $headers = null;
+            $responseArray['headers'] = null;
         }
 
         return array_merge($responseArray, parent::convert($response));
     }
 
-    private function convertHeaders(HttpResponse $response, array &$responseArray)
+    private function getConvertHeaders(HttpResponse $response): array
     {
         $headers = $response->getHeaders();
         $headersArray = [];
@@ -33,6 +33,6 @@ class HttpResponseToArrayConverter extends ResponseToArrayConverter
         foreach ($headers as $header) {
             $headersArray[$header->getName()->asString()] = $header->getValue()->asString();
         }
-        $responseArray['headers'] = $headersArray;
+        return $headersArray;
     }
 }
