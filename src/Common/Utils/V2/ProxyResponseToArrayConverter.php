@@ -1,6 +1,6 @@
 <?php
 
-namespace Mcustiel\Phiremock\Common\Utils;
+namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Domain\Response;
 

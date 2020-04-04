@@ -24,10 +24,6 @@ class ExpectationToArrayConverter
     {
         $expectationArray = [];
 
-        $expectationArray['request'] = $this->requestToArrayConverter->convert($expectation->getRequest());
-        $expectationArray['response'] = $this->responseConverterLocator
-            ->locate($expectation->getResponse())
-            ->convert($expectation->getResponse());
         if ($expectation->hasScenarioName()) {
             $expectationArray['scenarioName'] = $expectation->getScenarioName()->asString();
         } else {
@@ -38,17 +34,30 @@ class ExpectationToArrayConverter
         } else {
             $expectationArray['scenarioStateIs'] = null;
         }
-
         if ($expectation->getResponse()->hasNewScenarioState()) {
             $expectationArray['newScenarioState'] = $expectation->getResponse()->getNewScenarioState()->asString();
         } else {
             $expectationArray['newScenarioState'] = null;
         }
 
+        $expectationArray['request'] = $this->requestToArrayConverter->convert($expectation->getRequest());
+
+        $response = $expectation->getResponse();
+
+        if ($response->isHttpResponse()) {
+            $expectationArray['response'] = $this->responseConverterLocator
+                ->locate($expectation->getResponse())
+                ->convert($expectation->getResponse());
+            $expectationArray['proxyTo'] = null;
+        } else {
+            $expectationArray['response'] = null;
+            $expectationArray['proxyTo'] = $expectation->getResponse()->getUrl()->asString();
+        }
+
         if ($expectation->hasPriority()) {
             $expectationArray['priority'] = $expectation->getPriority()->asInt();
         } else {
-            $expectationArray['priority'] = null;
+            $expectationArray['priority'] = 0;
         }
 
         return $expectationArray;
