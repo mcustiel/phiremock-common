@@ -10,7 +10,6 @@ use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
 use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
-use Mcustiel\Phiremock\Domain\Conditions;
 use PHPUnit\Framework\TestCase;
 
 class ArrayToRequestConverterTest extends TestCase

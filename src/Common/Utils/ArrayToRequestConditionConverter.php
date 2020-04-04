@@ -2,10 +2,12 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
+use Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Body\BodyMatcher;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionCollection;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionIterator;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderMatcher;
 use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Method\MethodMatcher;
@@ -14,8 +16,6 @@ use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlMatcher;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
-use Mcustiel\Phiremock\Domain\Conditions;
-use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionIterator;
 
 class ArrayToRequestConditionConverter
 {
@@ -81,14 +81,15 @@ class ArrayToRequestConditionConverter
 
     protected function convertMethodCondition(array $requestArray): ?MethodCondition
     {
-
         if (!empty($requestArray['method'])) {
             $method = $requestArray['method'];
+
             return new MethodCondition(
                 MethodMatcher::equalTo(),
                 new StringValue($method)
             );
         }
+
         return null;
     }
 

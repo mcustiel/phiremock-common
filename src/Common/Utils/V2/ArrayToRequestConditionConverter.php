@@ -2,10 +2,10 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
+use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterV1;
 use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Method\MethodMatcher;
 use Mcustiel\Phiremock\Domain\Conditions\StringValue;
-use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterV1;
 
 class ArrayToRequestConditionConverter extends ArrayToRequestConditionConverterV1
 {
@@ -21,6 +21,8 @@ class ArrayToRequestConditionConverter extends ArrayToRequestConditionConverterV
                 new MethodMatcher(key($method)),
                 new StringValue(current($method))
             );
-        } return null;
+        }
+
+        return null;
     }
 }

@@ -22,7 +22,6 @@ class ExpectationToArrayConverter
 
     public function convert(Expectation $expectation)
     {
-
         $expectationArray = [];
 
         $expectationArray['request'] = $this->requestToArrayConverter->convert($expectation->getRequest());
@@ -31,9 +30,13 @@ class ExpectationToArrayConverter
             ->convert($expectation->getResponse());
         if ($expectation->hasScenarioName()) {
             $expectationArray['scenarioName'] = $expectation->getScenarioName()->asString();
+        } else {
+            $expectationArray['scenarioName'] = null;
         }
         if ($expectation->hasPriority()) {
             $expectationArray['priority'] = $expectation->getPriority()->asInt();
+        } else {
+            $expectationArray['priority'] = null;
         }
 
         return $expectationArray;

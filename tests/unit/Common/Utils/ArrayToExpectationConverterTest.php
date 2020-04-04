@@ -2,20 +2,19 @@
 
 namespace Mcustiel\Phiremock\Tests\Unit\Common\Utils;
 
+use Mcustiel\Phiremock\Common\Utils\ArrayToConditionsConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator;
-use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter;
+use Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\Expectation;
 use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Options\Priority;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
-use Mcustiel\Phiremock\Domain\Conditions;
+use Mcustiel\Phiremock\Domain\Version;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Mcustiel\Phiremock\Common\Utils\ArrayToConditionsConverterLocator;
-use Mcustiel\Phiremock\Domain\Version;
 
 class ArrayToExpectationConverterTest extends TestCase
 {

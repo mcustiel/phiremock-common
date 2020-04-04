@@ -2,8 +2,8 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Factory;
 use Mcustiel\Phiremock\Domain\Version;
+use Mcustiel\Phiremock\Factory;
 
 class ArrayToConditionsConverterLocator
 {
@@ -24,6 +24,5 @@ class ArrayToConditionsConverterLocator
                 return $this->factory->createArrayToRequestConditionV2Converter();
         }
         throw new \LogicException('Unimplemented config version');
-
     }
 }

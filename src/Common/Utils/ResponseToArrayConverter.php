@@ -8,13 +8,14 @@ class ResponseToArrayConverter
 {
     public function convert(Response $response)
     {
-        $responseArray = [];
-        if ($response->hasNewScenarioState()) {
-            $responseArray['newScenarioState'] = $response->getNewScenarioState()->asString();
-        }
-        if ($response->hasDelayMillis()) {
-            $responseArray['delayMillis'] = $response->getDelayMillis()->asInt();
-        }
+        $responseArray = [
+            'newScenarioState' => $response->hasNewScenarioState()
+                ? $response->getNewScenarioState()->asString()
+                : null,
+            'delayMillis' => $response->hasDelayMillis()
+                ? $response->getDelayMillis()->asInt()
+                : null,
+            ];
 
         return $responseArray;
     }

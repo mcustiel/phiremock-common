@@ -11,6 +11,7 @@ use Mcustiel\Phiremock\Domain\Http\HeaderValue;
 use Mcustiel\Phiremock\Domain\Http\StatusCode;
 use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Options\Delay;
+use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use PHPUnit\Framework\TestCase;
 
 class ResponseToArrayConverterTest extends TestCase
@@ -30,8 +31,10 @@ class ResponseToArrayConverterTest extends TestCase
         $responseArray = $this->converter->convert($response);
         $this->assertSame(
             [
-                'statusCode'  => 200,
-                'body'        => '',
+                'statusCode'       => 200,
+                'body'             => '',
+                'newScenarioState' => null,
+                'delayMillis'      => null,
             ],
             $responseArray
         );
@@ -50,7 +53,8 @@ class ResponseToArrayConverterTest extends TestCase
             new StatusCode(404),
             new Body('I am the body.'),
             $headersCollection,
-            new Delay(0)
+            new Delay(0),
+            new ScenarioState('potato')
         );
 
         $responseArray = $this->converter->convert($response);
@@ -61,7 +65,8 @@ class ResponseToArrayConverterTest extends TestCase
                 'headers'     => [
                     'Content-Type' => 'text/plain',
                 ],
-                'delayMillis' => 0,
+                'newScenarioState' => 'potato',
+                'delayMillis'      => 0,
             ],
             $responseArray
         );

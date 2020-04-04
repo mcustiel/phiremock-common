@@ -43,6 +43,7 @@ class ArrayToExpectationConverter
         if (isset($expectationArray['version'])) {
             return new Version((int) $expectationArray['version']);
         }
+
         return new Version(1);
     }
 

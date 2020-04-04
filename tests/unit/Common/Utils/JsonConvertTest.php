@@ -1,12 +1,12 @@
 <?php
+
 namespace Mcustiel\Phiremock\Test\Unit\Common\Utils;
 
-use PHPUnit\Framework\TestCase;
+use Mcustiel\Phiremock\Common\Utils\ArrayToConditionsConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator;
 use Mcustiel\Phiremock\Factory;
-use Mcustiel\Phiremock\Common\Utils\ArrayToConditionsConverterLocator;
+use PHPUnit\Framework\TestCase;
 
 class JsonConvertTest extends TestCase
 {

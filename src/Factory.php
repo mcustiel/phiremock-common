@@ -19,11 +19,11 @@
 namespace Mcustiel\Phiremock;
 
 use Mcustiel\Phiremock\Common\Http\Implementation\GuzzleConnection;
+use Mcustiel\Phiremock\Common\Utils\ArrayToConditionsConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
-use Mcustiel\Phiremock\Common\Utils\V2\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterV2;
 use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter;
@@ -32,7 +32,7 @@ use Mcustiel\Phiremock\Common\Utils\HttpResponseToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\ProxyResponseToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverterLocator;
-use Mcustiel\Phiremock\Common\Utils\ArrayToConditionsConverterLocator;
+use Mcustiel\Phiremock\Common\Utils\V2\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterV2;
 
 class Factory
 {

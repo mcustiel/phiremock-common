@@ -2,6 +2,7 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
+use Mcustiel\Phiremock\Domain\Http\Header;
 use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Response;
 

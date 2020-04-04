@@ -3,6 +3,7 @@
 namespace Mcustiel\Phiremock\Tests\Unit\Common\Utils;
 
 use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
+use Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Body\BodyMatcher;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
@@ -15,7 +16,6 @@ use Mcustiel\Phiremock\Domain\Conditions\StringValue;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlMatcher;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
-use Mcustiel\Phiremock\Domain\Conditions;
 use PHPUnit\Framework\TestCase;
 
 class RequestToArrayConverterTest extends TestCase
@@ -34,7 +34,7 @@ class RequestToArrayConverterTest extends TestCase
 
         $requestArray = $this->converter->convert($request);
         $this->assertSame(
-            ['method' => ['isSameString' => 'GET']],
+            ['method' => 'GET', 'url' => null, 'body' => null, 'headers' => null],
             $requestArray
         );
     }
@@ -59,7 +59,7 @@ class RequestToArrayConverterTest extends TestCase
         $requestArray = $this->converter->convert($request);
         $this->assertSame(
             [
-                'method'  => [MatchersEnum::SAME_STRING => 'POST'],
+                'method'  => 'POST',
                 'url'     => [MatchersEnum::CONTAINS => '/potato'],
                 'body'    => [MatchersEnum::MATCHES => 'I am the body.'],
                 'headers' => [
