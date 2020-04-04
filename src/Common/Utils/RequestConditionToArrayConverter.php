@@ -38,8 +38,8 @@ class RequestConditionToArrayConverter
 
     private function convertBody(Conditions $request, array &$requestArray)
     {
-        if (null !== $request->getBody()) {
-            $body = $request->getBody();
+        $body = $request->getBody();
+        if (null !== $body) {
             $requestArray['body'] = [
                 $body->getMatcher()->asString() => $body->getValue()->asString(),
             ];
@@ -48,8 +48,8 @@ class RequestConditionToArrayConverter
 
     private function convertUrl(Conditions $request, array &$requestArray)
     {
-        if (null !== $request->getUrl()) {
-            $url = $request->getUrl();
+        $url = $request->getUrl();
+        if (null !== $url) {
             $requestArray['url'] = [
                 $url->getMatcher()->asString() => $url->getValue()->asString(),
             ];
@@ -59,8 +59,10 @@ class RequestConditionToArrayConverter
     private function convertMethod(Conditions $request, array &$requestArray)
     {
         $method = $request->getMethod();
-        $requestArray['method'] = [
-            $method->getMatcher()->asString() => $method->getValue()->asString(),
-        ];
+        if ($method) {
+            $requestArray['method'] = [
+                $method->getMatcher()->asString() => $method->getValue()->asString(),
+            ];
+        }
     }
 }

@@ -22,6 +22,7 @@ class ExpectationToArrayConverter
 
     public function convert(Expectation $expectation)
     {
+
         $expectationArray = [];
 
         $expectationArray['request'] = $this->requestToArrayConverter->convert($expectation->getRequest());
