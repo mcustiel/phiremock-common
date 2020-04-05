@@ -10,27 +10,13 @@ class StringValue
     private $value;
 
     /** @param string $stringValue */
-    public function __construct($stringValue)
+    public function __construct(string $stringValue)
     {
-        $this->assertString($stringValue);
         $this->value = $stringValue;
     }
 
-    /** @return string */
-    public function asString()
+    public function asString(): string
     {
         return $this->value;
-    }
-
-    /**
-     * @param string $pattern
-     *
-     * @throws InvalidArgumentException
-     */
-    private function assertString($pattern)
-    {
-        if (!\is_string($pattern)) {
-            throw new InvalidArgumentException(sprintf('Expected string got: %s', \gettype($pattern)));
-        }
     }
 }

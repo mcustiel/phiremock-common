@@ -4,10 +4,11 @@ namespace Mcustiel\Phiremock\Domain\Conditions\Method;
 
 use Mcustiel\Phiremock\Domain\Condition;
 use Mcustiel\Phiremock\Domain\Conditions\StringValue;
+use Mcustiel\Phiremock\Domain\Http\Method;
 
 class MethodCondition extends Condition
 {
-    public function __construct(MethodMatcher $matcher, StringValue $value)
+    public function __construct(MethodMatcher $matcher, Method $value)
     {
         parent::__construct($matcher, $value);
     }

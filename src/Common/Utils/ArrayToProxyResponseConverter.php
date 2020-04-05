@@ -15,6 +15,7 @@ class ArrayToProxyResponseConverter extends ArrayToResponseConverter
         ?Delay $delay,
         ?ScenarioState $newScenarioState
     ): Response {
+        var_export('proxy converter');
         if (empty($responseArray['proxyTo'])) {
             throw new \InvalidArgumentException('Trying to create a proxied response with an empty uri');
         }

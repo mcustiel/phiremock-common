@@ -21,8 +21,8 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
 
     protected function convertResponse(
         array $responseArray,
-        Delay $delay = null,
-        ScenarioState $newScenarioState = null
+        ?Delay $delay,
+        ?ScenarioState $newScenarioState
     ): Response {
         if (!isset($responseArray['response']['statusCode'])) {
             $responseArray['response']['statusCode'] = 200;

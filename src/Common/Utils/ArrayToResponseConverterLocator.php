@@ -16,6 +16,7 @@ class ArrayToResponseConverterLocator
 
     public function locate(array $responseArray): ArrayToResponseConverter
     {
+        var_export('locator');
         if (isset($responseArray['proxyTo'])) {
             return $this->factory->createArrayToProxyResponseConverter();
         }

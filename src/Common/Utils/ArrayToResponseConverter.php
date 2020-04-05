@@ -12,6 +12,7 @@ abstract class ArrayToResponseConverter
 
     public function convert(array $responseArray): Response
     {
+        var_export('response converter');
         return $this->convertResponse(
             $responseArray,
             $this->getDelay($responseArray['response']),
@@ -21,8 +22,8 @@ abstract class ArrayToResponseConverter
 
     abstract protected function convertResponse(
         array $response,
-        Delay $delay = null,
-        ScenarioState $newScenarioState = null
+        ?Delay $delay,
+        ?ScenarioState $newScenarioState
     ): Response;
 
     private function getDelay(array $responseArray): ?Delay

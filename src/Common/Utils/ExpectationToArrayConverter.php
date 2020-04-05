@@ -44,6 +44,7 @@ class ExpectationToArrayConverter
 
         $response = $expectation->getResponse();
 
+        var_export('Let\'s convert the response');
         if ($response->isHttpResponse()) {
             $expectationArray['response'] = $this->responseConverterLocator
                 ->locate($expectation->getResponse())
@@ -51,7 +52,7 @@ class ExpectationToArrayConverter
             $expectationArray['proxyTo'] = null;
         } else {
             $expectationArray['response'] = null;
-            $expectationArray['proxyTo'] = $expectation->getResponse()->getUrl()->asString();
+            $expectationArray['proxyTo'] = $expectation->getResponse()->getUri()->asString();
         }
 
         if ($expectation->hasPriority()) {
