@@ -7,6 +7,8 @@ use Mcustiel\Phiremock\Domain\Options\Priority;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Response;
 use Mcustiel\Phiremock\Domain\Version;
+use Mcustiel\Phiremock\Domain\HttpResponse;
+use Mcustiel\Phiremock\Domain\Http\StatusCode;
 
 class ArrayToExpectationConverter
 {
@@ -23,10 +25,7 @@ class ArrayToExpectationConverter
         $this->arrayToResponseConverterLocator = $arrayToResponseConverterLocator;
     }
 
-    /**
-     * @return Expectation
-     */
-    public function convert(array $expectationArray)
+    public function convert(array $expectationArray): Expectation
     {
         $version = $this->getVersion($expectationArray);
 
@@ -47,10 +46,7 @@ class ArrayToExpectationConverter
         return new Version(1);
     }
 
-    /**
-     * @return \Mcustiel\Phiremock\Domain\Options\Priority|null
-     */
-    private function getPriority(array $expectationArray)
+    private function getPriority(array $expectationArray): ?Priority
     {
         $priority = null;
         if (!empty($expectationArray['priority'])) {
@@ -60,10 +56,7 @@ class ArrayToExpectationConverter
         return $priority;
     }
 
-    /**
-     * @return \Mcustiel\Phiremock\Domain\Options\ScenarioName|null
-     */
-    private function getScenarioName(array $expectationArray)
+    private function getScenarioName(array $expectationArray): ?ScenarioName
     {
         $scenarioName = null;
         if (!empty($expectationArray['scenarioName'])) {
@@ -75,13 +68,18 @@ class ArrayToExpectationConverter
 
     private function convertResponse(array $expectationArray): Response
     {
-        if (!isset($expectationArray['response'])) {
-            throw new \InvalidArgumentException('Creating an expectation without response.');
+        if (!isset($expectationArray['response']) && !isset($expectationArray['proxyTo'])) {
+            return new HttpResponse(new StatusCode(200), null, null, null, null);
+        }
+        if (!is_array($expectationArray['response'])) {
+            throw new \InvalidArgumentException(
+                'Invalid response definition: ' . var_export($expectationArray['response'], true)
+            );
         }
 
         return $this->arrayToResponseConverterLocator
-            ->locate($expectationArray['response'])
-            ->convert($expectationArray['response']);
+            ->locate($expectationArray)
+            ->convert($expectationArray);
     }
 
     private function convertRequest(array $expectationArray, Version $version)
@@ -92,6 +90,6 @@ class ArrayToExpectationConverter
 
         return $this->arrayToConditionsConverterLocator
             ->locate($version)
-            ->convert($expectationArray['request']);
+            ->convert($expectationArray);
     }
 }

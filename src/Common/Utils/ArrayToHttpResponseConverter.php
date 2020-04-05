@@ -24,14 +24,14 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
         Delay $delay = null,
         ScenarioState $newScenarioState = null
     ): Response {
-        if (!isset($responseArray['statusCode'])) {
-            $responseArray['statusCode'] = 200;
+        if (!isset($responseArray['response']['statusCode'])) {
+            $responseArray['response']['statusCode'] = 200;
         }
 
         return new HttpResponse(
-            new StatusCode((int) $responseArray['statusCode']),
-            $this->getBody($responseArray),
-            $this->getHeaders($responseArray),
+            new StatusCode((int) $responseArray['response']['statusCode']),
+            $this->getBody($responseArray['response']),
+            $this->getHeaders($responseArray['response']),
             $delay,
             $newScenarioState
         );

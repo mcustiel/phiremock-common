@@ -39,8 +39,8 @@ class HttpResponse extends Response
         StatusCode $statusCode,
         ?Body $body,
         ?HeadersCollection $headers,
-        ?Delay $delayMillis = null,
-        ?ScenarioState $newScenarioState = null
+        ?Delay $delayMillis,
+        ?ScenarioState $newScenarioState
     ) {
         parent::__construct($delayMillis, $newScenarioState);
         $this->statusCode = $statusCode;

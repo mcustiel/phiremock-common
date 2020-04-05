@@ -14,7 +14,7 @@ abstract class ArrayToResponseConverter
     {
         return $this->convertResponse(
             $responseArray,
-            $this->getDelay($responseArray),
+            $this->getDelay($responseArray['response']),
             $this->getNewScenarioState($responseArray)
         );
     }

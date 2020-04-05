@@ -13,8 +13,8 @@ class Response
     private $delayMillis;
 
     public function __construct(
-        Delay $delayMillis = null,
-        ScenarioState $newScenarioState = null
+        ?Delay $delayMillis,
+        ?ScenarioState $newScenarioState
     ) {
         $this->newScenarioState = $newScenarioState;
         $this->delayMillis = $delayMillis;

@@ -22,10 +22,10 @@ class ArrayToRequestConditionConverter
     public function convert(array $requestArray): Conditions
     {
         return new Conditions(
-            $this->convertMethodCondition($requestArray),
-            $this->convertUrlCondition($requestArray),
-            $this->convertBodyCondition($requestArray),
-            $this->convertHeadersConditions($requestArray),
+            $this->convertMethodCondition($requestArray['request']),
+            $this->convertUrlCondition($requestArray['request']),
+            $this->convertBodyCondition($requestArray['request']),
+            $this->convertHeadersConditions($requestArray['request']),
             $this->convertScenarioState($requestArray)
         );
     }
@@ -110,8 +110,7 @@ class ArrayToRequestConditionConverter
         return null;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\Options\ScenarioState|null */
-    protected function convertScenarioState(array $requestArray)
+    protected function convertScenarioState(array $requestArray): ?ScenarioState
     {
         if (!empty($requestArray['scenarioStateIs'])) {
             return new ScenarioState($requestArray['scenarioStateIs']);

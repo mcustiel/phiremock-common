@@ -8,7 +8,7 @@ use Mcustiel\Phiremock\Domain\Http\HeaderName;
 
 class RequestConditionToArrayConverter
 {
-    public function convert(Conditions $request)
+    public function convert(Conditions $request): array
     {
         $requestArray = [];
 
@@ -20,7 +20,7 @@ class RequestConditionToArrayConverter
         return $requestArray;
     }
 
-    protected function convertHeaders(Conditions $request, array &$requestArray)
+    protected function convertHeaders(Conditions $request, array &$requestArray): void
     {
         $headers = $request->getHeaders();
         if ($headers === null) {
@@ -38,7 +38,7 @@ class RequestConditionToArrayConverter
         }
     }
 
-    protected function convertBody(Conditions $request, array &$requestArray)
+    protected function convertBody(Conditions $request, array &$requestArray): void
     {
         $body = $request->getBody();
         $requestArray['body'] = null === $body ? null : [
@@ -46,7 +46,7 @@ class RequestConditionToArrayConverter
         ];
     }
 
-    protected function convertUrl(Conditions $request, array &$requestArray)
+    protected function convertUrl(Conditions $request, array &$requestArray): void
     {
         $url = $request->getUrl();
         $requestArray['url'] = null === $url ? null : [
@@ -54,7 +54,7 @@ class RequestConditionToArrayConverter
         ];
     }
 
-    protected function convertMethod(Conditions $request, array &$requestArray)
+    protected function convertMethod(Conditions $request, array &$requestArray): void
     {
         $method = $request->getMethod();
         $requestArray['method'] = null === $method ? null : $method->getValue()->asString();
