@@ -3,12 +3,12 @@
 namespace Mcustiel\Phiremock\Common\Utils;
 
 use Mcustiel\Phiremock\Domain\Expectation;
+use Mcustiel\Phiremock\Domain\Http\StatusCode;
+use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Options\Priority;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Response;
 use Mcustiel\Phiremock\Domain\Version;
-use Mcustiel\Phiremock\Domain\HttpResponse;
-use Mcustiel\Phiremock\Domain\Http\StatusCode;
 
 class ArrayToExpectationConverter
 {
@@ -74,12 +74,11 @@ class ArrayToExpectationConverter
             return new HttpResponse(new StatusCode(200), null, null, null, null);
         }
         var_export('Convert response in expectation converter 1 ');
-        if (!isset($expectationArray['proxyTo']) && !is_array($expectationArray['response'])) {
-            throw new \InvalidArgumentException(
-                'Invalid response definition: ' . var_export($expectationArray['response'], true)
-            );
+        if (!isset($expectationArray['proxyTo']) && !\is_array($expectationArray['response'])) {
+            throw new \InvalidArgumentException('Invalid response definition: ' . var_export($expectationArray['response'], true));
         }
         var_export('Convert response in expectation converter 2 ');
+
         return $this->arrayToResponseConverterLocator
             ->locate($expectationArray)
             ->convert($expectationArray);

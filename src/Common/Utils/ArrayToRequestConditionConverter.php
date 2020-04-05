@@ -15,8 +15,8 @@ use Mcustiel\Phiremock\Domain\Conditions\StringValue;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlMatcher;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
-use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\Http\Method;
+use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class ArrayToRequestConditionConverter
 {

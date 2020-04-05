@@ -2,8 +2,6 @@
 
 namespace Mcustiel\Phiremock\Domain\Conditions;
 
-use InvalidArgumentException;
-
 class StringValue
 {
     /** @var string */

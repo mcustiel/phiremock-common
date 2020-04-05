@@ -13,6 +13,7 @@ abstract class ArrayToResponseConverter
     public function convert(array $responseArray): Response
     {
         var_export('response converter');
+
         return $this->convertResponse(
             $responseArray,
             $this->getDelay($responseArray['response']),

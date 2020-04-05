@@ -61,7 +61,7 @@ class Method extends StringValue
         return $this->method;
     }
 
-    public function equals(Method $other): bool
+    public function equals(self $other): bool
     {
         return $this->asString() === $other->asString();
     }

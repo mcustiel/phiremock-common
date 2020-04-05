@@ -3,7 +3,6 @@
 namespace Mcustiel\Phiremock\Domain\Conditions\Method;
 
 use Mcustiel\Phiremock\Domain\Condition;
-use Mcustiel\Phiremock\Domain\Conditions\StringValue;
 use Mcustiel\Phiremock\Domain\Http\Method;
 
 class MethodCondition extends Condition

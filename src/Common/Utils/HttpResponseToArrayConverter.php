@@ -33,6 +33,7 @@ class HttpResponseToArrayConverter extends ResponseToArrayConverter
         foreach ($headers as $header) {
             $headersArray[$header->getName()->asString()] = $header->getValue()->asString();
         }
+
         return $headersArray;
     }
 }

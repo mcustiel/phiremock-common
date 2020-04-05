@@ -9,9 +9,6 @@ class ScenarioState
     /** @var string * */
     private $state;
 
-    /**
-     * @param string $state
-     */
     public function __construct(string $state)
     {
         $this->ensureNotEmpty($state);
