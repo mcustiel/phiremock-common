@@ -33,6 +33,7 @@ class ResponseToArrayConverterTest extends TestCase
             [
                 'statusCode'       => 200,
                 'body'             => '',
+                'headers'             => null,
                 'delayMillis'      => null,
             ],
             $responseArray

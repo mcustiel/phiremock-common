@@ -38,17 +38,22 @@ class Conditions
     private $scenarioState;
 
     public function __construct(
-        ?MethodCondition $method,
-        ?UrlCondition $url,
-        ?BodyCondition $body,
-        ?HeaderConditionIterator $headers,
-        ?ScenarioState $scenarioState
+        ?MethodCondition $method = null,
+        ?UrlCondition $url = null,
+        ?BodyCondition $body = null,
+        ?HeaderConditionIterator $headers = null,
+        ?ScenarioState $scenarioState = null
     ) {
         $this->method = $method;
         $this->url = $url;
         $this->body = $body;
         $this->headers = $headers;
         $this->scenarioState = $scenarioState;
+    }
+
+    public function hasMethod(): bool
+    {
+        return null !== $this->method;
     }
 
     public function getMethod(): ?MethodCondition

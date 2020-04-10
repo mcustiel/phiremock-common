@@ -14,6 +14,7 @@ use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\Response;
+use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter;
 
 class ArrayToHttpResponseConverter extends ArrayToResponseConverter
 {
