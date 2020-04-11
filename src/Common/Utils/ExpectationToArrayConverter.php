@@ -44,7 +44,6 @@ class ExpectationToArrayConverter
 
         $response = $expectation->getResponse();
 
-        var_export('Let\'s convert the response');
         if ($response->isHttpResponse()) {
             $expectationArray['response'] = $this->responseConverterLocator
                 ->locate($expectation->getResponse())

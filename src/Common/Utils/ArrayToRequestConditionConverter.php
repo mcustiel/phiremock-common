@@ -33,7 +33,6 @@ class ArrayToRequestConditionConverter
 
     protected function convertHeadersConditions(array $requestArray): ?HeaderConditionIterator
     {
-        var_export('headers');
         if (!empty($requestArray['headers'])) {
             $headers = $requestArray['headers'];
             if (!\is_array($headers)) {
@@ -57,7 +56,6 @@ class ArrayToRequestConditionConverter
 
     protected function convertHeaderCondition($header): HeaderCondition
     {
-        var_export('header');
         if (!\is_array($header)) {
             throw new \InvalidArgumentException('Headers condition is invalid: ' . var_export($header, true));
         }
@@ -70,7 +68,6 @@ class ArrayToRequestConditionConverter
 
     protected function convertUrlCondition(array $requestArray): ?UrlCondition
     {
-        var_export('url');
         if (!empty($requestArray['url'])) {
             $url = $requestArray['url'];
             if (!\is_array($url)) {
@@ -85,7 +82,6 @@ class ArrayToRequestConditionConverter
 
     protected function convertMethodCondition(array $requestArray): ?MethodCondition
     {
-        var_export('method');
         if (!empty($requestArray['method'])) {
             $method = $requestArray['method'];
 
