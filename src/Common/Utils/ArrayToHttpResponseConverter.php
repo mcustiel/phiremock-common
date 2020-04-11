@@ -51,11 +51,15 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
     private function getBody(array $responseArray)
     {
         if (isset($responseArray['body'])) {
-            if ($this->isBinaryBody($responseArray['body'])) {
-                return new BinaryBody($responseArray['body']);
+            $body = $responseArray['body'];
+            if (is_array($body)) {
+                $body = json_encode($body);
+            }
+            if ($this->isBinaryBody($body)) {
+                return new BinaryBody($body);
             }
 
-            return new Body($responseArray['body']);
+            return new Body($body);
         }
 
         return null;
