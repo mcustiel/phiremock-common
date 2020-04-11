@@ -59,6 +59,10 @@ class ArrayToRequestConditionConverter
         if (!\is_array($header)) {
             throw new \InvalidArgumentException('Headers condition is invalid: ' . var_export($header, true));
         }
+        $value = current($header);
+        if (!\is_string($value)) {
+            throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . gettype($value));
+        }
 
         return new HeaderCondition(
             new HeaderMatcher(key($header)),
@@ -73,6 +77,10 @@ class ArrayToRequestConditionConverter
             if (!\is_array($url)) {
                 throw new \InvalidArgumentException('Url condition is invalid: ' . var_export($url, true));
             }
+            $value = current($url);
+            if (!\is_string($value)) {
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . gettype($value));
+            }
 
             return new UrlCondition(new UrlMatcher(key($url)), new StringValue(current($url)));
         }
@@ -84,6 +92,9 @@ class ArrayToRequestConditionConverter
     {
         if (!empty($requestArray['method'])) {
             $method = $requestArray['method'];
+            if (!\is_string($method)) {
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . gettype($value));
+            }
 
             return new MethodCondition(
                 MethodMatcher::equalTo(),
@@ -101,8 +112,10 @@ class ArrayToRequestConditionConverter
             if (!\is_array($body)) {
                 throw new \InvalidArgumentException('Body condition is invalid: ' . var_export($body, true));
             }
-
-            //$bodyContents = current($body);
+            $value = current($body);
+            if (!\is_string($value)) {
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . gettype($value));
+            }
 
             return new BodyCondition(
                 new BodyMatcher(key($body)),
