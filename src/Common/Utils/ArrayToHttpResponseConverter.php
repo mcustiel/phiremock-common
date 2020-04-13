@@ -52,7 +52,7 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
     {
         if (isset($responseArray['body'])) {
             $body = $responseArray['body'];
-            if (is_array($body)) {
+            if (\is_array($body)) {
                 $body = json_encode($body);
             }
             if ($this->isBinaryBody($body)) {

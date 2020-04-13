@@ -2,6 +2,7 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
+use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter;
 use Mcustiel\Phiremock\Domain\BinaryInfo;
 use Mcustiel\Phiremock\Domain\Http\BinaryBody;
 use Mcustiel\Phiremock\Domain\Http\Body;
@@ -14,7 +15,6 @@ use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\Response;
-use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter;
 
 class ArrayToHttpResponseConverter extends ArrayToResponseConverter
 {

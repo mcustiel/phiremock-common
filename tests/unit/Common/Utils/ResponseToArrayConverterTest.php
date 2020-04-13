@@ -31,10 +31,10 @@ class ResponseToArrayConverterTest extends TestCase
         $responseArray = $this->converter->convert($response);
         $this->assertSame(
             [
-                'statusCode'       => 200,
-                'body'             => '',
+                'statusCode'          => 200,
+                'body'                => '',
                 'headers'             => null,
-                'delayMillis'      => null,
+                'delayMillis'         => null,
             ],
             $responseArray
         );

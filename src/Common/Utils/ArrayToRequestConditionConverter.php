@@ -61,7 +61,7 @@ class ArrayToRequestConditionConverter
         }
         $value = current($header);
         if (!\is_string($value)) {
-            throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . gettype($value));
+            throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
         }
 
         return new HeaderCondition(
@@ -79,7 +79,7 @@ class ArrayToRequestConditionConverter
             }
             $value = current($url);
             if (!\is_string($value)) {
-                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . gettype($value));
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
             }
 
             return new UrlCondition(new UrlMatcher(key($url)), new StringValue(current($url)));
@@ -93,7 +93,7 @@ class ArrayToRequestConditionConverter
         if (!empty($requestArray['method'])) {
             $method = $requestArray['method'];
             if (!\is_string($method)) {
-                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . gettype($value));
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
             }
 
             return new MethodCondition(
@@ -114,7 +114,7 @@ class ArrayToRequestConditionConverter
             }
             $value = current($body);
             if (!\is_string($value)) {
-                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . gettype($value));
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
             }
 
             return new BodyCondition(

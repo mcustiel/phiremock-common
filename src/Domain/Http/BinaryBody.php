@@ -8,7 +8,7 @@ class BinaryBody extends Body
 {
     public function __construct($body)
     {
-        parent::__construct(base64_decode(substr($body, BinaryInfo::BINARY_BODY_PREFIX_LENGTH)));
+        parent::__construct(base64_decode(substr($body, BinaryInfo::BINARY_BODY_PREFIX_LENGTH), true));
     }
 
     /** @return string */
