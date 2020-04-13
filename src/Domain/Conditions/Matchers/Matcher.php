@@ -16,7 +16,7 @@ abstract class Matcher
 
     public function getCheckValue(): ConditionValue
     {
-        return (string) $this->checkValue->get();
+        return $this->checkValue;
     }
 
     abstract public function getName(): string;
