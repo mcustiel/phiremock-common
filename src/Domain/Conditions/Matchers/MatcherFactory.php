@@ -23,5 +23,6 @@ class MatcherFactory
             case MatchersEnum::SAME_STRING:
                 return new CaseInsensitiveEquals(new StringValue($value));
         }
+        throw new \InvalidArgumentException('Invalid condition matcher specified: ' . $identifier);
     }
 }
