@@ -14,7 +14,7 @@ abstract class ArrayToResponseConverter
     {
         return $this->convertResponse(
             $responseArray,
-            $this->getDelay($responseArray['response']),
+            $this->getDelay($responseArray),
             $this->getNewScenarioState($responseArray)
         );
     }
@@ -27,6 +27,11 @@ abstract class ArrayToResponseConverter
 
     private function getDelay(array $responseArray): ?Delay
     {
+        if (empty($responseArray['response'])) {
+            return null;
+        }
+
+        $responseArray = $responseArray['response'];
         if (!empty($responseArray['delayMillis'])) {
             return new Delay($responseArray['delayMillis']);
         }
