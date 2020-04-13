@@ -8,17 +8,17 @@ class BinaryBody extends Body
 {
     public function __construct($body)
     {
-        parent::__construct(base64_decode(substr($body, BinaryInfo::BINARY_BODY_PREFIX_LENGTH), true));
+        parent::__construct(
+            base64_decode(substr($body, BinaryInfo::BINARY_BODY_PREFIX_LENGTH), true)
+        );
     }
 
-    /** @return string */
-    public function asString()
+    public function asString(): string
     {
         return BinaryInfo::BINARY_BODY_PREFIX . base64_encode(parent::asString());
     }
 
-    /** @return bool */
-    public function isTextBody()
+    public function isTextBody(): bool
     {
         return false;
     }
