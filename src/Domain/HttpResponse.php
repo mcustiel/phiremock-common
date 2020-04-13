@@ -36,14 +36,14 @@ class HttpResponse extends Response
     private $headers;
 
     public function __construct(
-        StatusCode $statusCode,
-        Body $body,
-        HeadersCollection $headers,
-        Delay $delayMillis = null,
-        ScenarioState $newScenarioState = null
+        StatusCode $statusCode = null,
+        ?Body $body = null,
+        ?HeadersCollection $headers = null,
+        ?Delay $delayMillis = null,
+        ?ScenarioState $newScenarioState = null
     ) {
         parent::__construct($delayMillis, $newScenarioState);
-        $this->statusCode = $statusCode;
+        $this->statusCode = $statusCode ?? StatusCode::createDefault();
         $this->headers = $headers;
         $this->body = $body;
     }

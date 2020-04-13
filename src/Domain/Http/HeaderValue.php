@@ -23,9 +23,7 @@ class HeaderValue
     private function ensureIsValidHeaderValue($headerValue)
     {
         if (!\is_string($headerValue)) {
-            throw new \InvalidArgumentException(
-                sprintf('Header value must be a string. Got: %s', \gettype($headerValue))
-            );
+            throw new \InvalidArgumentException(sprintf('Header value must be a string. Got: %s', \gettype($headerValue)));
         }
     }
 }

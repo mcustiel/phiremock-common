@@ -2,47 +2,50 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\MockConfig;
+use Mcustiel\Phiremock\Domain\Expectation;
+use Mcustiel\Phiremock\Domain\Http\StatusCode;
+use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Options\Priority;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Response;
+use Mcustiel\Phiremock\Domain\Version;
 
 class ArrayToExpectationConverter
 {
-    /** @var ArrayToRequestConditionConverter */
-    private $arrayToRequestConverter;
+    /** @var ArrayToConditionsConverterLocator */
+    private $arrayToConditionsConverterLocator;
     /** @var ArrayToResponseConverterLocator */
     private $arrayToResponseConverterLocator;
 
     public function __construct(
-        ArrayToRequestConditionConverter $arrayToRequestConditionsConverter,
+        ArrayToConditionsConverterLocator $arrayToConditionsConverterLocator,
         ArrayToResponseConverterLocator $arrayToResponseConverterLocator
     ) {
-        $this->arrayToRequestConverter = $arrayToRequestConditionsConverter;
+        $this->arrayToConditionsConverterLocator = $arrayToConditionsConverterLocator;
         $this->arrayToResponseConverterLocator = $arrayToResponseConverterLocator;
     }
 
-    /**
-     * @param array $expectationArray
-     *
-     * @return MockConfig
-     */
-    public function convert(array $expectationArray)
+    public function convert(array $expectationArray): Expectation
     {
-        $request = $this->convertRequest($expectationArray);
+        $version = $this->getVersion($expectationArray);
+        $request = $this->convertRequest($expectationArray, $version);
         $response = $this->convertResponse($expectationArray);
         $scenarioName = $this->getScenarioName($expectationArray);
         $priority = $this->getPriority($expectationArray);
 
-        return new MockConfig($request, $response, $scenarioName, $priority);
+        return new Expectation($request, $response, $scenarioName, $priority);
     }
 
-    /**
-     * @param array $expectationArray
-     *
-     * @return null|\Mcustiel\Phiremock\Domain\Options\Priority
-     */
-    private function getPriority(array $expectationArray)
+    private function getVersion(array $expectationArray): Version
+    {
+        if (isset($expectationArray['version'])) {
+            return new Version((int) $expectationArray['version']);
+        }
+
+        return new Version(1);
+    }
+
+    private function getPriority(array $expectationArray): ?Priority
     {
         $priority = null;
         if (!empty($expectationArray['priority'])) {
@@ -52,12 +55,7 @@ class ArrayToExpectationConverter
         return $priority;
     }
 
-    /**
-     * @param array $expectationArray
-     *
-     * @return null|\Mcustiel\Phiremock\Domain\Options\ScenarioName
-     */
-    private function getScenarioName(array $expectationArray)
+    private function getScenarioName(array $expectationArray): ?ScenarioName
     {
         $scenarioName = null;
         if (!empty($expectationArray['scenarioName'])) {
@@ -67,28 +65,28 @@ class ArrayToExpectationConverter
         return $scenarioName;
     }
 
-    /**
-     * @param array $expectationArray
-     *
-     * @return Response
-     */
-    private function convertResponse(array $expectationArray)
+    private function convertResponse(array $expectationArray): Response
     {
-        if (!isset($expectationArray['response'])) {
-            throw new \InvalidArgumentException('Creating an expectation without response.');
+        if (!isset($expectationArray['response']) && !isset($expectationArray['proxyTo'])) {
+            return new HttpResponse(new StatusCode(200), null, null, null, null);
+        }
+        if (!isset($expectationArray['proxyTo']) && !\is_array($expectationArray['response'])) {
+            throw new \InvalidArgumentException('Invalid response definition: ' . var_export($expectationArray['response'], true));
         }
 
         return $this->arrayToResponseConverterLocator
-            ->locate($expectationArray['response'])
-            ->convert($expectationArray['response']);
+            ->locate($expectationArray)
+            ->convert($expectationArray);
     }
 
-    private function convertRequest(array $expectationArray)
+    private function convertRequest(array $expectationArray, Version $version)
     {
         if (!isset($expectationArray['request'])) {
             throw new \InvalidArgumentException('Expectation request is not set');
         }
 
-        return $this->arrayToRequestConverter->convert($expectationArray['request']);
+        return $this->arrayToConditionsConverterLocator
+            ->locate($version)
+            ->convert($expectationArray);
     }
 }

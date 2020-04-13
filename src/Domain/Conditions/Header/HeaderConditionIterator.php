@@ -1,14 +1,12 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Conditions;
+namespace Mcustiel\Phiremock\Domain\Conditions\Header;
 
-use Mcustiel\Phiremock\Domain\AbstractArrayCollection;
+use Mcustiel\Phiremock\Domain\AbstractArrayIterator;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 
-/**
- * @method HeaderCondition current()
- */
-class HeaderConditionCollection extends AbstractArrayCollection
+/** @method HeaderCondition current() */
+final class HeaderConditionIterator extends AbstractArrayIterator
 {
     public function __toString()
     {
@@ -22,14 +20,7 @@ class HeaderConditionCollection extends AbstractArrayCollection
         return $string;
     }
 
-    public function setHeaderCondition(HeaderName $header, HeaderCondition $condition)
-    {
-        parent::set($header->asString(), $condition);
-    }
-
-    /**
-     * @return HeaderName
-     */
+    /** @return HeaderName */
     public function key()
     {
         return new HeaderName(parent::key());

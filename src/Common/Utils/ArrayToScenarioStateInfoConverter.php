@@ -9,8 +9,6 @@ use Mcustiel\Phiremock\Domain\ScenarioStateInfo;
 class ArrayToScenarioStateInfoConverter
 {
     /**
-     * @param array $expectationArray
-     *
      * @return ScenarioStateInfo
      */
     public function convert(array $expectationArray)

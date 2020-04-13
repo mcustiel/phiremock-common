@@ -12,25 +12,24 @@ class MethodsEnum
     const HEAD = 'HEAD';
     const OPTIONS = 'OPTIONS';
     const PATCH = 'PATCH';
+    const LINK = 'LINK';
 
-    const VALID_METHODS = [
+    private const VALID_METHODS = [
         self::GET,
         self::POST,
         self::PUT,
         self::DELETE,
-        self::FETCH,
-        self::HEAD,
-        self::OPTIONS,
         self::PATCH,
+        self::FETCH,
+        self::OPTIONS,
+        self::HEAD,
+        self::LINK,
     ];
 
-    /**
-     * @param string $method
-     *
-     * @return bool
-     */
-    public static function isValid($method)
+    public static function isValid(string $method): bool
     {
+        var_export('method validator');
+
         return \in_array(strtoupper($method), self::VALID_METHODS, true);
     }
 }

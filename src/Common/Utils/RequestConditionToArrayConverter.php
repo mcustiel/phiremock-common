@@ -2,15 +2,17 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\RequestConditions;
+use Mcustiel\Phiremock\Domain\Conditions;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
+use Mcustiel\Phiremock\Domain\Http\HeaderName;
 
 class RequestConditionToArrayConverter
 {
-    public function convert(RequestConditions $request)
+    public function convert(Conditions $request): array
     {
         $requestArray = [];
 
-        $requestArray['method'] = $request->getMethod()->asString();
+        $this->convertMethod($request, $requestArray);
         $this->convertUrl($request, $requestArray);
         $this->convertBody($request, $requestArray);
         $this->convertHeaders($request, $requestArray);
@@ -18,10 +20,12 @@ class RequestConditionToArrayConverter
         return $requestArray;
     }
 
-    private function convertHeaders(RequestConditions $request, array &$requestArray)
+    protected function convertHeaders(Conditions $request, array &$requestArray): void
     {
         $headers = $request->getHeaders();
-        if (!$headers->isEmpty()) {
+        if ($headers === null) {
+            $requestArray['headers'] = null;
+        } else {
             $headersArray = [];
             /** @var HeaderName $headerName */
             /** @var HeaderCondition $headerCondition */
@@ -34,23 +38,25 @@ class RequestConditionToArrayConverter
         }
     }
 
-    private function convertBody(RequestConditions $request, array &$requestArray)
+    protected function convertBody(Conditions $request, array &$requestArray): void
     {
-        if (null !== $request->getBody()) {
-            $body = $request->getBody();
-            $requestArray['body'] = [
-                $body->getMatcher()->asString() => $body->getValue()->asString(),
-            ];
-        }
+        $body = $request->getBody();
+        $requestArray['body'] = null === $body ? null : [
+            $body->getMatcher()->asString() => $body->getValue()->asString(),
+        ];
     }
 
-    private function convertUrl(RequestConditions $request, array &$requestArray)
+    protected function convertUrl(Conditions $request, array &$requestArray): void
     {
-        if (null !== $request->getUrl()) {
-            $url = $request->getUrl();
-            $requestArray['url'] = [
-                $url->getMatcher()->asString() => $url->getValue()->asString(),
-            ];
-        }
+        $url = $request->getUrl();
+        $requestArray['url'] = null === $url ? null : [
+            $url->getMatcher()->asString() => $url->getValue()->asString(),
+        ];
+    }
+
+    protected function convertMethod(Conditions $request, array &$requestArray): void
+    {
+        $method = $request->getMethod();
+        $requestArray['method'] = null === $method ? null : $method->getValue()->asString();
     }
 }

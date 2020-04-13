@@ -6,11 +6,11 @@ use Mcustiel\Phiremock\Domain\Response;
 
 class ProxyResponseToArrayConverter extends ResponseToArrayConverter
 {
-    /** @param \Mcustiel\Phiremock\Domain\ProxyResponse $response */
     public function convert(Response $response)
     {
+        /** @var \Mcustiel\Phiremock\Domain\ProxyResponse $response */
         $responseArray = [];
-        $responseArray['url'] = $response->getUrl()->asString();
+        $responseArray['url'] = $response->getUri()->asString();
 
         return array_merge($responseArray, parent::convert($response));
     }

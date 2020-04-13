@@ -21,9 +21,9 @@ namespace Mcustiel\Phiremock\Domain;
 use Mcustiel\Phiremock\Domain\Options\Priority;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 
-class MockConfig
+class Expectation
 {
-    /** @var RequestConditions */
+    /** @var Conditions */
     private $requestConditions;
 
     /** @var ScenarioName */
@@ -36,7 +36,7 @@ class MockConfig
     private $priority;
 
     public function __construct(
-        RequestConditions $requestConditions,
+        Conditions $requestConditions,
         Response $response,
         ScenarioName $scenarioName = null,
         Priority $priority = null
@@ -47,7 +47,7 @@ class MockConfig
         $this->response = $response;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\RequestConditions */
+    /** @return Conditions */
     public function getRequest()
     {
         return $this->requestConditions;
@@ -81,5 +81,10 @@ class MockConfig
     public function getPriority()
     {
         return $this->priority;
+    }
+
+    public function setPriority(Priority $priority)
+    {
+        return $this->priority = $priority;
     }
 }

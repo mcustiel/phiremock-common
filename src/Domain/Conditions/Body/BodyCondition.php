@@ -1,15 +1,15 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Conditions;
+namespace Mcustiel\Phiremock\Domain\Conditions\Body;
 
 use Mcustiel\Phiremock\Domain\Condition;
-use Mcustiel\Phiremock\Domain\Http\Body;
+use Mcustiel\Phiremock\Domain\Conditions\StringValue;
 
 class BodyCondition extends Condition
 {
     const LONG_CONTENT = '--VERY LONG CONTENTS--';
 
-    public function __construct(Matcher $matcher, Body $body)
+    public function __construct(BodyMatcher $matcher, StringValue $body)
     {
         parent::__construct($matcher, $body);
     }
@@ -20,16 +20,5 @@ class BodyCondition extends Condition
 
         return $this->getMatcher()->asString() . ' => ' .
             (isset($value[2000]) ? self::LONG_CONTENT : $value);
-    }
-
-    /** @return Body */
-    public function getValue()
-    {
-        return parent::getValue();
-    }
-
-    public static function fromCondition(Condition $condition)
-    {
-        return new self($condition->getMatcher(), new Body($condition->getValue()));
     }
 }

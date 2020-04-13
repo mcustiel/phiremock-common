@@ -4,12 +4,13 @@ namespace Mcustiel\Phiremock\Common\Utils;
 
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
+use Mcustiel\Phiremock\Domain\Response;
 
 abstract class ArrayToResponseConverter
 {
     const NO_DELAY = 0;
 
-    public function convert(array $responseArray)
+    public function convert(array $responseArray): Response
     {
         return $this->convertResponse(
             $responseArray,
@@ -20,13 +21,17 @@ abstract class ArrayToResponseConverter
 
     abstract protected function convertResponse(
         array $response,
-        Delay $delay = null,
-        ScenarioState $newScenarioState = null
-    );
+        ?Delay $delay,
+        ?ScenarioState $newScenarioState
+    ): Response;
 
-    /** @return \Mcustiel\Phiremock\Domain\Options\Delay */
-    private function getDelay(array $responseArray)
+    private function getDelay(array $responseArray): ?Delay
     {
+        if (empty($responseArray['response'])) {
+            return null;
+        }
+
+        $responseArray = $responseArray['response'];
         if (!empty($responseArray['delayMillis'])) {
             return new Delay($responseArray['delayMillis']);
         }
@@ -34,8 +39,7 @@ abstract class ArrayToResponseConverter
         return null;
     }
 
-    /** @return null|\Mcustiel\Phiremock\Domain\Options\ScenarioState */
-    private function getNewScenarioState(array $expectationArray)
+    private function getNewScenarioState(array $expectationArray): ?ScenarioState
     {
         $newScenarioState = null;
         if (!empty($expectationArray['newScenarioState'])) {

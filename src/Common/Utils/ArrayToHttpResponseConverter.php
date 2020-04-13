@@ -13,6 +13,7 @@ use Mcustiel\Phiremock\Domain\Http\StatusCode;
 use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
+use Mcustiel\Phiremock\Domain\Response;
 
 class ArrayToHttpResponseConverter extends ArrayToResponseConverter
 {
@@ -20,17 +21,17 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
 
     protected function convertResponse(
         array $responseArray,
-        Delay $delay = null,
-        ScenarioState $newScenarioState = null
-    ) {
-        if (!isset($responseArray['statusCode'])) {
-            throw new \InvalidArgumentException('Status code is not set');
+        ?Delay $delay,
+        ?ScenarioState $newScenarioState
+    ): Response {
+        if (!isset($responseArray['response']['statusCode'])) {
+            $responseArray['response']['statusCode'] = 200;
         }
 
         return new HttpResponse(
-            new StatusCode((int) $responseArray['statusCode']),
-            $this->getBody($responseArray),
-            $this->getHeaders($responseArray),
+            new StatusCode((int) $responseArray['response']['statusCode']),
+            $this->getBody($responseArray['response']),
+            $this->getHeaders($responseArray['response']),
             $delay,
             $newScenarioState
         );
@@ -43,21 +44,25 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
             return $this->convertHeaders($responseArray['headers']);
         }
 
-        return new HeadersCollection();
+        return null;
     }
 
     /** @return \Mcustiel\Phiremock\Domain\Http\Body */
     private function getBody(array $responseArray)
     {
         if (isset($responseArray['body'])) {
-            if ($this->isBinaryBody($responseArray['body'])) {
-                return new BinaryBody($responseArray['body']);
+            $body = $responseArray['body'];
+            if (\is_array($body)) {
+                $body = json_encode($body);
+            }
+            if ($this->isBinaryBody($body)) {
+                return new BinaryBody($body);
             }
 
-            return new Body($responseArray['body']);
+            return new Body($body);
         }
 
-        return Body::createEmpty();
+        return null;
     }
 
     /**
@@ -80,9 +85,7 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
     private function convertHeaders($headers)
     {
         if (!\is_array($headers)) {
-            throw new \InvalidArgumentException(
-                'Response headers are invalid: ' . var_export($headers, true)
-            );
+            throw new \InvalidArgumentException('Response headers are invalid: ' . var_export($headers, true));
         }
 
         $headerCollection = new HeadersCollection();

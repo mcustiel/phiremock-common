@@ -1,4 +1,3 @@
-==== BASE ====
 <?php
 
 namespace Mcustiel\Phiremock\Domain\Conditions;

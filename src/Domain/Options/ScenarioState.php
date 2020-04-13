@@ -9,12 +9,9 @@ class ScenarioState
     /** @var string * */
     private $state;
 
-    /**
-     * @param string $state
-     */
-    public function __construct($state)
+    public function __construct(string $state)
     {
-        $this->ensureIsValidState($state);
+        $this->ensureNotEmpty($state);
         $this->state = $state;
     }
 
@@ -41,12 +38,10 @@ class ScenarioState
         return $other->asString() === $this->asString();
     }
 
-    private function ensureIsValidState($state)
+    private function ensureNotEmpty($state)
     {
-        if (!\is_string($state)) {
-            throw new \InvalidArgumentException(
-                sprintf('Scenario state must be a string. Got: %s', \gettype($state))
-            );
+        if (empty($state)) {
+            throw new \InvalidArgumentException('Scenario state can not be empty');
         }
     }
 }

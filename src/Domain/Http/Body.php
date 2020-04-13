@@ -10,7 +10,7 @@ class Body
     /** @param string $body */
     public function __construct($body)
     {
-        $this->ensureIsValidBody($body);
+        $this->ensureIsString($body);
         $this->body = $body;
     }
 
@@ -42,12 +42,10 @@ class Body
         return $this->asString() === $other->asString();
     }
 
-    private function ensureIsValidBody($body)
+    private function ensureIsString($body)
     {
         if (!\is_string($body)) {
-            throw new \InvalidArgumentException(
-                sprintf('Body must be a string. Got: %s', \gettype($body))
-            );
+            throw new \InvalidArgumentException(sprintf('Body must be a string. Got: %s', \gettype($body)));
         }
     }
 }

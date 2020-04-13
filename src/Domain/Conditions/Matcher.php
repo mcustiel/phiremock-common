@@ -15,27 +15,27 @@ class Matcher
 
     public static function equalTo(): self
     {
-        return new self(MatchersEnum::EQUAL_TO);
+        return new static(MatchersEnum::EQUAL_TO);
     }
 
     public static function sameString(): self
     {
-        return new self(MatchersEnum::SAME_STRING);
+        return new static(MatchersEnum::SAME_STRING);
     }
 
     public static function sameJson(): self
     {
-        return new self(MatchersEnum::SAME_JSON);
+        return new static(MatchersEnum::SAME_JSON);
     }
 
     public static function contains(): self
     {
-        return new self(MatchersEnum::CONTAINS);
+        return new static(MatchersEnum::CONTAINS);
     }
 
     public static function matches(): self
     {
-        return new self(MatchersEnum::MATCHES);
+        return new static(MatchersEnum::MATCHES);
     }
 
     public function asString(): string
@@ -46,15 +46,11 @@ class Matcher
     private function ensureIsValidMatcher($matcher): void
     {
         if (!\is_string($matcher)) {
-            throw new \InvalidArgumentException(
-                sprintf('Matcher must be a string. Got: %s', \gettype($matcher))
-            );
+            throw new \InvalidArgumentException(sprintf('Matcher must be a string. Got: %s', \gettype($matcher)));
         }
 
         if (!MatchersEnum::isValidMatcher($matcher)) {
-            throw new \InvalidArgumentException(
-                sprintf('Invalid matcher: %s', $matcher)
-            );
+            throw new \InvalidArgumentException(sprintf('Invalid condition matcher specified: %s', $matcher));
         }
     }
 }

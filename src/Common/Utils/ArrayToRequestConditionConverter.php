@@ -2,44 +2,41 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\Conditions\BodyCondition;
-use Mcustiel\Phiremock\Domain\Conditions\HeaderCondition;
-use Mcustiel\Phiremock\Domain\Conditions\HeaderConditionCollection;
-use Mcustiel\Phiremock\Domain\Conditions\Matcher;
-use Mcustiel\Phiremock\Domain\Conditions\UrlCondition;
-use Mcustiel\Phiremock\Domain\Http\Body;
+use Mcustiel\Phiremock\Domain\Conditions;
+use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
+use Mcustiel\Phiremock\Domain\Conditions\Body\BodyMatcher;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionCollection;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionIterator;
+use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderMatcher;
+use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
+use Mcustiel\Phiremock\Domain\Conditions\Method\MethodMatcher;
+use Mcustiel\Phiremock\Domain\Conditions\StringValue;
+use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
+use Mcustiel\Phiremock\Domain\Conditions\Url\UrlMatcher;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
-use Mcustiel\Phiremock\Domain\Http\HeaderValue;
 use Mcustiel\Phiremock\Domain\Http\Method;
-use Mcustiel\Phiremock\Domain\Http\Url;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
-use Mcustiel\Phiremock\Domain\RequestConditions;
 
 class ArrayToRequestConditionConverter
 {
-    public function convert(array $requestArray)
+    public function convert(array $requestArray): Conditions
     {
-        if (!isset($requestArray['method'])) {
-            throw new \InvalidArgumentException('Method is not set');
-        }
-
-        return new RequestConditions(
-            new Method($requestArray['method']),
-            $this->convertUrlCondition($requestArray),
-            $this->convertBodyCondition($requestArray),
-            $this->convertHeadersConditions($requestArray),
+        return new Conditions(
+            $this->convertMethodCondition($requestArray['request']),
+            $this->convertUrlCondition($requestArray['request']),
+            $this->convertBodyCondition($requestArray['request']),
+            $this->convertHeadersConditions($requestArray['request']),
             $this->convertScenarioState($requestArray)
         );
     }
 
-    private function convertHeadersConditions(array $requestArray)
+    protected function convertHeadersConditions(array $requestArray): ?HeaderConditionIterator
     {
         if (!empty($requestArray['headers'])) {
             $headers = $requestArray['headers'];
             if (!\is_array($headers)) {
-                throw new \InvalidArgumentException(
-                    'Headers condition is invalid: ' . var_export($headers, true)
-                );
+                throw new \InvalidArgumentException('Headers condition is invalid: ' . var_export($headers, true));
             }
             $headersCollection = new HeaderConditionCollection();
             foreach ($headers as $headerName => $header) {
@@ -51,60 +48,85 @@ class ArrayToRequestConditionConverter
                 );
             }
 
-            return $headersCollection;
+            return $headersCollection->iterator();
         }
 
         return null;
     }
 
-    private function convertHeaderCondition($header)
+    protected function convertHeaderCondition($header): HeaderCondition
     {
         if (!\is_array($header)) {
-            throw new \InvalidArgumentException(
-                'Headers condition is invalid: ' . var_export($header, true)
-            );
+            throw new \InvalidArgumentException('Headers condition is invalid: ' . var_export($header, true));
+        }
+        $value = current($header);
+        if (!\is_string($value)) {
+            throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
         }
 
         return new HeaderCondition(
-            new Matcher(key($header)),
-            new HeaderValue(current($header))
+            new HeaderMatcher(key($header)),
+            new StringValue(current($header))
         );
     }
 
-    private function convertUrlCondition(array $requestArray)
+    protected function convertUrlCondition(array $requestArray): ?UrlCondition
     {
         if (!empty($requestArray['url'])) {
             $url = $requestArray['url'];
             if (!\is_array($url)) {
-                throw new \InvalidArgumentException(
-                    'Url condition is invalid: ' . var_export($url, true)
-                );
+                throw new \InvalidArgumentException('Url condition is invalid: ' . var_export($url, true));
+            }
+            $value = current($url);
+            if (!\is_string($value)) {
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
             }
 
-            return new UrlCondition(new Matcher(key($url)), new Url(current($url)));
+            return new UrlCondition(new UrlMatcher(key($url)), new StringValue(current($url)));
         }
 
         return null;
     }
 
-    private function convertBodyCondition(array $requestArray)
+    protected function convertMethodCondition(array $requestArray): ?MethodCondition
+    {
+        if (!empty($requestArray['method'])) {
+            $method = $requestArray['method'];
+            if (!\is_string($method)) {
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
+            }
+
+            return new MethodCondition(
+                MethodMatcher::equalTo(),
+                new Method($method)
+            );
+        }
+
+        return null;
+    }
+
+    protected function convertBodyCondition(array $requestArray): ?BodyCondition
     {
         if (!empty($requestArray['body'])) {
             $body = $requestArray['body'];
             if (!\is_array($body)) {
-                throw new \InvalidArgumentException(
-                    'Body condition is invalid: ' . var_export($body, true)
-                );
+                throw new \InvalidArgumentException('Body condition is invalid: ' . var_export($body, true));
+            }
+            $value = current($body);
+            if (!\is_string($value)) {
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
             }
 
-            return new BodyCondition(new Matcher(key($body)), new Body(current($body)));
+            return new BodyCondition(
+                new BodyMatcher(key($body)),
+                new StringValue(current($body))
+            );
         }
 
         return null;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\Options\ScenarioState|null */
-    private function convertScenarioState(array $requestArray)
+    protected function convertScenarioState(array $requestArray): ?ScenarioState
     {
         if (!empty($requestArray['scenarioStateIs'])) {
             return new ScenarioState($requestArray['scenarioStateIs']);

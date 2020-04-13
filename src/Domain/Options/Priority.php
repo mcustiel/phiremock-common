@@ -37,14 +37,10 @@ class Priority
     private function ensureIsValidPriority($priority)
     {
         if (!\is_int($priority)) {
-            throw new \InvalidArgumentException(
-                sprintf('Priority must be an integer. Got: %s', \gettype($priority))
-            );
+            throw new \InvalidArgumentException(sprintf('Priority must be an integer. Got: %s', \gettype($priority)));
         }
         if ($priority < 0) {
-            throw new \InvalidArgumentException(
-                sprintf('Priority must be greater or equal to 0. Got: %d', $priority)
-            );
+            throw new \InvalidArgumentException(sprintf('Priority must be greater or equal to 0. Got: %d', $priority));
         }
     }
 }

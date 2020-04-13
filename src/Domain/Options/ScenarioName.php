@@ -23,9 +23,7 @@ class ScenarioName
     private function ensureIsValidScenarioName($name)
     {
         if (!\is_string($name)) {
-            throw new \InvalidArgumentException(
-                sprintf('Scenario name must be a string. Got: %s', \gettype($name))
-            );
+            throw new \InvalidArgumentException(sprintf('Scenario name must be a string. Got: %s', \gettype($name)));
         }
     }
 }

@@ -2,46 +2,51 @@
 
 namespace Mcustiel\Phiremock\Tests\Unit\Common\Utils;
 
+use Mcustiel\Phiremock\Common\Utils\ArrayToConditionsConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator;
-use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter;
+use Mcustiel\Phiremock\Domain\Conditions;
+use Mcustiel\Phiremock\Domain\Expectation;
 use Mcustiel\Phiremock\Domain\HttpResponse;
-use Mcustiel\Phiremock\Domain\MockConfig;
 use Mcustiel\Phiremock\Domain\Options\Priority;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
-use Mcustiel\Phiremock\Domain\RequestConditions;
+use Mcustiel\Phiremock\Domain\Version;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ArrayToExpectationConverterTest extends TestCase
 {
-    /** @var ArrayToRequestConditionConverter|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ArrayToRequestConditionConverter|MockObject */
     private $requestConverter;
-    /** @var ArrayToHttpResponseConverter|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ArrayToHttpResponseConverter|MockObject */
     private $responseConverter;
-    /** @var ArrayToStateConditionsConverter|\PHPUnit_Framework_MockObject_MockObject */
-    private $locator;
+    /** @var ArrayToResponseConverterLocator|MockObject */
+    private $responseConverterLocator;
+    /** @var ArrayToConditionsConverterLocator|MockObject */
+    private $conditionsConverterLocator;
     /** @var ArrayToExpectationConverter */
     private $expectationConverter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requestConverter = $this->createMock(ArrayToRequestConditionConverter::class);
-        $this->locator = $this->createMock(ArrayToResponseConverterLocator::class);
+        $this->responseConverterLocator = $this->createMock(ArrayToResponseConverterLocator::class);
         $this->responseConverter = $this->createMock(ArrayToHttpResponseConverter::class);
+        $this->conditionsConverterLocator = $this->createMock(ArrayToConditionsConverterLocator::class);
         $this->expectationConverter = new ArrayToExpectationConverter(
-            $this->requestConverter,
-            $this->locator
+            $this->conditionsConverterLocator,
+            $this->responseConverterLocator
         );
     }
 
-    public function testConvertsAnArrayWithNullValuesToExpectation()
+    public function testConvertsAnArrayWithNullValuesToExpectation(): void
     {
         $requestArray = ['tomato'];
         $responseArray = ['potato'];
 
-        $request = $this->createMock(RequestConditions::class);
+        $request = $this->createMock(Conditions::class);
         $response = $this->createMock(HttpResponse::class);
 
         $expectationArray = [
@@ -53,7 +58,11 @@ class ArrayToExpectationConverterTest extends TestCase
             'scenarioName'     => null,
             'priority'         => null,
         ];
-        $this->locator->expects($this->once())
+        $this->conditionsConverterLocator->expects($this->once())
+            ->method('locate')
+            ->with($this->equalTo(new Version(1)))
+            ->willReturn($this->requestConverter);
+        $this->responseConverterLocator->expects($this->once())
             ->method('locate')
             ->with($this->identicalTo($responseArray))
             ->willReturn($this->responseConverter);
@@ -67,29 +76,33 @@ class ArrayToExpectationConverterTest extends TestCase
             ->willReturn($response);
 
         $expectation = $this->expectationConverter->convert($expectationArray);
-        $this->assertInstanceOf(MockConfig::class, $expectation);
+        $this->assertInstanceOf(Expectation::class, $expectation);
         $this->assertSame($request, $expectation->getRequest());
         $this->assertSame($response, $expectation->getResponse());
         $this->assertFalse($expectation->hasScenarioName());
         $this->assertFalse($expectation->hasPriority());
     }
 
-    public function testConvertsAnArrayWithUnsetValuesToExpectation()
+    public function testConvertsAnArrayWithUnsetValuesToExpectation(): void
     {
         $requestArray = ['tomato'];
         $responseArray = ['potato'];
 
-        $request = $this->createMock(RequestConditions::class);
+        $request = $this->createMock(Conditions::class);
         $response = $this->createMock(HttpResponse::class);
 
         $expectationArray = [
             'request'  => $requestArray,
             'response' => $responseArray,
         ];
-        $this->locator->expects($this->once())
+        $this->responseConverterLocator->expects($this->once())
             ->method('locate')
             ->with($this->identicalTo($responseArray))
             ->willReturn($this->responseConverter);
+        $this->conditionsConverterLocator->expects($this->once())
+            ->method('locate')
+            ->with($this->equalTo(new Version(1)))
+            ->willReturn($this->requestConverter);
         $this->requestConverter->expects($this->once())
             ->method('convert')
             ->with($this->identicalTo($requestArray))
@@ -100,19 +113,19 @@ class ArrayToExpectationConverterTest extends TestCase
             ->willReturn($response);
 
         $expectation = $this->expectationConverter->convert($expectationArray);
-        $this->assertInstanceOf(MockConfig::class, $expectation);
+        $this->assertInstanceOf(Expectation::class, $expectation);
         $this->assertSame($request, $expectation->getRequest());
         $this->assertSame($response, $expectation->getResponse());
         $this->assertFalse($expectation->hasScenarioName());
         $this->assertFalse($expectation->hasPriority());
     }
 
-    public function testConvertsAnArrayWithoutNullValuesToExpectation()
+    public function testConvertsAnArrayWithoutNullValuesToExpectation(): void
     {
         $requestArray = ['tomato'];
         $responseArray = ['potato'];
 
-        $request = $this->createMock(RequestConditions::class);
+        $request = $this->createMock(Conditions::class);
         $response = $this->createMock(HttpResponse::class);
 
         $expectationArray = [
@@ -123,10 +136,14 @@ class ArrayToExpectationConverterTest extends TestCase
             'scenarioName'     => 'banana',
             'priority'         => 3,
         ];
-        $this->locator->expects($this->once())
+        $this->responseConverterLocator->expects($this->once())
             ->method('locate')
             ->with($this->identicalTo($responseArray))
             ->willReturn($this->responseConverter);
+        $this->conditionsConverterLocator->expects($this->once())
+            ->method('locate')
+            ->with($this->equalTo(new Version(1)))
+            ->willReturn($this->requestConverter);
         $this->requestConverter->expects($this->once())
             ->method('convert')
             ->with($this->identicalTo($requestArray))
@@ -137,7 +154,7 @@ class ArrayToExpectationConverterTest extends TestCase
             ->willReturn($response);
 
         $expectation = $this->expectationConverter->convert($expectationArray);
-        $this->assertInstanceOf(MockConfig::class, $expectation);
+        $this->assertInstanceOf(Expectation::class, $expectation);
         $this->assertSame($request, $expectation->getRequest());
         $this->assertSame($response, $expectation->getResponse());
         $this->assertInstanceOf(ScenarioName::class, $expectation->getScenarioName());

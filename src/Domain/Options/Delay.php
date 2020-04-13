@@ -29,14 +29,10 @@ class Delay
     private function ensureIsValidDelay($delay)
     {
         if (!\is_int($delay)) {
-            throw new \InvalidArgumentException(
-                sprintf('Delay must be an integer. Got: %s', \gettype($delay))
-            );
+            throw new \InvalidArgumentException(sprintf('Delay must be an integer. Got: %s', \gettype($delay)));
         }
         if ($delay < 0) {
-            throw new \InvalidArgumentException(
-                sprintf('Delay must be greater or equal to 0. Got: %d', $delay)
-            );
+            throw new \InvalidArgumentException(sprintf('Delay must be greater or equal to 0. Got: %d', $delay));
         }
     }
 }
