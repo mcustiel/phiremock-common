@@ -19,19 +19,16 @@
 namespace Mcustiel\Phiremock\Domain;
 
 use Mcustiel\Phiremock\Domain\Conditions\Matcher;
+use Mcustiel\Phiremock\Domain\Conditions\ConditionValue;
 
-class Condition
+abstract class Condition
 {
     /** @var Matcher */
     private $matcher;
-    /** @var mixed */
+    /** @var ConditionValue */
     private $value;
 
-    /**
-     * @param string|null $matcher
-     * @param mixed       $value
-     */
-    public function __construct(Matcher $matcher, $value)
+    public function __construct(Matcher $matcher, ConditionValue $value)
     {
         $this->matcher = $matcher;
         $this->value = $value;
@@ -39,21 +36,15 @@ class Condition
 
     public function __toString()
     {
-        return $this->matcher->asString() . ' ' . var_export($this->value, true);
+        return $this->getMatcher()->asString() . ' ' . $this->getValue()->asString();
     }
 
-    /**
-     * @return Matcher
-     */
-    public function getMatcher()
+    public function getMatcher(): Matcher
     {
         return $this->matcher;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function getValue(): ConditionValue
     {
         return $this->value;
     }

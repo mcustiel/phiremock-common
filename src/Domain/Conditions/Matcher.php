@@ -7,50 +7,43 @@ class Matcher
     /** @var string */
     private $matcher;
 
-    /** @param string $matcher */
-    public function __construct($matcher)
+    public function __construct(string $matcher)
     {
         $this->ensureIsValidMatcher($matcher);
         $this->matcher = $matcher;
     }
 
-    /** @return self */
-    public static function equalTo()
+    public static function equalTo(): self
     {
         return new self(MatchersEnum::EQUAL_TO);
     }
 
-    /** @return self */
-    public static function sameString()
+    public static function sameString(): self
     {
         return new self(MatchersEnum::SAME_STRING);
     }
 
-    /** @return self */
-    public static function sameJson()
+    public static function sameJson(): self
     {
         return new self(MatchersEnum::SAME_JSON);
     }
 
-    /** @return self */
-    public static function contains()
+    public static function contains(): self
     {
         return new self(MatchersEnum::CONTAINS);
     }
 
-    /** @return self */
-    public static function matches()
+    public static function matches(): self
     {
         return new self(MatchersEnum::MATCHES);
     }
 
-    /** @return string */
-    public function asString()
+    public function asString(): string
     {
         return $this->matcher;
     }
 
-    private function ensureIsValidMatcher($matcher)
+    private function ensureIsValidMatcher($matcher): void
     {
         if (!\is_string($matcher)) {
             throw new \InvalidArgumentException(
