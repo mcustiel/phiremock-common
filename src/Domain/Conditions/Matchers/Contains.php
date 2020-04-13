@@ -12,7 +12,7 @@ class Contains extends Matcher
         parent::__construct($checkValue);
     }
 
-    public function matches(string $value): bool
+    public function matches($value): bool
     {
         return strpos($this->getCheckValue()->get(), $value) !== false;
     }

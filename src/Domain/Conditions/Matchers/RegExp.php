@@ -12,9 +12,9 @@ class RegExp extends Matcher
         parent::__construct($checkValue);
     }
 
-    public function matches(string $value): bool
+    public function matches($value): bool
     {
-        return (bool) preg_match($value, $this->getCheckValue()->get());
+        return preg_match($this->getCheckValue()->get(), $value) !== 0;
     }
 
     public function getName(): string

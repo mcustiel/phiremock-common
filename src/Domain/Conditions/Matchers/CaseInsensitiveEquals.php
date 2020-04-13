@@ -12,7 +12,7 @@ class CaseInsensitiveEquals extends Matcher
         parent::__construct($checkValue);
     }
 
-    public function matches(string $value): bool
+    public function matches($value): bool
     {
         return strtolower($value) === strtolower($this->getCheckValue()->get());
     }
