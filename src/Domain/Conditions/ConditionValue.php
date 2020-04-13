@@ -2,7 +2,7 @@
 
 namespace Mcustiel\Phiremock\Domain\Conditions;
 
-abstract class ConditionValue
+class ConditionValue
 {
     /** @var mixed */
     private $value;

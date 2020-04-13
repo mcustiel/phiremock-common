@@ -20,13 +20,13 @@ namespace Mcustiel\Phiremock\Domain\Conditions;
 
 class MatchersEnum
 {
-    const MATCHES = 'matches';
-    const EQUAL_TO = 'isEqualTo';
-    const SAME_STRING = 'isSameString';
-    const CONTAINS = 'contains';
-    const SAME_JSON = 'isSameJsonObject';
+    public const MATCHES = 'matches';
+    public const EQUAL_TO = 'isEqualTo';
+    public const SAME_STRING = 'isSameString';
+    public const CONTAINS = 'contains';
+    public const SAME_JSON = 'isSameJsonObject';
 
-    const VALID_MATCHERS = [
+    private const VALID_MATCHERS = [
         self::CONTAINS,
         self::EQUAL_TO,
         self::MATCHES,

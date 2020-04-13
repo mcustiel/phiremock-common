@@ -18,25 +18,22 @@
 
 namespace Mcustiel\Phiremock\Domain;
 
-use Mcustiel\Phiremock\Domain\Conditions\Matcher;
 use Mcustiel\Phiremock\Domain\Conditions\ConditionValue;
+use Mcustiel\Phiremock\Domain\Conditions\Matchers\Matcher;
 
 abstract class Condition
 {
     /** @var Matcher */
     private $matcher;
-    /** @var ConditionValue */
-    private $value;
 
-    public function __construct(Matcher $matcher, ConditionValue $value)
+    public function __construct(Matcher $matcher)
     {
         $this->matcher = $matcher;
-        $this->value = $value;
     }
 
     public function __toString()
     {
-        return $this->getMatcher()->asString() . ' ' . $this->getValue()->asString();
+        return $this->getMatcher()->getName() . ' ' . $this->getValue()->asString();
     }
 
     public function getMatcher(): Matcher
@@ -46,6 +43,6 @@ abstract class Condition
 
     public function getValue(): ConditionValue
     {
-        return $this->value;
+        return $this->matcher->getCheckValue();
     }
 }

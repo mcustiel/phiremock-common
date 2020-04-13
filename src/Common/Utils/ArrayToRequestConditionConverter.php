@@ -4,22 +4,25 @@ namespace Mcustiel\Phiremock\Common\Utils;
 
 use Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
-use Mcustiel\Phiremock\Domain\Conditions\Body\BodyMatcher;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionCollection;
 use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionIterator;
-use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderMatcher;
+use Mcustiel\Phiremock\Domain\Conditions\Matchers\MatcherFactory;
+use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
 use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
-use Mcustiel\Phiremock\Domain\Conditions\Method\MethodMatcher;
-use Mcustiel\Phiremock\Domain\Conditions\StringValue;
 use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
-use Mcustiel\Phiremock\Domain\Conditions\Url\UrlMatcher;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
-use Mcustiel\Phiremock\Domain\Http\Method;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class ArrayToRequestConditionConverter
 {
+    private $matcherFactory;
+
+    public function __construct()
+    {
+        $this->matcherFactory = new MatcherFactory();
+    }
+
     public function convert(array $requestArray): Conditions
     {
         return new Conditions(
@@ -54,35 +57,36 @@ class ArrayToRequestConditionConverter
         return null;
     }
 
-    protected function convertHeaderCondition($header): HeaderCondition
+    protected function convertHeaderCondition($headerCondition): HeaderCondition
     {
-        if (!\is_array($header)) {
-            throw new \InvalidArgumentException('Headers condition is invalid: ' . var_export($header, true));
+        if (!\is_array($headerCondition)) {
+            throw new \InvalidArgumentException('Headers condition is invalid: ' . var_export($headerCondition, true));
         }
-        $value = current($header);
+        $value = current($headerCondition);
         if (!\is_string($value)) {
             throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
         }
 
         return new HeaderCondition(
-            new HeaderMatcher(key($header)),
-            new StringValue(current($header))
+            $this->matcherFactory->createFrom(key($headerCondition), $value)
         );
     }
 
     protected function convertUrlCondition(array $requestArray): ?UrlCondition
     {
         if (!empty($requestArray['url'])) {
-            $url = $requestArray['url'];
-            if (!\is_array($url)) {
-                throw new \InvalidArgumentException('Url condition is invalid: ' . var_export($url, true));
+            $urlCondition = $requestArray['url'];
+            if (!\is_array($urlCondition)) {
+                throw new \InvalidArgumentException('Url condition is invalid: ' . var_export($urlCondition, true));
             }
-            $value = current($url);
+            $value = current($urlCondition);
             if (!\is_string($value)) {
                 throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
             }
 
-            return new UrlCondition(new UrlMatcher(key($url)), new StringValue(current($url)));
+            return new UrlCondition(
+                $this->matcherFactory->createFrom(key($urlCondition), $value)
+            );
         }
 
         return null;
@@ -97,8 +101,7 @@ class ArrayToRequestConditionConverter
             }
 
             return new MethodCondition(
-                MethodMatcher::equalTo(),
-                new Method($method)
+                $this->matcherFactory->createFrom(MatchersEnum::SAME_STRING, $method)
             );
         }
 
@@ -108,18 +111,17 @@ class ArrayToRequestConditionConverter
     protected function convertBodyCondition(array $requestArray): ?BodyCondition
     {
         if (!empty($requestArray['body'])) {
-            $body = $requestArray['body'];
-            if (!\is_array($body)) {
-                throw new \InvalidArgumentException('Body condition is invalid: ' . var_export($body, true));
+            $bodyCondition = $requestArray['body'];
+            if (!\is_array($bodyCondition)) {
+                throw new \InvalidArgumentException('Body condition is invalid: ' . var_export($bodyCondition, true));
             }
-            $value = current($body);
+            $value = current($bodyCondition);
             if (!\is_string($value)) {
                 throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
             }
 
             return new BodyCondition(
-                new BodyMatcher(key($body)),
-                new StringValue(current($body))
+                $this->matcherFactory->createFrom(key($bodyCondition), $value)
             );
         }
 

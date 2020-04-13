@@ -16,49 +16,41 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Server\Http\Matchers;
+namespace Mcustiel\Phiremock\Domain\Conditions\Matchers;
 
-use Mcustiel\Phiremock\Server\Utils\ArraysHelper;
-use Psr\Log\LoggerInterface;
+use Mcustiel\Phiremock\Common\Utils\ArraysHelper;
+use Mcustiel\Phiremock\Domain\Conditions\StringValue;
 
-class JsonObjectsEquals implements MatcherInterface
+class JsonContains extends Matcher
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(LoggerInterface $logger)
+    public function __construct(StringValue $string)
     {
-        $this->logger = $logger;
+        parent::__construct($string);
     }
 
-    public function match($value, $argument = null): bool
+    public function matches($value): bool
     {
         if (\is_string($value)) {
             $requestValue = $this->getParsedValue($value);
         } else {
             $requestValue = $value;
         }
-        $configValue = $this->decodeJson($argument);
-
-        $this->logger->debug('Decoded json: ' . var_export($configValue, true));
+        $configValue = $this->decodeJson($this->getCheckValue()->get());
 
         if (!\is_array($requestValue) || !\is_array($configValue)) {
             return false;
         }
 
-        return ArraysHelper::areRecursivelyEquals($requestValue, $configValue);
+        return ArraysHelper::arrayIsContained($requestValue, $configValue);
     }
 
-    /**
-     * @param string $value
-     *
-     * @return mixed
-     */
-    private function decodeJson($value)
+    public function getName(): string
     {
-        $this->logger->debug('Received json string: ' . $value);
+        return 'jsonEquals';
+    }
+
+    private function decodeJson(string $value): array
+    {
         $decodedValue = json_decode($value, true);
         if (JSON_ERROR_NONE !== json_last_error() || $decodedValue === null) {
             throw new \InvalidArgumentException('JSON parsing error: ' . json_last_error_msg());
@@ -67,19 +59,12 @@ class JsonObjectsEquals implements MatcherInterface
         return $decodedValue;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return mixed
-     */
-    private function getParsedValue($value)
+    private function getParsedValue(string $value)
     {
         try {
             $requestValue = $this->decodeJson($value);
         } catch (\Throwable $e) {
             $requestValue = $value;
-            $this->logger->warning('Invalid json received in request: ' . $value);
-            //throw $e;
         }
 
         return $requestValue;

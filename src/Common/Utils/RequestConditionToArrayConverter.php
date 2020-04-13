@@ -31,7 +31,7 @@ class RequestConditionToArrayConverter
             /** @var HeaderCondition $headerCondition */
             foreach ($headers as $headerName => $headerCondition) {
                 $headersArray[$headerName->asString()] = [
-                    $headerCondition->getMatcher()->asString() => $headerCondition->getValue()->asString(),
+                    $headerCondition->getMatcher()->getName() => $headerCondition->getValue()->asString(),
                 ];
             }
             $requestArray['headers'] = $headersArray;
@@ -42,7 +42,7 @@ class RequestConditionToArrayConverter
     {
         $body = $request->getBody();
         $requestArray['body'] = null === $body ? null : [
-            $body->getMatcher()->asString() => $body->getValue()->asString(),
+            $body->getMatcher()->getName() => $body->getValue()->asString(),
         ];
     }
 
@@ -50,7 +50,7 @@ class RequestConditionToArrayConverter
     {
         $url = $request->getUrl();
         $requestArray['url'] = null === $url ? null : [
-            $url->getMatcher()->asString() => $url->getValue()->asString(),
+            $url->getMatcher()->getName() => $url->getValue()->asString(),
         ];
     }
 

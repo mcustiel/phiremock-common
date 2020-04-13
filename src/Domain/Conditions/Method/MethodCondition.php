@@ -3,13 +3,20 @@
 namespace Mcustiel\Phiremock\Domain\Conditions\Method;
 
 use Mcustiel\Phiremock\Domain\Condition;
-use Mcustiel\Phiremock\Domain\Http\Method;
+use Mcustiel\Phiremock\Domain\Conditions\Matchers\Matcher;
+use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
 
 class MethodCondition extends Condition
 {
-    public function __construct(MethodMatcher $matcher, Method $value)
+    private const VALID_MATCHERS = [
+        MatchersEnum::SAME_STRING,
+        MatchersEnum::MATCHES,
+    ];
+
+    public function __construct(Matcher $matcher)
     {
-        parent::__construct($matcher, $value);
+        $this->ensureIsValidMatcher($matcher->getName());
+        parent::__construct($matcher);
     }
 
     public function __toString()
@@ -18,8 +25,15 @@ class MethodCondition extends Condition
 
         return sprintf(
             '%s => BINARY CONTENTS (%s bytes)',
-            $this->getMatcher()->asString(),
+            $this->getMatcher()->getName(),
             \strlen($value)
         );
+    }
+
+    private function ensureIsValidMatcher(string $matcherName): void
+    {
+        if (!\in_array($matcherName, self::VALID_MATCHERS, true)) {
+            throw new \InvalidArgumentException(sprintf('%s is not an allowed condition matcher for http methods.', $matcherName));
+        }
     }
 }
