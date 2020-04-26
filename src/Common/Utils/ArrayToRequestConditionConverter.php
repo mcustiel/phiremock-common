@@ -2,15 +2,15 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
+use Mcustiel\Phiremock\Domain\Condition\Conditions\BodyCondition;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderCondition;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderConditionCollection;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderConditionIterator;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\MethodCondition;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\UrlCondition;
+use Mcustiel\Phiremock\Domain\Condition\Matchers\MatcherFactory;
+use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
 use Mcustiel\Phiremock\Domain\Conditions;
-use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
-use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
-use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionCollection;
-use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionIterator;
-use Mcustiel\Phiremock\Domain\Conditions\Matchers\MatcherFactory;
-use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
-use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
-use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 

@@ -1,11 +1,12 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Conditions\Matchers;
+namespace Mcustiel\Phiremock\Domain\Condition\Matchers;
 
-use Mcustiel\Phiremock\Domain\Conditions\ConditionValue;
-use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
-use Mcustiel\Phiremock\Domain\Conditions\Pattern;
-use Mcustiel\Phiremock\Domain\Conditions\StringValue;
+use Mcustiel\Phiremock\Domain\Condition\ConditionValue;
+use Mcustiel\Phiremock\Domain\Condition\Json;
+use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
+use Mcustiel\Phiremock\Domain\Condition\Pattern;
+use Mcustiel\Phiremock\Domain\Condition\StringValue;
 
 class MatcherFactory
 {
@@ -19,7 +20,7 @@ class MatcherFactory
             case MatchersEnum::MATCHES:
                 return new RegExp(new Pattern($value));
             case MatchersEnum::SAME_JSON:
-                return new JsonEquals(new StringValue($value));
+                return new JsonEquals(new Json($value));
             case MatchersEnum::SAME_STRING:
                 return new CaseInsensitiveEquals(new StringValue($value));
         }

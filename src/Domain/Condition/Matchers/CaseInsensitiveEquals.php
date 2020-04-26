@@ -1,9 +1,9 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Conditions\Matchers;
+namespace Mcustiel\Phiremock\Domain\Condition\Matchers;
 
-use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
-use Mcustiel\Phiremock\Domain\Conditions\StringValue;
+use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
+use Mcustiel\Phiremock\Domain\Condition\StringValue;
 
 class CaseInsensitiveEquals extends Matcher
 {

@@ -2,8 +2,8 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
+use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Conditions;
-use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 
 class RequestConditionToArrayConverter

@@ -1,8 +1,8 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Conditions\Matchers;
+namespace Mcustiel\Phiremock\Domain\Condition\Matchers;
 
-use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
+use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
 
 class Equals extends Matcher
 {

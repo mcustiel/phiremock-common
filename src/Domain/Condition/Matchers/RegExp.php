@@ -1,9 +1,9 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Conditions\Matchers;
+namespace Mcustiel\Phiremock\Domain\Condition\Matchers;
 
-use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
-use Mcustiel\Phiremock\Domain\Conditions\Pattern;
+use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
+use Mcustiel\Phiremock\Domain\Condition\Pattern;
 
 class RegExp extends Matcher
 {

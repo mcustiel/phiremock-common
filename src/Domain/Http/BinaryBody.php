@@ -6,7 +6,7 @@ use Mcustiel\Phiremock\Domain\BinaryInfo;
 
 class BinaryBody extends Body
 {
-    public function __construct($body)
+    public function __construct(string $body)
     {
         parent::__construct(
             base64_decode(substr($body, BinaryInfo::BINARY_BODY_PREFIX_LENGTH), true)

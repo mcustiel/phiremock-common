@@ -1,8 +1,8 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Conditions\Matchers;
+namespace Mcustiel\Phiremock\Domain\Condition\Matchers;
 
-use Mcustiel\Phiremock\Domain\Conditions\ConditionValue;
+use Mcustiel\Phiremock\Domain\Condition\ConditionValue;
 
 abstract class Matcher
 {

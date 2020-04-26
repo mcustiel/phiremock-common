@@ -1,10 +1,10 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Conditions\BinaryBody;
+namespace Mcustiel\Phiremock\Domain\Condition\BinaryBody;
 
-use Mcustiel\Phiremock\Domain\Condition;
-use Mcustiel\Phiremock\Domain\Conditions\Matchers\Matcher;
-use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
+use Mcustiel\Phiremock\Domain\Condition\Condition;
+use Mcustiel\Phiremock\Domain\Condition\Matchers\Matcher;
+use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
 
 class BinaryBodyCondition extends Condition
 {

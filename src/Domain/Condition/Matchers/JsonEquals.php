@@ -16,15 +16,15 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Domain\Conditions\Matchers;
+namespace Mcustiel\Phiremock\Domain\Condition\Matchers;
 
 use Mcustiel\Phiremock\Common\Utils\ArraysHelper;
-use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
-use Mcustiel\Phiremock\Domain\Conditions\StringValue;
+use Mcustiel\Phiremock\Domain\Condition\Json;
+use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
 
 class JsonEquals extends Matcher
 {
-    public function __construct(StringValue $string)
+    public function __construct(Json $string)
     {
         parent::__construct($string);
     }

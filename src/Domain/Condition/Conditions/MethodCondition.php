@@ -1,10 +1,10 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Conditions\Method;
+namespace Mcustiel\Phiremock\Domain\Condition\Conditions;
 
-use Mcustiel\Phiremock\Domain\Condition;
-use Mcustiel\Phiremock\Domain\Conditions\Matchers\Matcher;
-use Mcustiel\Phiremock\Domain\Conditions\MatchersEnum;
+use Mcustiel\Phiremock\Domain\Condition\Condition;
+use Mcustiel\Phiremock\Domain\Condition\Matchers\Matcher;
+use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
 
 class MethodCondition extends Condition
 {

@@ -13,6 +13,7 @@ class JsonConvertTest extends TestCase
     private const EMPTY_CONFIG = '{}';
     private const EMPTY_REQUEST = '{"request": {}, "response": {"statusCode": 200}}';
     private const EMPTY_RESPONSE = '{"request": {"method": "GET"}, "response": {}}';
+    private const JSON_CONDITION = '{"request": {"method": "GET", "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}}, "response": {}}';
     private const BASIC_CONFIG = '{"request": {"method": "GET"}, "response": {"status": 200}}';
     private const FULL_CONFIG = '{
     	"scenarioName": "potato",
@@ -50,13 +51,18 @@ class JsonConvertTest extends TestCase
         );
     }
 
-    public function testConvertsABasicConfig()
+    public function configProvider(): array
     {
-        $this->converter->convert(json_decode(self::BASIC_CONFIG, true));
+        return [
+            'base config'       => [self::BASIC_CONFIG],
+            'json body request' => [self::JSON_CONDITION],
+            'full config'       => [self::FULL_CONFIG],
+        ];
     }
 
-    public function testConvertsAFullConfig()
+    /** @dataProvider configProvider */
+    public function testConvertsConfig(string $config)
     {
-        $this->converter->convert(json_decode(self::FULL_CONFIG, true));
+        $this->assertNotNull($this->converter->convert(json_decode($config, true)));
     }
 }

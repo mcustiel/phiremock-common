@@ -2,16 +2,13 @@
 
 namespace Mcustiel\Phiremock\Domain\Http;
 
-use Mcustiel\Phiremock\Domain\Conditions\StringValue;
-
-class Method extends StringValue
+class Method
 {
     /** @var string * */
     private $method;
 
     public function __construct(string $method)
     {
-        var_export('method constructor');
         $this->ensureIsValidHttpMethod($method);
         $this->method = strtolower($method);
     }

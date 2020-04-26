@@ -16,10 +16,10 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Domain\Conditions\Matchers;
+namespace Mcustiel\Phiremock\Domain\Condition\Matchers;
 
 use Mcustiel\Phiremock\Common\Utils\ArraysHelper;
-use Mcustiel\Phiremock\Domain\Conditions\StringValue;
+use Mcustiel\Phiremock\Domain\Condition\StringValue;
 
 class JsonContains extends Matcher
 {
@@ -46,7 +46,7 @@ class JsonContains extends Matcher
 
     public function getName(): string
     {
-        return 'jsonEquals';
+        return 'jsonContains';
     }
 
     private function decodeJson(string $value): array

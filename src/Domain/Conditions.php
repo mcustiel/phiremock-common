@@ -18,10 +18,10 @@
 
 namespace Mcustiel\Phiremock\Domain;
 
-use Mcustiel\Phiremock\Domain\Conditions\Body\BodyCondition;
-use Mcustiel\Phiremock\Domain\Conditions\Header\HeaderConditionIterator;
-use Mcustiel\Phiremock\Domain\Conditions\Method\MethodCondition;
-use Mcustiel\Phiremock\Domain\Conditions\Url\UrlCondition;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\BodyCondition;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderConditionIterator;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\MethodCondition;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\UrlCondition;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class Conditions

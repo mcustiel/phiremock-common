@@ -1,8 +1,8 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Conditions\Body;
+namespace Mcustiel\Phiremock\Domain\Condition\Conditions;
 
-use Mcustiel\Phiremock\Domain\Condition;
+use Mcustiel\Phiremock\Domain\Condition\Condition;
 
 class BodyCondition extends Condition
 {

@@ -16,33 +16,31 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Domain;
+namespace Mcustiel\Phiremock\Domain\Condition;
 
-use Mcustiel\Phiremock\Domain\Conditions\ConditionValue;
-use Mcustiel\Phiremock\Domain\Conditions\Matchers\Matcher;
-
-abstract class Condition
+class MatchersEnum
 {
-    /** @var Matcher */
-    private $matcher;
+    public const MATCHES = 'matches';
+    public const EQUAL_TO = 'isEqualTo';
+    public const SAME_STRING = 'isSameString';
+    public const CONTAINS = 'contains';
+    public const SAME_JSON = 'isSameJsonObject';
 
-    public function __construct(Matcher $matcher)
-    {
-        $this->matcher = $matcher;
-    }
+    private const VALID_MATCHERS = [
+        self::CONTAINS,
+        self::EQUAL_TO,
+        self::MATCHES,
+        self::SAME_JSON,
+        self::SAME_STRING,
+    ];
 
-    public function __toString()
+    /**
+     * @param string $matcherName
+     *
+     * @return bool
+     */
+    public static function isValidMatcher($matcherName)
     {
-        return $this->getMatcher()->getName() . ' ' . $this->getValue()->asString();
-    }
-
-    public function getMatcher(): Matcher
-    {
-        return $this->matcher;
-    }
-
-    public function getValue(): ConditionValue
-    {
-        return $this->matcher->getCheckValue();
+        return \in_array($matcherName, self::VALID_MATCHERS, true);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Conditions;
+namespace Mcustiel\Phiremock\Domain\Condition;
 
 class StringValue extends ConditionValue
 {
