@@ -14,16 +14,41 @@ class MatcherFactory
     {
         switch ($identifier) {
             case MatchersEnum::CONTAINS:
-                return new Contains(new StringValue($value));
+                return self::contains($value);
             case MatchersEnum::EQUAL_TO:
-                return new Equals(new ConditionValue($value));
+                return self::equalsTo($value);
             case MatchersEnum::MATCHES:
-                return new RegExp(new Pattern($value));
+                return self::matches($value);
             case MatchersEnum::SAME_JSON:
-                return new JsonEquals(new Json($value));
+                return self::jsonEquals($value);
             case MatchersEnum::SAME_STRING:
-                return new CaseInsensitiveEquals(new StringValue($value));
+                return self::sameString($value);
         }
         throw new \InvalidArgumentException('Invalid condition matcher specified: ' . $identifier);
+    }
+
+    public static function contains($value): Contains
+    {
+        return new Contains(new StringValue($value));
+    }
+
+    public static function equalsTo($value): Equals
+    {
+        return new Equals(new ConditionValue($value));
+    }
+
+    public static function matches($value): RegExp
+    {
+        return new RegExp(new Pattern($value));
+    }
+
+    public static function jsonEquals($value): JsonEquals
+    {
+        return new JsonEquals(new Json($value));
+    }
+
+    public static function sameString($value): CaseInsensitiveEquals
+    {
+        return new CaseInsensitiveEquals(new StringValue($value));
     }
 }
