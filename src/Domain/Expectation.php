@@ -83,8 +83,9 @@ class Expectation
         return $this->priority;
     }
 
-    public function setPriority(Priority $priority)
+    public function setPriority(Priority $priority) : self
     {
-        return $this->priority = $priority;
+        $this->priority = $priority;
+        return $this;
     }
 }
