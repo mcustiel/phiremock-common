@@ -1,6 +1,6 @@
 <?php
 
-namespace Mcustiel\Phiremock\Domain\Condition\BinaryBody;
+namespace Mcustiel\Phiremock\Domain\Condition\Conditions;
 
 use Mcustiel\Phiremock\Domain\Condition\Condition;
 use Mcustiel\Phiremock\Domain\Condition\Matchers\Matcher;
