@@ -35,16 +35,21 @@ class Expectation
     /** @var Priority */
     private $priority;
 
+    /** @var Version */
+    private $version;
+
     public function __construct(
         Conditions $requestConditions,
         Response $response,
         ScenarioName $scenarioName = null,
-        Priority $priority = null
+        Priority $priority = null,
+        Version $version = null
     ) {
         $this->priority = $priority;
         $this->requestConditions = $requestConditions;
         $this->scenarioName = $scenarioName;
         $this->response = $response;
+        $this->version = $version ?? new Version(1);
     }
 
     /** @return Conditions */

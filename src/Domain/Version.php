@@ -20,23 +20,24 @@ namespace Mcustiel\Phiremock\Domain;
 
 class Version
 {
-    /** @var int */
+    /** @var string */
     private $version;
 
-    public function __construct(int $version)
+    public function __construct(string $version)
     {
         $this->ensureVersionIsCorrect($version);
         $this->version = $version;
     }
 
-    public function asInt(): int
+    public function asInt(): string
     {
         return $this->version;
     }
 
-    private function ensureVersionIsCorrect(int $version): void
+    private function ensureVersionIsCorrect(string $version): void
     {
-        if ($version < 1 || $version > 2) {
+        $numeric = intval($version);
+        if ($numeric < 1 || $numeric > 2) {
             throw new \InvalidArgumentException(sprintf('Invalid version: %s', $version));
         }
     }
