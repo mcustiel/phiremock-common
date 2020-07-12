@@ -28,14 +28,17 @@ class ArrayToRequestConditionConverter extends ArrayToRequestConditionConverterV
     protected function convertMethodCondition(array $requestArray): ?MethodCondition
     {
         if (!empty($requestArray['method'])) {
-            $method = $requestArray['method'];
-            if (!\is_array($method)) {
-                throw new \InvalidArgumentException('Method condition is invalid: ' . var_export($method, true));
+            $methodCondition = $requestArray['method'];
+            if (!\is_array($methodCondition)) {
+                throw new \InvalidArgumentException('Method condition is invalid: ' . var_export($methodCondition, true));
+            }
+            $value = current($methodCondition);
+            if (!\is_string($value)) {
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
             }
 
             return new MethodCondition(
-                new CaseInsensitiveEquals(key($method)),
-                new StringValue(current($method))
+                $this->matcherFactory->createFrom(key($methodCondition), $value)
             );
         }
 
