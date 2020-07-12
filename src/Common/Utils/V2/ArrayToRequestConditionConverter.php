@@ -20,8 +20,6 @@ namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterV1;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\MethodCondition;
-use Mcustiel\Phiremock\Domain\Condition\Matchers\CaseInsensitiveEquals;
-use Mcustiel\Phiremock\Domain\Condition\StringValue;
 
 class ArrayToRequestConditionConverter extends ArrayToRequestConditionConverterV1
 {
@@ -38,7 +36,7 @@ class ArrayToRequestConditionConverter extends ArrayToRequestConditionConverterV
             }
 
             return new MethodCondition(
-                $this->matcherFactory->createFrom(key($methodCondition), $value)
+                $this->getMatcherFactory()->createFrom(key($methodCondition), $value)
             );
         }
 

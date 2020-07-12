@@ -36,7 +36,7 @@ class JsonEquals extends Matcher
         } else {
             $requestValue = $value;
         }
-       $configValue = $this->getCheckValue()->get();
+        $configValue = $this->getCheckValue()->get();
 
         if (!\is_array($requestValue)) {
             return false;

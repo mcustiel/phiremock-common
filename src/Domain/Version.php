@@ -36,7 +36,7 @@ class Version
 
     private function ensureVersionIsCorrect(string $version): void
     {
-        $numeric = intval($version);
+        $numeric = (int) $version;
         if ($numeric < 1 || $numeric > 2) {
             throw new \InvalidArgumentException(sprintf('Invalid version: %s', $version));
         }

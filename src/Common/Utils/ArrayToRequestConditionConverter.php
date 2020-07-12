@@ -32,6 +32,7 @@ use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class ArrayToRequestConditionConverter
 {
+    /** @var MatcherFactory */
     private $matcherFactory;
 
     public function __construct()
@@ -151,5 +152,10 @@ class ArrayToRequestConditionConverter
         }
 
         return null;
+    }
+
+    protected function getMatcherFactory(): MatcherFactory
+    {
+        return $this->matcherFactory;
     }
 }
