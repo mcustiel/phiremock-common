@@ -58,30 +58,32 @@ class HttpResponse extends Response
         );
     }
 
-    /** @return StatusCode */
-    public function getStatusCode()
+    public function getStatusCode(): StatusCode
     {
         return $this->statusCode;
     }
 
-    /** @return Body */
-    public function getBody()
+    public function hasBody(): bool
+    {
+        return $this->body !== null;
+    }
+
+    public function getBody(): ?Body
     {
         return $this->body;
     }
 
-    /** @return HeadersCollection */
-    public function getHeaders()
+    public function hasHeaders(): bool
+    {
+        return $this->headers !== null;
+    }
+
+    public function getHeaders(): ?HeadersCollection
     {
         return $this->headers;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Mcustiel\Phiremock\Domain\Response::isHttpResponse()
-     */
-    public function isHttpResponse()
+    public function isHttpResponse(): bool
     {
         return true;
     }

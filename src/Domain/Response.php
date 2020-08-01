@@ -36,44 +36,37 @@ class Response
         $this->delayMillis = $delayMillis;
     }
 
-    /** @return self */
-    public static function createEmpty()
+    public static function createEmpty(): self
     {
         return new self();
     }
 
-    /** @return bool */
-    public function hasNewScenarioState()
+    public function hasNewScenarioState(): bool
     {
         return null !== $this->newScenarioState;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\Options\ScenarioState */
-    public function getNewScenarioState()
+    public function getNewScenarioState(): ?ScenarioState
     {
         return $this->newScenarioState;
     }
 
-    /** @return bool */
-    public function hasDelayMillis()
+    public function hasDelayMillis(): bool
     {
         return $this->delayMillis !== null;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\Options\Delay */
-    public function getDelayMillis()
+    public function getDelayMillis() : ?Delay
     {
         return $this->delayMillis;
     }
 
-    /** @return bool */
-    public function isHttpResponse()
+    public function isHttpResponse(): bool
     {
         return false;
     }
 
-    /** @return bool */
-    public function isProxyResponse()
+    public function isProxyResponse(): bool
     {
         return false;
     }

@@ -42,18 +42,12 @@ class ProxyResponse extends Response
         return 'proxy to: ' . $this->uri->asString();
     }
 
-    /** @return Uri */
-    public function getUri()
+    public function getUri(): Uri
     {
         return $this->uri;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Mcustiel\Phiremock\Domain\Response::isProxyResponse()
-     */
-    public function isProxyResponse()
+    public function isProxyResponse(): bool
     {
         return true;
     }
