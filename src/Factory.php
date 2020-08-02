@@ -19,6 +19,7 @@
 namespace Mcustiel\Phiremock;
 
 use Mcustiel\Phiremock\Common\Http\Implementation\GuzzleConnection;
+use Mcustiel\Phiremock\Common\Http\RemoteConnectionInterface;
 use Mcustiel\Phiremock\Common\Utils\ArrayToConditionsConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter;
@@ -31,13 +32,14 @@ use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\HttpResponseToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\ProxyResponseToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
+use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\V2\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterV2;
+use Mcustiel\Phiremock\Common\Utils\V2\RequestConditionToArrayConverter as RequestConditionToArrayConverterV2;
 
 class Factory
 {
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter */
-    public function createArrayToExpectationConverter()
+    public function createArrayToExpectationConverter(): ArrayToExpectationConverter
     {
         return new ArrayToExpectationConverter(
             $this->createArrayToConditionsConverterLocator(),
@@ -46,88 +48,85 @@ class Factory
         );
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter */
-    public function createArrayToStateConditionsConverter()
+    public function createArrayToStateConditionsConverter(): ArrayToStateConditionsConverter
     {
         return new ArrayToStateConditionsConverter();
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator */
-    public function createArrayToResponseConverterLocator()
+    public function createArrayToResponseConverterLocator(): ArrayToResponseConverterLocator
     {
         return new ArrayToResponseConverterLocator($this);
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator */
-    public function createArrayToConditionsConverterLocator()
+    public function createArrayToConditionsConverterLocator(): ArrayToConditionsConverterLocator
     {
         return new ArrayToConditionsConverterLocator($this);
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter */
-    public function createArrayToHttpResponseConverter()
+    public function createArrayToHttpResponseConverter(): ArrayToHttpResponseConverter
     {
         return new ArrayToHttpResponseConverter();
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter*/
-    public function createArrayToProxyResponseConverter()
+    public function createArrayToProxyResponseConverter(): ArrayToProxyResponseConverter
     {
         return new ArrayToProxyResponseConverter();
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter */
-    public function createArrayToRequestConditionConverter()
+    public function createArrayToRequestConditionConverter(): ArrayToRequestConditionConverter
     {
         return new ArrayToRequestConditionConverter();
     }
 
-    public function createArrayToRequestConditionV2Converter()
+    public function createArrayToRequestConditionV2Converter(): ArrayToRequestConditionConverterV2
     {
         return new ArrayToRequestConditionConverterV2();
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter */
-    public function createExpectationToArrayConverter()
+    public function createExpectationToArrayConverter(): ExpectationToArrayConverter
     {
         return new ExpectationToArrayConverter(
-            $this->createRequestConditionToArrayConverter(),
+            $this->createRequestConditionToArrayConverterLocator(),
             $this->createResponseToArrayConverterLocator()
         );
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\HttpResponseToArrayConverter */
-    public function createHttpResponseToArrayConverter()
+    public function createHttpResponseToArrayConverter(): HttpResponseToArrayConverter
     {
         return new HttpResponseToArrayConverter();
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\ProxyResponseToArrayConverter */
-    public function createProxyResponseToArrayConverter()
+    public function createProxyResponseToArrayConverter(): ProxyResponseToArrayConverter
     {
         return new ProxyResponseToArrayConverter();
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverterLocator */
-    public function createResponseToArrayConverterLocator()
+    public function createResponseToArrayConverterLocator(): ResponseToArrayConverterLocator
     {
         return new ResponseToArrayConverterLocator($this);
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter */
-    public function createRequestConditionToArrayConverter()
+    public function createRequestConditionToArrayConverterLocator(): RequestConditionToArrayConverterLocator
+    {
+        return new RequestConditionToArrayConverterLocator($this);
+    }
+
+    public function createRequestConditionToArrayConverter(): RequestConditionToArrayConverter
     {
         return new RequestConditionToArrayConverter();
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Http\Implementation\GuzzleConnection */
-    public function createRemoteConnectionInterface()
+    public function createRequestConditionToArrayV2Converter(): RequestConditionToArrayConverterV2
+    {
+        return new RequestConditionToArrayConverterV2();
+    }
+
+    public function createRemoteConnectionInterface(): RemoteConnectionInterface
     {
         return new GuzzleConnection(new \GuzzleHttp\Client());
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter */
-    public function createArrayToScenarioStateInfoConverter()
+    public function createArrayToScenarioStateInfoConverter(): ArrayToScenarioStateInfoConverter
     {
         return new ArrayToScenarioStateInfoConverter();
     }

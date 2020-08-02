@@ -52,38 +52,37 @@ class Expectation
         $this->version = $version ?? new Version(1);
     }
 
-    /** @return Conditions */
-    public function getRequest()
+    public function getVersion(): Version
+    {
+        return $this->version;
+    }
+
+    public function getRequest(): Conditions
     {
         return $this->requestConditions;
     }
 
-    /** @return bool */
-    public function hasScenarioName()
+    public function hasScenarioName(): bool
     {
         return $this->scenarioName !== null;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\Options\ScenarioName */
-    public function getScenarioName()
+    public function getScenarioName(): ?ScenarioName
     {
         return $this->scenarioName;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\Response */
-    public function getResponse()
+    public function getResponse(): Response
     {
         return $this->response;
     }
 
-    /** @return bool */
-    public function hasPriority()
+    public function hasPriority(): bool
     {
         return null !== $this->priority;
     }
 
-    /** @return Priority|null */
-    public function getPriority()
+    public function getPriority(): ?Priority
     {
         return $this->priority;
     }

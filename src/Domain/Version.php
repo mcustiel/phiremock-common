@@ -29,7 +29,7 @@ class Version
         $this->version = $version;
     }
 
-    public function asInt(): string
+    public function asString(): string
     {
         return $this->version;
     }

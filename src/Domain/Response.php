@@ -56,7 +56,7 @@ class Response
         return $this->delayMillis !== null;
     }
 
-    public function getDelayMillis() : ?Delay
+    public function getDelayMillis(): ?Delay
     {
         return $this->delayMillis;
     }

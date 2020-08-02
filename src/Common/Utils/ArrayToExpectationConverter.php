@@ -49,7 +49,7 @@ class ArrayToExpectationConverter
         $scenarioName = $this->getScenarioName($expectationArray);
         $priority = $this->getPriority($expectationArray);
 
-        return new Expectation($request, $response, $scenarioName, $priority);
+        return new Expectation($request, $response, $scenarioName, $priority, $version);
     }
 
     private function getVersion(array $expectationArray): Version

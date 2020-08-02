@@ -18,19 +18,17 @@
 
 namespace Mcustiel\Phiremock\Test\Unit\Common\Utils\V2;
 
-use Mcustiel\Phiremock\Common\Utils\ArrayToConditionsConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator;
+use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
 use Mcustiel\Phiremock\Factory;
 use PHPUnit\Framework\TestCase;
 
 class JsonConvertTest extends TestCase
 {
-    private const EMPTY_CONFIG = '{"version": "2", }';
-    private const EMPTY_REQUEST = '{"version": "2", "request": {}, "response": {"statusCode": 200}}';
-    private const EMPTY_RESPONSE = '{"version": "2", "request": {"method": {"isSameString": "GET"}}, "response": {}}';
     private const JSON_CONDITION = '{"version": "2", "request": {"method": {"isSameString": "GET"}, "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}}, "response": {}}';
+    private const JSON_CONDITION_EXPECTED = '{"version": "2", "request": {"method": {"isSameString": "GET"}, "url":null, "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}, "headers" : null}, "response": {"status": 200,"body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
     private const BASIC_CONFIG = '{"version": "2", "request": {"method": {"isSameString": "GET"}}, "response": {"status": 200}}';
+    private const BASIC_CONFIG_EXPECTED = '{"version": "2", "request": {"method": {"isSameString": "GET"}, "url":null, "body": null, "headers" : null}, "response": {"status": 200, "body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
     private const FULL_CONFIG = '{
         "version": "2",
     	"scenarioName": "potato",
@@ -43,6 +41,9 @@ class JsonConvertTest extends TestCase
     		"url": {
     			"isEqualTo": "/some/thing"
     		},
+            "body": {
+                "matches": "/^something$/"
+            },
     		"headers": {
     			"Content-Type": {
     				"isEqualTo": "text/plain"
@@ -50,38 +51,78 @@ class JsonConvertTest extends TestCase
     		}
     	},
     	"response": {
-    		"statusCode": 200,
+    		"status": 200,
     		"body": "Hello world!",
     		"headers": {
     			"Content-Type": "text/plain"
+    		},
+            "delayMillis": 1000
+    	},
+        "proxyTo" : null,
+        "priority": 3
+    }';
+    private const FULL_CONFIG_EXPECTED = '{
+        "version": "2",
+    	"scenarioName": "potato",
+    	"scenarioStateIs": "Scenario.START",
+    	"newScenarioState": "tomato",
+    	"request": {
+    		"method": {
+    			"isSameString": "GET"
+    		},
+    		"url": {
+    			"isEqualTo": "/some/thing"
+    		},
+            "body": {
+                "matches": "/^something$/"
+            },
+    		"headers": {
+    			"Content-Type": {
+    				"isEqualTo": "text/plain"
+    			}
     		}
-    	}
+    	},
+    	"response": {
+    		"status": 200,
+    		"body": "Hello world!",
+    		"headers": {
+    			"Content-Type": "text/plain"
+    		},
+            "delayMillis": 1000
+    	},
+        "proxyTo" : null,
+        "priority": 3
     }';
 
     /** @var ArrayToExpectationConverter */
-    private $converter;
+    private $arrayToExpectationConverter;
+    /** @var ExpectationToArrayConverter */
+    private $expectationToArrayConverter;
 
     protected function setUp(): void
     {
         $factory = new Factory();
-        $this->converter = new ArrayToExpectationConverter(
-            new ArrayToConditionsConverterLocator($factory),
-            new ArrayToResponseConverterLocator($factory)
-        );
+        $this->arrayToExpectationConverter = $factory->createArrayToExpectationConverter();
+        $this->expectationToArrayConverter = $factory->createExpectationToArrayConverter();
     }
 
     public function configProvider(): array
     {
         return [
-            'base config'       => [self::BASIC_CONFIG],
-            'json body request' => [self::JSON_CONDITION],
-            'full config'       => [self::FULL_CONFIG],
+            'base config'       => [self::BASIC_CONFIG, self::BASIC_CONFIG_EXPECTED],
+            'json body request' => [self::JSON_CONDITION, self::JSON_CONDITION_EXPECTED],
+            'full config'       => [self::FULL_CONFIG, self::FULL_CONFIG_EXPECTED],
         ];
     }
 
     /** @dataProvider configProvider */
-    public function testConvertsConfig(string $config)
+    public function testConvertsConfig(string $config, string $expected)
     {
-        $this->assertNotNull($this->converter->convert(json_decode($config, true)));
+        $configArray = json_decode($config, true);
+        $expectation = $this->arrayToExpectationConverter->convert($configArray);
+        $expectedArray = json_decode($expected, true);
+        $this->assertSame($expectedArray, $this->expectationToArrayConverter->convert($expectation));
+        $expectation = $this->arrayToExpectationConverter->convert($expectedArray);
+        $this->assertSame($expectedArray, $this->expectationToArrayConverter->convert($expectation));
     }
 }

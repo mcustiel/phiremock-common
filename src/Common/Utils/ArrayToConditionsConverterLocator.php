@@ -33,10 +33,10 @@ class ArrayToConditionsConverterLocator
 
     public function locate(Version $version): ArrayToRequestConditionConverter
     {
-        switch ($version->asInt()) {
-            case 1:
+        switch ($version->asString()) {
+            case '1':
                 return  $this->factory->createArrayToRequestConditionConverter();
-            case 2:
+            case '2':
                 return $this->factory->createArrayToRequestConditionV2Converter();
         }
         throw new \LogicException('Unimplemented config version');

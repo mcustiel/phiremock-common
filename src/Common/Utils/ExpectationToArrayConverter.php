@@ -22,23 +22,27 @@ use Mcustiel\Phiremock\Domain\Expectation;
 
 class ExpectationToArrayConverter
 {
-    /** @var RequestConditionToArrayConverter */
-    private $requestToArrayConverter;
+    /** @var RequestConditionToArrayConverterLocator */
+    private $requestToArrayConverterLocator;
 
     /** @var ResponseToArrayConverterLocator */
     private $responseConverterLocator;
 
     public function __construct(
-        RequestConditionToArrayConverter $requestConverter,
+        RequestConditionToArrayConverterLocator $requestConverterLocator,
         ResponseToArrayConverterLocator $responseConverterLocator
     ) {
-        $this->requestToArrayConverter = $requestConverter;
+        $this->requestToArrayConverterLocator = $requestConverterLocator;
         $this->responseConverterLocator = $responseConverterLocator;
     }
 
     public function convert(Expectation $expectation)
     {
         $expectationArray = [];
+
+        if ($expectation->getVersion()->asString() !== '1') {
+            $expectationArray['version'] = $expectation->getVersion()->asString();
+        }
 
         if ($expectation->hasScenarioName()) {
             $expectationArray['scenarioName'] = $expectation->getScenarioName()->asString();
@@ -56,7 +60,9 @@ class ExpectationToArrayConverter
             $expectationArray['newScenarioState'] = null;
         }
 
-        $expectationArray['request'] = $this->requestToArrayConverter->convert($expectation->getRequest());
+        $expectationArray['request'] = $this->requestToArrayConverterLocator
+            ->locate($expectation)
+            ->convert($expectation->getRequest());
 
         $response = $expectation->getResponse();
 
