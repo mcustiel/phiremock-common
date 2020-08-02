@@ -28,7 +28,7 @@ class HttpResponseToArrayConverter extends ResponseToArrayConverter
     public function convert(Response $response)
     {
         $responseArray = [];
-        $responseArray['status'] = $response->getStatusCode()->asInt();
+        $responseArray['statusCode'] = $response->getStatusCode()->asInt();
         $body = $response->getBody();
         $responseArray['body'] = $body === null ? null : $body->asString();
         $headers = $response->getHeaders();

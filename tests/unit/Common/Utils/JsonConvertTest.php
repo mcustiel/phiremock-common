@@ -26,9 +26,9 @@ use PHPUnit\Framework\TestCase;
 class JsonConvertTest extends TestCase
 {
     private const JSON_CONDITION = '{"request": {"method": "GET", "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}}, "response": {}}';
-    private const JSON_CONDITION_EXPECTED = '{"request": {"method": "GET", "url":null, "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}, "headers" : null}, "response": {"status": 200,"body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
-    private const BASIC_CONFIG = '{"request": {"method": "GET"}, "response": {"status": 200}}';
-    private const BASIC_CONFIG_EXPECTED = '{"request": {"method": "GET", "url":null, "body": null, "headers" : null}, "response": {"status": 200, "body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
+    private const JSON_CONDITION_EXPECTED = '{"request": {"method": "GET", "url":null, "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}, "headers" : null}, "response": {"statusCode": 200,"body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
+    private const BASIC_CONFIG = '{"request": {"method": "GET"}, "response": {"statusCode": 200}}';
+    private const BASIC_CONFIG_EXPECTED = '{"request": {"method": "GET", "url":null, "body": null, "headers" : null}, "response": {"statusCode": 200, "body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
     private const FULL_CONFIG = '{
     	"scenarioName": "potato",
     	"scenarioStateIs": "Scenario.START",
@@ -48,7 +48,7 @@ class JsonConvertTest extends TestCase
     		}
     	},
     	"response": {
-    		"status": 200,
+    		"statusCode": 200,
     		"body": "Hello world!",
     		"headers": {
     			"Content-Type": "text/plain"
@@ -77,7 +77,7 @@ class JsonConvertTest extends TestCase
     		}
     	},
     	"response": {
-    		"status": 200,
+    		"statusCode": 200,
     		"body": "Hello world!",
     		"headers": {
     			"Content-Type": "text/plain"
