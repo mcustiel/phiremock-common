@@ -36,6 +36,7 @@ use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\V2\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterV2;
 use Mcustiel\Phiremock\Common\Utils\V2\RequestConditionToArrayConverter as RequestConditionToArrayConverterV2;
+use Mcustiel\Phiremock\Common\Utils\ScenarioStateInfoToArrayConverter;
 
 class Factory
 {
@@ -129,5 +130,10 @@ class Factory
     public function createArrayToScenarioStateInfoConverter(): ArrayToScenarioStateInfoConverter
     {
         return new ArrayToScenarioStateInfoConverter();
+    }
+
+    public function createScenarioStateInfoToArrayConverter(): ScenarioStateInfoToArrayConverter
+    {
+        return new ScenarioStateInfoToArrayConverter();
     }
 }

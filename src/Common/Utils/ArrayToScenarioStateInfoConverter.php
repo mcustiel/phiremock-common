@@ -24,10 +24,7 @@ use Mcustiel\Phiremock\Domain\ScenarioStateInfo;
 
 class ArrayToScenarioStateInfoConverter
 {
-    /**
-     * @return ScenarioStateInfo
-     */
-    public function convert(array $expectationArray)
+    public function convert(array $expectationArray): ScenarioStateInfo
     {
         if (empty($expectationArray['scenarioName'])) {
             throw new \InvalidArgumentException('Scenario name not set');

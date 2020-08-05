@@ -67,13 +67,15 @@ class ExpectationToArrayConverter
         $response = $expectation->getResponse();
 
         if ($response->isHttpResponse()) {
+            /** @var \Mcustiel\Phiremock\Domain\HttpResponse $response */
             $expectationArray['response'] = $this->responseConverterLocator
-                ->locate($expectation->getResponse())
-                ->convert($expectation->getResponse());
+                ->locate($response)
+                ->convert($response);
             $expectationArray['proxyTo'] = null;
         } else {
+            /** @var \Mcustiel\Phiremock\Domain\ProxyResponse $response */
             $expectationArray['response'] = null;
-            $expectationArray['proxyTo'] = $expectation->getResponse()->getUri()->asString();
+            $expectationArray['proxyTo'] = $response->getUri()->asString();
         }
 
         if ($expectation->hasPriority()) {
