@@ -21,7 +21,7 @@ namespace Mcustiel\Phiremock\Domain;
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
-abstract class Response
+class Response
 {
     /** @var ScenarioState */
     private $newScenarioState;
