@@ -34,9 +34,9 @@ use Mcustiel\Phiremock\Common\Utils\ProxyResponseToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverterLocator;
+use Mcustiel\Phiremock\Common\Utils\ScenarioStateInfoToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\V2\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterV2;
 use Mcustiel\Phiremock\Common\Utils\V2\RequestConditionToArrayConverter as RequestConditionToArrayConverterV2;
-use Mcustiel\Phiremock\Common\Utils\ScenarioStateInfoToArrayConverter;
 
 class Factory
 {

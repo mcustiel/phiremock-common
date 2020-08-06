@@ -18,11 +18,10 @@
 
 namespace Mcustiel\Phiremock\Domain\Condition\Conditions;
 
-use Mcustiel\Phiremock\Domain\Condition\Condition;
 use Mcustiel\Phiremock\Domain\Condition\Matchers\Matcher;
 use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
 
-class BinaryBodyCondition extends Condition
+class BinaryBodyCondition extends BodyCondition
 {
     public function __construct(Matcher $matcher)
     {

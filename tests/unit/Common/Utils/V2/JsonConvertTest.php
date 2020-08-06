@@ -25,10 +25,10 @@ use PHPUnit\Framework\TestCase;
 
 class JsonConvertTest extends TestCase
 {
-    private const JSON_CONDITION = '{"version": "2", "request": {"method": {"isSameString": "GET"}, "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}}, "response": {}}';
-    private const JSON_CONDITION_EXPECTED = '{"version": "2", "request": {"method": {"isSameString": "GET"}, "url":null, "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}, "headers" : null}, "response": {"status": 200,"body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
+    private const JSON_CONDITION = '{"version": "2","request": {"method": {"isSameString": "GET"}, "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}}, "response": {}}';
+    private const JSON_CONDITION_EXPECTED = '{"version": "2", "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null, "request": {"method": {"isSameString": "GET"}, "url":null, "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}, "headers" : null}, "response": {"statusCode": 200,"body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
     private const BASIC_CONFIG = '{"version": "2", "request": {"method": {"isSameString": "GET"}}, "response": {"status": 200}}';
-    private const BASIC_CONFIG_EXPECTED = '{"version": "2", "request": {"method": {"isSameString": "GET"}, "url":null, "body": null, "headers" : null}, "response": {"status": 200, "body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
+    private const BASIC_CONFIG_EXPECTED = '{"version": "2", "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null, "request": {"method": {"isSameString": "GET"}, "url":null, "body": null, "headers" : null}, "response": {"statusCode": 200, "body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
     private const FULL_CONFIG = '{
         "version": "2",
     	"scenarioName": "potato",
@@ -51,7 +51,7 @@ class JsonConvertTest extends TestCase
     		}
     	},
     	"response": {
-    		"status": 200,
+    		"statusCode": 200,
     		"body": "Hello world!",
     		"headers": {
     			"Content-Type": "text/plain"
@@ -83,7 +83,7 @@ class JsonConvertTest extends TestCase
     		}
     	},
     	"response": {
-    		"status": 200,
+    		"statusCode": 200,
     		"body": "Hello world!",
     		"headers": {
     			"Content-Type": "text/plain"
