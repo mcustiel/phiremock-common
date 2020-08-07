@@ -32,6 +32,13 @@ use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class ArrayToRequestConditionConverter
 {
+    const ALLOWED_OPTIONS = [
+        'method' => null,
+        'url'    => null,
+        'body'   => null,
+        'headers'=> null,
+    ];
+
     /** @var MatcherFactory */
     private $matcherFactory;
 
@@ -42,6 +49,8 @@ class ArrayToRequestConditionConverter
 
     public function convert(array $requestArray): Conditions
     {
+        $this->ensureNotInvalidOptionsAreProvided($requestArray);
+
         return new Conditions(
             $this->convertMethodCondition($requestArray['request']),
             $this->convertUrlCondition($requestArray['request']),
@@ -49,6 +58,14 @@ class ArrayToRequestConditionConverter
             $this->convertHeadersConditions($requestArray['request']),
             $this->convertScenarioState($requestArray)
         );
+    }
+
+    protected function ensureNotInvalidOptionsAreProvided(array $requestArray): void
+    {
+        $invalidOptions = array_diff_key($requestArray['request'], static::ALLOWED_OPTIONS);
+        if (!empty($invalidOptions)) {
+            throw new \Exception('Unknown request conditions: ' . var_export($invalidOptions, true));
+        }
     }
 
     protected function convertHeadersConditions(array $requestArray): ?HeaderConditionIterator
@@ -62,9 +79,7 @@ class ArrayToRequestConditionConverter
             foreach ($headers as $headerName => $header) {
                 $headersCollection->setHeaderCondition(
                     new HeaderName($headerName),
-                    $this->convertHeaderCondition(
-                        $header
-                    )
+                    $this->convertHeaderCondition($header)
                 );
             }
 

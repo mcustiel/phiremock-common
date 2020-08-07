@@ -33,6 +33,12 @@ use Mcustiel\Phiremock\Domain\Response;
 
 class ArrayToHttpResponseConverter extends ArrayToResponseConverter
 {
+    const ALLOWED_OPTIONS = [
+        'statusCode' => null,
+        'body'       => null,
+        'headers'    => null,
+        'delayMillis'=> null,
+    ];
     const STRING_START = 0;
 
     protected function convertResponse(

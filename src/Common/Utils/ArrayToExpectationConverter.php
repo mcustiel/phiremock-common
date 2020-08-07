@@ -28,6 +28,17 @@ use Mcustiel\Phiremock\Domain\Version;
 
 class ArrayToExpectationConverter
 {
+    const ALLOWED_OPTIONS = [
+        'version'         => null,
+        'scenarioName'    => null,
+        'scenarioStateIs' => null,
+        'newScenarioState'=> null,
+        'priority'        => null,
+        'proxyTo'         => null,
+        'request'         => null,
+        'response'        => null,
+    ];
+
     /** @var ArrayToConditionsConverterLocator */
     private $arrayToConditionsConverterLocator;
     /** @var ArrayToResponseConverterLocator */
@@ -43,6 +54,7 @@ class ArrayToExpectationConverter
 
     public function convert(array $expectationArray): Expectation
     {
+        $this->ensureNotInvalidOptionsAreProvided($expectationArray);
         $version = $this->getVersion($expectationArray);
         $request = $this->convertRequest($expectationArray, $version);
         $response = $this->convertResponse($expectationArray);
@@ -50,6 +62,14 @@ class ArrayToExpectationConverter
         $priority = $this->getPriority($expectationArray);
 
         return new Expectation($request, $response, $scenarioName, $priority, $version);
+    }
+
+    private function ensureNotInvalidOptionsAreProvided(array $expectationArray): void
+    {
+        $invalidOptions = array_diff_key($expectationArray, self::ALLOWED_OPTIONS);
+        if (!empty($invalidOptions)) {
+            throw new \Exception('Unknown expectation options: ' . var_export($invalidOptions, true));
+        }
     }
 
     private function getVersion(array $expectationArray): Version

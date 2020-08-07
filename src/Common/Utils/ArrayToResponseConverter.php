@@ -24,6 +24,7 @@ use Mcustiel\Phiremock\Domain\Response;
 
 abstract class ArrayToResponseConverter
 {
+    const ALLOWED_OPTIONS = ['delayMillis'=> null];
     const NO_DELAY = 0;
 
     public function convert(array $responseArray): Response
@@ -33,6 +34,14 @@ abstract class ArrayToResponseConverter
             $this->getDelay($responseArray),
             $this->getNewScenarioState($responseArray)
         );
+    }
+
+    protected function ensureNotInvalidOptionsAreProvided(array $responseArray): void
+    {
+        $invalidOptions = array_diff_key($responseArray, static::ALLOWED_OPTIONS);
+        if (!empty($invalidOptions)) {
+            throw new \Exception('Unknown expectation options: ' . var_export($invalidOptions, true));
+        }
     }
 
     abstract protected function convertResponse(
