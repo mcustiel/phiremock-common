@@ -22,7 +22,7 @@ use Mcustiel\Phiremock\Domain\Response;
 
 class ProxyResponseToArrayConverter extends ResponseToArrayConverter
 {
-    public function convert(Response $response)
+    public function convert(Response $response): array
     {
         /** @var \Mcustiel\Phiremock\Domain\ProxyResponse $response */
         $responseArray = [];

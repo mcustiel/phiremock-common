@@ -24,9 +24,9 @@ use Mcustiel\Phiremock\Domain\Response;
 
 class HttpResponseToArrayConverter extends ResponseToArrayConverter
 {
-    /** @param HttpResponse $response */
-    public function convert(Response $response)
+    public function convert(Response $response): array
     {
+        /** @var HttpResponse $response */
         $responseArray = [];
         $responseArray['statusCode'] = $response->getStatusCode()->asInt();
         $body = $response->getBody();

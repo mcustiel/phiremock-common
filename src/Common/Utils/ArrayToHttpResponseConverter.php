@@ -59,8 +59,7 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
         );
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\Http\HeadersCollection */
-    private function getHeaders($responseArray)
+    private function getHeaders(array $responseArray): ?HeadersCollection
     {
         if (!empty($responseArray['headers'])) {
             return $this->convertHeaders($responseArray['headers']);
@@ -69,8 +68,7 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
         return null;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\Http\Body */
-    private function getBody(array $responseArray)
+    private function getBody(array $responseArray): ?Body
     {
         if (isset($responseArray['body'])) {
             $body = $responseArray['body'];
@@ -87,12 +85,7 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
         return null;
     }
 
-    /**
-     * @param string $body
-     *
-     * @return bool
-     */
-    private function isBinaryBody($body)
+    private function isBinaryBody(string $body): bool
     {
         return BinaryInfo::BINARY_BODY_PREFIX === substr($body, self::STRING_START, BinaryInfo::BINARY_BODY_PREFIX_LENGTH);
     }
@@ -104,12 +97,8 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
      *
      * @return \Mcustiel\Phiremock\Domain\Http\HeadersCollection
      */
-    private function convertHeaders($headers)
+    private function convertHeaders(array $headers): HeadersCollection
     {
-        if (!\is_array($headers)) {
-            throw new \InvalidArgumentException('Response headers are invalid: ' . var_export($headers, true));
-        }
-
         $headerCollection = new HeadersCollection();
         foreach ($headers as $headerName => $headerValue) {
             $headerCollection->setHeader(

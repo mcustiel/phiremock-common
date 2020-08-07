@@ -24,7 +24,7 @@ use Mcustiel\Phiremock\Domain\StateConditions;
 
 class ArrayToStateConditionsConverter
 {
-    public function convert(array $stateInfoArray)
+    public function convert(array $stateInfoArray): StateConditions
     {
         $scenarioName = null;
         if (!empty($stateInfoArray['scenarioName'])) {

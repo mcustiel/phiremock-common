@@ -36,7 +36,7 @@ class ExpectationToArrayConverter
         $this->responseConverterLocator = $responseConverterLocator;
     }
 
-    public function convert(Expectation $expectation)
+    public function convert(Expectation $expectation): array
     {
         $expectationArray = [];
 

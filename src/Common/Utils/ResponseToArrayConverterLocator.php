@@ -31,10 +31,7 @@ class ResponseToArrayConverterLocator
         $this->factory = $factory;
     }
 
-    /**
-     * @return \Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter
-     */
-    public function locate(Response $response)
+    public function locate(Response $response): ResponseToArrayConverter
     {
         if ($response->isHttpResponse()) {
             return $this->factory->createHttpResponseToArrayConverter();

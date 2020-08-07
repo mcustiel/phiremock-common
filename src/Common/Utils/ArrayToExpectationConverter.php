@@ -18,6 +18,7 @@
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
+use Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\Expectation;
 use Mcustiel\Phiremock\Domain\Http\StatusCode;
 use Mcustiel\Phiremock\Domain\HttpResponse;
@@ -115,7 +116,7 @@ class ArrayToExpectationConverter
             ->convert($expectationArray);
     }
 
-    private function convertRequest(array $expectationArray, Version $version)
+    private function convertRequest(array $expectationArray, Version $version): Conditions
     {
         if (!isset($expectationArray['request'])) {
             throw new \InvalidArgumentException('Expectation request is not set');

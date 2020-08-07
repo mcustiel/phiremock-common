@@ -22,7 +22,7 @@ use Mcustiel\Phiremock\Domain\Response;
 
 class ResponseToArrayConverter
 {
-    public function convert(Response $response)
+    public function convert(Response $response): array
     {
         $responseArray = [
             'delayMillis' => $response->hasDelayMillis()

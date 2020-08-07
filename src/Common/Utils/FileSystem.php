@@ -20,12 +20,7 @@ namespace Mcustiel\Phiremock\Common\Utils;
 
 class FileSystem
 {
-    /**
-     * @param string $path
-     *
-     * @return mixed
-     */
-    public function getRealPath($path)
+    public function getRealPath(string $path): string
     {
         $existentPath = $this->normalizePath($path);
         $tail = [];
@@ -43,12 +38,7 @@ class FileSystem
         );
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string|mixed
-     */
-    private function normalizePath($path)
+    private function normalizePath(string $path): string
     {
         $path = str_replace(\DIRECTORY_SEPARATOR, '/', $path);
         if ('/' !== $path[0]) {
