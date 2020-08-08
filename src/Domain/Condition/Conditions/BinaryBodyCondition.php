@@ -35,7 +35,7 @@ class BinaryBodyCondition extends BodyCondition
 
         return sprintf(
             '%s => BINARY CONTENTS (%s bytes)',
-            $this->getMatcher()->asString(),
+            $this->getMatcher()->getName(),
             \strlen($value)
         );
     }
