@@ -129,7 +129,7 @@ class ArrayToRequestConditionConverter
         if (!empty($requestArray['method'])) {
             $method = $requestArray['method'];
             if (!\is_string($method)) {
-                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($method));
             }
 
             return new MethodCondition(

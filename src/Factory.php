@@ -44,8 +44,7 @@ class Factory
     {
         return new ArrayToExpectationConverter(
             $this->createArrayToConditionsConverterLocator(),
-            $this->createArrayToResponseConverterLocator(),
-            $this->createArrayToStateConditionsConverter()
+            $this->createArrayToResponseConverterLocator()
         );
     }
 

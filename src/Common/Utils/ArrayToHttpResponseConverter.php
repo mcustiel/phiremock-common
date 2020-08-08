@@ -61,13 +61,15 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
 
     private function getHeaders(array $responseArray): ?HeadersCollection
     {
-        $headers = $responseArray['headers'];
-        if (!empty($headers)) {
-            if (!\is_array($headers)) {
-                throw new \InvalidArgumentException('Response headers are invalid: ' . var_export($headers, true));
-            }
+        if (isset($responseArray['headers'])) {
+            $headers = $responseArray['headers'];
+            if (!empty($headers)) {
+                if (!\is_array($headers)) {
+                    throw new \InvalidArgumentException('Response headers are invalid: ' . var_export($headers, true));
+                }
 
-            return $this->convertHeaders($headers);
+                return $this->convertHeaders($headers);
+            }
         }
 
         return null;
