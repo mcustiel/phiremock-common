@@ -81,6 +81,11 @@ class Conditions
         return $this->body;
     }
 
+    public function hasHeaders(): bool
+    {
+        return null !== $this->headers && !$this->headers->isEmpty();
+    }
+
     public function getHeaders(): ?HeaderConditionIterator
     {
         return $this->headers;

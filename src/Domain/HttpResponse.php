@@ -74,7 +74,7 @@ class HttpResponse extends Response
 
     public function hasHeaders(): bool
     {
-        return $this->headers !== null;
+        return $this->headers !== null && !$this->headers->isEmpty();
     }
 
     public function getHeaders(): ?HeadersCollection
