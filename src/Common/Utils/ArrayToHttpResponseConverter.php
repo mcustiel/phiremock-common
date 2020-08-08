@@ -64,7 +64,7 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
         $headers = $responseArray['headers'];
         if (!empty($headers)) {
             if (!\is_array($headers)) {
-                throw new \InvalidArgumentExpection('Invalid headers received: ' . var_export($headers, true));
+                throw new \InvalidArgumentException('Response headers are invalid: ' . var_export($headers, true));
             }
 
             return $this->convertHeaders($headers);
