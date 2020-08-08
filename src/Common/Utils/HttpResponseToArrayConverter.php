@@ -33,7 +33,7 @@ class HttpResponseToArrayConverter extends ResponseToArrayConverter
         $responseArray['body'] = $body === null ? null : $body->asString();
         $headers = $response->getHeaders();
         if ($headers && !$headers->isEmpty()) {
-            $responseArray['headers'] = $this->getConvertHeaders($response, $responseArray);
+            $responseArray['headers'] = $this->convertHeaders($response);
         } else {
             $responseArray['headers'] = null;
         }
@@ -41,7 +41,7 @@ class HttpResponseToArrayConverter extends ResponseToArrayConverter
         return array_merge($responseArray, parent::convert($response));
     }
 
-    private function getConvertHeaders(HttpResponse $response): array
+    private function convertHeaders(HttpResponse $response): array
     {
         $headers = $response->getHeaders();
         $headersArray = [];
