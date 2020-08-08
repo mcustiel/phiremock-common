@@ -44,26 +44,23 @@ class ExpectationToArrayConverter
             $expectationArray['version'] = $expectation->getVersion()->asString();
         }
 
-        if ($expectation->hasScenarioName()) {
-            $expectationArray['scenarioName'] = $expectation->getScenarioName()->asString();
-        } else {
-            $expectationArray['scenarioName'] = null;
-        }
-        if ($expectation->getRequest()->hasScenarioState()) {
-            $expectationArray['scenarioStateIs'] = $expectation->getRequest()->getScenarioState()->asString();
-        } else {
-            $expectationArray['scenarioStateIs'] = null;
-        }
-        if ($expectation->getResponse()->hasNewScenarioState()) {
-            $expectationArray['newScenarioState'] = $expectation->getResponse()->getNewScenarioState()->asString();
-        } else {
-            $expectationArray['newScenarioState'] = null;
-        }
+        $expectationArray['scenarioName'] = $this->getScenarioName($expectation);
+        $expectationArray['scenarioStateIs'] = $this->getScenarioState($expectation);
+        $expectationArray['newScenarioState'] = $this->getNewScenarioState($expectation);
 
         $expectationArray['request'] = $this->requestToArrayConverterLocator
             ->locate($expectation)
             ->convert($expectation->getRequest());
 
+        $this->setResponse($expectation, $expectationArray);
+
+        $expectationArray['priority'] = $this->getPriority($expectation);
+
+        return $expectationArray;
+    }
+
+    private function setResponse(Expectation $expectation, array &$expectationArray): void
+    {
         $response = $expectation->getResponse();
 
         if ($response->isHttpResponse()) {
@@ -77,13 +74,41 @@ class ExpectationToArrayConverter
             $expectationArray['response'] = null;
             $expectationArray['proxyTo'] = $response->getUri()->asString();
         }
+    }
 
-        if ($expectation->hasPriority()) {
-            $expectationArray['priority'] = $expectation->getPriority()->asInt();
-        } else {
-            $expectationArray['priority'] = 0;
+    private function getScenarioName(Expectation $expectation): ?string
+    {
+        if ($expectation->hasScenarioName()) {
+            return $expectation->getScenarioName()->asString();
         }
 
-        return $expectationArray;
+        return null;
+    }
+
+    private function getScenarioState(Expectation $expectation): ?string
+    {
+        if ($expectation->getRequest()->hasScenarioState()) {
+            return $expectation->getRequest()->getScenarioState()->asString();
+        }
+
+        return null;
+    }
+
+    private function getNewScenarioState(Expectation $expectation): ?string
+    {
+        if ($expectation->getResponse()->hasNewScenarioState()) {
+            return $expectation->getResponse()->getNewScenarioState()->asString();
+        }
+
+        return null;
+    }
+
+    private function getPriority(Expectation $expectation): int
+    {
+        if ($expectation->hasPriority()) {
+            return $expectation->getPriority()->asInt();
+        }
+
+        return 0;
     }
 }
