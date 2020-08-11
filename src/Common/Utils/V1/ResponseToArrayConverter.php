@@ -16,29 +16,20 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Common\Utils;
+namespace Mcustiel\Phiremock\Common\Utils\V1;
 
-use Mcustiel\Phiremock\Domain\Version;
-use Mcustiel\Phiremock\Factory;
+use Mcustiel\Phiremock\Domain\Response;
 
-class ArrayToConditionsConverterLocator
+class ResponseToArrayConverter
 {
-    /** @var Factory */
-    private $factory;
-
-    public function __construct(Factory $factory)
+    public function convert(Response $response): array
     {
-        $this->factory = $factory;
-    }
+        $responseArray = [
+            'delayMillis' => $response->hasDelayMillis()
+                ? $response->getDelayMillis()->asInt()
+                : null,
+            ];
 
-    public function locate(Version $version): ArrayToRequestConditionConverter
-    {
-        switch ($version->asString()) {
-            case '1':
-                return  $this->factory->createArrayToRequestConditionConverter();
-            case '2':
-                return $this->factory->createArrayToRequestConditionV2Converter();
-        }
-        throw new \LogicException('Unimplemented config version');
+        return $responseArray;
     }
 }

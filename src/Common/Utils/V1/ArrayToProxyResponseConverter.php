@@ -16,26 +16,29 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Common\Utils;
+namespace Mcustiel\Phiremock\Common\Utils\V1;
 
-use Mcustiel\Phiremock\Domain\Options\ScenarioName;
+use Mcustiel\Phiremock\Domain\Http\Uri;
+use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
-use Mcustiel\Phiremock\Domain\StateConditions;
+use Mcustiel\Phiremock\Domain\ProxyResponse;
+use Mcustiel\Phiremock\Domain\Response;
 
-class ArrayToStateConditionsConverter
+class ArrayToProxyResponseConverter extends ArrayToResponseConverter
 {
-    public function convert(array $stateInfoArray): StateConditions
-    {
-        $scenarioName = null;
-        if (!empty($stateInfoArray['scenarioName'])) {
-            $scenarioName = new ScenarioName($stateInfoArray['scenarioName']);
+    protected function convertResponse(
+        array $responseArray,
+        ?Delay $delay,
+        ?ScenarioState $newScenarioState
+    ): Response {
+        if (empty($responseArray['proxyTo'])) {
+            throw new \InvalidArgumentException('Trying to create a proxied response with an empty uri');
         }
 
-        $currentScenarioState = null;
-        if (!empty($stateInfoArray['scenarioStateIs'])) {
-            $currentScenarioState = new ScenarioState($stateInfoArray['scenarioStateIs']);
-        }
-
-        return new StateConditions($scenarioName, $currentScenarioState);
+        return new ProxyResponse(
+            new Uri($responseArray['proxyTo']),
+            $delay,
+            $newScenarioState
+        );
     }
 }

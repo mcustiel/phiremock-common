@@ -20,7 +20,7 @@ namespace Mcustiel\Phiremock\Test\Unit\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
 use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
-use Mcustiel\Phiremock\Factory;
+use Mcustiel\Phiremock\Common\Utils\V2\Factory;
 use PHPUnit\Framework\TestCase;
 
 class JsonConvertTest extends TestCase

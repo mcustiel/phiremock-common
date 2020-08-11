@@ -16,18 +16,10 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Common\Utils;
+namespace Mcustiel\Phiremock\Common\Utils\V2;
 
-use Mcustiel\Phiremock\Domain\Response;
+use Mcustiel\Phiremock\Common\Utils\V1\ExpectationToArrayConverter as ExpectationToArrayConverterV1;
 
-class ProxyResponseToArrayConverter extends ResponseToArrayConverter
+class ExpectationToArrayConverter extends ExpectationToArrayConverterV1
 {
-    public function convert(Response $response): array
-    {
-        /** @var \Mcustiel\Phiremock\Domain\ProxyResponse $response */
-        $responseArray = [];
-        $responseArray['url'] = $response->getUri()->asString();
-
-        return array_merge($responseArray, parent::convert($response));
-    }
 }

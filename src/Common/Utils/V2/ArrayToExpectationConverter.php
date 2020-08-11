@@ -16,27 +16,10 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Common\Utils;
+namespace Mcustiel\Phiremock\Common\Utils\V2;
 
-use Mcustiel\Phiremock\Domain\Response;
-use Mcustiel\Phiremock\Factory;
+use Mcustiel\Phiremock\Common\Utils\V1\ArrayToExpectationConverter as ArrayToExpectationConverterV1;
 
-class ResponseToArrayConverterLocator
+class ArrayToExpectationConverter extends ArrayToExpectationConverterV1
 {
-    /** @var Factory */
-    private $factory;
-
-    public function __construct(Factory $factory)
-    {
-        $this->factory = $factory;
-    }
-
-    public function locate(Response $response): ResponseToArrayConverter
-    {
-        if ($response->isHttpResponse()) {
-            return $this->factory->createHttpResponseToArrayConverter();
-        }
-
-        return $this->factory->createProxyResponseToArrayConverter();
-    }
 }

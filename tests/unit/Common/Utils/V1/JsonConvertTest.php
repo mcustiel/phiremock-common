@@ -16,11 +16,11 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Test\Unit\Common\Utils;
+namespace Mcustiel\Phiremock\Test\Unit\Common\Utils\V1;
 
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
 use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
-use Mcustiel\Phiremock\Factory;
+use Mcustiel\Phiremock\Common\Utils\V1\Factory;
 use PHPUnit\Framework\TestCase;
 
 class JsonConvertTest extends TestCase

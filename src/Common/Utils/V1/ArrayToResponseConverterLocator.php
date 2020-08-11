@@ -16,20 +16,24 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Common\Utils;
+namespace Mcustiel\Phiremock\Common\Utils\V1;
 
-use Mcustiel\Phiremock\Domain\Response;
-
-class ResponseToArrayConverter
+class ArrayToResponseConverterLocator
 {
-    public function convert(Response $response): array
-    {
-        $responseArray = [
-            'delayMillis' => $response->hasDelayMillis()
-                ? $response->getDelayMillis()->asInt()
-                : null,
-            ];
+    /** @var Factory */
+    private $factory;
 
-        return $responseArray;
+    public function __construct(Factory $factory)
+    {
+        $this->factory = $factory;
+    }
+
+    public function locate(array $responseArray): ArrayToResponseConverter
+    {
+        if (isset($responseArray['proxyTo'])) {
+            return $this->factory->createArrayToProxyResponseConverter();
+        }
+
+        return $this->factory->createArrayToHttpResponseConverter();
     }
 }

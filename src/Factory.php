@@ -20,119 +20,41 @@ namespace Mcustiel\Phiremock;
 
 use Mcustiel\Phiremock\Common\Http\Implementation\GuzzleConnection;
 use Mcustiel\Phiremock\Common\Http\RemoteConnectionInterface;
-use Mcustiel\Phiremock\Common\Utils\ArrayToConditionsConverterLocator;
-use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator;
-use Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter;
-use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
-use Mcustiel\Phiremock\Common\Utils\HttpResponseToArrayConverter;
-use Mcustiel\Phiremock\Common\Utils\ProxyResponseToArrayConverter;
-use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
-use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverterLocator;
-use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverterLocator;
-use Mcustiel\Phiremock\Common\Utils\ScenarioStateInfoToArrayConverter;
-use Mcustiel\Phiremock\Common\Utils\V2\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterV2;
-use Mcustiel\Phiremock\Common\Utils\V2\RequestConditionToArrayConverter as RequestConditionToArrayConverterV2;
+use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverterLocator;
+use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverterLocator;
+use Mcustiel\Phiremock\Common\Utils\V1\Factory as FactoryV1;
+use Mcustiel\Phiremock\Common\Utils\V2\Factory as FactoryV2;
 
 class Factory
 {
-    public function createArrayToExpectationConverter(): ArrayToExpectationConverter
+    public function createV1UtilsFactory(): FactoryV1
     {
-        return new ArrayToExpectationConverter(
-            $this->createArrayToConditionsConverterLocator(),
-            $this->createArrayToResponseConverterLocator()
+        return new FactoryV1($this);
+    }
+
+    public function createV2UtilsFactory(): FactoryV2
+    {
+        return new FactoryV2($this);
+    }
+
+    public function createExpectationToArrayConverterLocator(): ExpectationToArrayConverterLocator
+    {
+        return new ExpectationToArrayConverterLocator(
+            $this->createV1UtilsFactory(),
+            $this->createV2UtilsFactory()
         );
     }
 
-    public function createArrayToStateConditionsConverter(): ArrayToStateConditionsConverter
+    public function createArrayToExpectationConverterLocator(): ArrayToExpectationConverterLocator
     {
-        return new ArrayToStateConditionsConverter();
-    }
-
-    public function createArrayToResponseConverterLocator(): ArrayToResponseConverterLocator
-    {
-        return new ArrayToResponseConverterLocator($this);
-    }
-
-    public function createArrayToConditionsConverterLocator(): ArrayToConditionsConverterLocator
-    {
-        return new ArrayToConditionsConverterLocator($this);
-    }
-
-    public function createArrayToHttpResponseConverter(): ArrayToHttpResponseConverter
-    {
-        return new ArrayToHttpResponseConverter();
-    }
-
-    public function createArrayToProxyResponseConverter(): ArrayToProxyResponseConverter
-    {
-        return new ArrayToProxyResponseConverter();
-    }
-
-    public function createArrayToRequestConditionConverter(): ArrayToRequestConditionConverter
-    {
-        return new ArrayToRequestConditionConverter();
-    }
-
-    public function createArrayToRequestConditionV2Converter(): ArrayToRequestConditionConverterV2
-    {
-        return new ArrayToRequestConditionConverterV2();
-    }
-
-    public function createExpectationToArrayConverter(): ExpectationToArrayConverter
-    {
-        return new ExpectationToArrayConverter(
-            $this->createRequestConditionToArrayConverterLocator(),
-            $this->createResponseToArrayConverterLocator()
+        return new ArrayToExpectationConverterLocator(
+            $this->createV1UtilsFactory(),
+            $this->createV2UtilsFactory()
         );
-    }
-
-    public function createHttpResponseToArrayConverter(): HttpResponseToArrayConverter
-    {
-        return new HttpResponseToArrayConverter();
-    }
-
-    public function createProxyResponseToArrayConverter(): ProxyResponseToArrayConverter
-    {
-        return new ProxyResponseToArrayConverter();
-    }
-
-    public function createResponseToArrayConverterLocator(): ResponseToArrayConverterLocator
-    {
-        return new ResponseToArrayConverterLocator($this);
-    }
-
-    public function createRequestConditionToArrayConverterLocator(): RequestConditionToArrayConverterLocator
-    {
-        return new RequestConditionToArrayConverterLocator($this);
-    }
-
-    public function createRequestConditionToArrayConverter(): RequestConditionToArrayConverter
-    {
-        return new RequestConditionToArrayConverter();
-    }
-
-    public function createRequestConditionToArrayV2Converter(): RequestConditionToArrayConverterV2
-    {
-        return new RequestConditionToArrayConverterV2();
     }
 
     public function createRemoteConnectionInterface(): RemoteConnectionInterface
     {
         return new GuzzleConnection(new \GuzzleHttp\Client());
-    }
-
-    public function createArrayToScenarioStateInfoConverter(): ArrayToScenarioStateInfoConverter
-    {
-        return new ArrayToScenarioStateInfoConverter();
-    }
-
-    public function createScenarioStateInfoToArrayConverter(): ScenarioStateInfoToArrayConverter
-    {
-        return new ScenarioStateInfoToArrayConverter();
     }
 }

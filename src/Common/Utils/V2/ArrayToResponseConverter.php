@@ -16,7 +16,7 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Common\Utils;
+namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;

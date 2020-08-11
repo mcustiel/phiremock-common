@@ -18,7 +18,7 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
-use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterV1;
+use Mcustiel\Phiremock\Common\Utils\V1\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterV1;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\MethodCondition;
 
 class ArrayToRequestConditionConverter extends ArrayToRequestConditionConverterV1

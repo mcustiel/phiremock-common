@@ -16,7 +16,7 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Common\Utils;
+namespace Mcustiel\Phiremock\Common\Utils\V1;
 
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Conditions;
