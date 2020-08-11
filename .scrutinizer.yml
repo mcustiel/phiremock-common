@@ -10,17 +10,18 @@ build:
       tests:
         override:
           - php-scrutinizer-run
+    coverage:
+      tests:
+        override:
+          -
+            command: ./vendor/bin/phpunit -c tests
+            coverage:
+                file: build/coverage.xml
+                format: clover
   environment:
     postgresql: false
     mysql: false
     redis: false
     php:
       version: 7.2
-  tests:
-    coverage:
-      override:
-        -
-          command: ./vendor/bin/phpunit -c tests
-          coverage:
-              file: build/coverage.xml
-              format: clover
+  
