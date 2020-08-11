@@ -33,6 +33,6 @@ class ArrayToExpectationConverterLocator
             );
         }
 
-        return $this->factory1->createArrayToExpectationConverter();
+        return $this->factoryV1->createArrayToExpectationConverter();
     }
 }

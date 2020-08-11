@@ -18,9 +18,9 @@
 
 namespace Mcustiel\Phiremock\Test\Unit\Common\Utils\V1;
 
-use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
-use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
-use Mcustiel\Phiremock\Common\Utils\V1\Factory;
+use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverterLocator;
+use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverterLocator;
+use Mcustiel\Phiremock\Factory;
 use PHPUnit\Framework\TestCase;
 
 class JsonConvertTest extends TestCase
@@ -88,16 +88,16 @@ class JsonConvertTest extends TestCase
         "priority": 3
     }';
 
-    /** @var ArrayToExpectationConverter */
-    private $arrayToExpectationConverter;
-    /** @var ExpectationToArrayConverter */
-    private $expectationToArrayConverter;
+    /** @var ArrayToExpectationConverterLocator */
+    private $arrayToExpectationConverterLocator;
+    /** @var ExpectationToArrayConverterLocator */
+    private $expectationToArrayConverterLocator;
 
     protected function setUp(): void
     {
         $factory = new Factory();
-        $this->arrayToExpectationConverter = $factory->createArrayToExpectationConverter();
-        $this->expectationToArrayConverter = $factory->createExpectationToArrayConverter();
+        $this->arrayToExpectationConverterLocator = $factory->createArrayToExpectationConverterLocator();
+        $this->expectationToArrayConverterLocator = $factory->createExpectationToArrayConverterLocator();
     }
 
     public function configProvider(): array
@@ -113,10 +113,24 @@ class JsonConvertTest extends TestCase
     public function testConvertsConfig(string $config, string $expected)
     {
         $configArray = json_decode($config, true);
-        $expectation = $this->arrayToExpectationConverter->convert($configArray);
+        $expectation = $this->arrayToExpectationConverterLocator
+            ->locate($configArray)
+            ->convert($configArray);
         $expectedArray = json_decode($expected, true);
-        $this->assertSame($expectedArray, $this->expectationToArrayConverter->convert($expectation));
-        $expectation = $this->arrayToExpectationConverter->convert($expectedArray);
-        $this->assertSame($expectedArray, $this->expectationToArrayConverter->convert($expectation));
+        $this->assertSame(
+            $expectedArray,
+            $this->expectationToArrayConverterLocator
+                ->locate($expectation)
+                ->convert($expectation)
+        );
+        $expectation = $this->arrayToExpectationConverterLocator
+            ->locate($expectedArray)
+            ->convert($expectedArray);
+        $this->assertSame(
+            $expectedArray,
+            $this->expectationToArrayConverterLocator
+                ->locate($expectation)
+                ->convert($expectation)
+        );
     }
 }
