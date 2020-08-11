@@ -26,7 +26,7 @@ class ExpectationToArrayConverterLocator
             case '1':
                 return $this->factoryV1->createArrayToExpectationConverter();
             case '2':
-                return $this->factoryV1->createArrayToExpectationConverter();
+                return $this->factoryV2->createArrayToExpectationConverter();
         }
         throw new \Exception(
             sprintf('Unimplemented configuration version: %s', $expectation->getVersion()->asString())
