@@ -17,6 +17,10 @@ build:
     php:
       version: 7.2
   tests:
-    override:
+    coverage:
+      override:
         -
           command: ./vendor/bin/phpunit -c tests
+          coverage:
+              file: build/coverage.xml
+              format: clover
