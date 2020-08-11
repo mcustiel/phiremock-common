@@ -18,9 +18,10 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
+use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter as ExpectationToArrayConverterInterface;
 use Mcustiel\Phiremock\Domain\Expectation;
 
-class ExpectationToArrayConverter
+class ExpectationToArrayConverter implements ExpectationToArrayConverterInterface
 {
     /** @var RequestConditionToArrayConverter */
     private $requestToArrayConverter;

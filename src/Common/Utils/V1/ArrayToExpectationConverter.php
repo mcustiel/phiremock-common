@@ -18,6 +18,7 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
+use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter as ArrayToExpectationConverterInterface;
 use Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\Expectation;
 use Mcustiel\Phiremock\Domain\Http\StatusCode;
@@ -27,7 +28,7 @@ use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Response;
 use Mcustiel\Phiremock\Domain\Version;
 
-class ArrayToExpectationConverter
+class ArrayToExpectationConverter implements ArrayToExpectationConverterInterface
 {
     const ALLOWED_OPTIONS = [
         'version'         => null,
