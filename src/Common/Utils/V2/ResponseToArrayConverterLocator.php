@@ -23,20 +23,4 @@ use Mcustiel\Phiremock\Domain\Response;
 
 class ResponseToArrayConverterLocator extends ResponseToArrayConverterLocatorV1
 {
-    /* @var Factory */
-//     private $factory;
-
-//     public function __construct(Factory $factory)
-//     {
-//         $this->factory = $factory;
-//     }
-
-//     public function locate(Response $response): ResponseToArrayConverter
-//     {
-//         if ($response->isHttpResponse()) {
-//             return $this->factory->createHttpResponseToArrayConverter();
-//         }
-
-//         return $this->factory->createProxyResponseToArrayConverter();
-//     }
 }

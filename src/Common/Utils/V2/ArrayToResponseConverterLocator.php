@@ -22,20 +22,4 @@ use Mcustiel\Phiremock\Common\Utils\V1\ArrayToResponseConverterLocator as ArrayT
 
 class ArrayToResponseConverterLocator extends ArrayToResponseConverterLocatorV1
 {
-    /* @var Factory */
-//     private $factory;
-
-//     public function __construct(Factory $factory)
-//     {
-//         $this->factory = $factory;
-//     }
-
-//     public function locate(array $responseArray): ArrayToResponseConverter
-//     {
-//         if (isset($responseArray['proxyTo'])) {
-//             return $this->factory->createArrayToProxyResponseConverter();
-//         }
-
-//         return $this->factory->createArrayToHttpResponseConverter();
-//     }
 }

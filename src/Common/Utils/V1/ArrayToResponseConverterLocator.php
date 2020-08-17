@@ -22,7 +22,7 @@ use Mcustiel\Phiremock\Common\UtilsFactory;
 
 class ArrayToResponseConverterLocator
 {
-    /** @var Factory */
+    /** @var UtilsFactory */
     private $factory;
 
     public function __construct(UtilsFactory $factory)
