@@ -19,6 +19,7 @@
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
 use Mcustiel\Phiremock\Common\UtilsFactory;
+use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter as ArrayToResponseConverterInterface;
 
 class ArrayToResponseConverterLocator
 {
@@ -30,7 +31,7 @@ class ArrayToResponseConverterLocator
         $this->factory = $factory;
     }
 
-    public function locate(array $responseArray): ArrayToResponseConverter
+    public function locate(array $responseArray): ArrayToResponseConverterInterface
     {
         if (isset($responseArray['proxyTo'])) {
             return $this->factory->createArrayToProxyResponseConverter();

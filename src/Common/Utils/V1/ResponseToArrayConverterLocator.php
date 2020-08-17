@@ -20,6 +20,7 @@ namespace Mcustiel\Phiremock\Common\Utils\V1;
 
 use Mcustiel\Phiremock\Common\UtilsFactory;
 use Mcustiel\Phiremock\Domain\Response;
+use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter as ResponseToArrayConverterInterface;
 
 class ResponseToArrayConverterLocator
 {
@@ -31,7 +32,7 @@ class ResponseToArrayConverterLocator
         $this->factory = $factory;
     }
 
-    public function locate(Response $response): ResponseToArrayConverter
+    public function locate(Response $response): ResponseToArrayConverterInterface
     {
         if ($response->isHttpResponse()) {
             return $this->factory->createHttpResponseToArrayConverter();
