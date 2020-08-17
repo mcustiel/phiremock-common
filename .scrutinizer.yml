@@ -14,7 +14,7 @@ build:
       tests:
         override:
           -
-            command: ./vendor/bin/phpunit -c tests
+            command: ./vendor/bin/phpunit
             coverage:
                 file: build/coverage.xml
                 format: clover
