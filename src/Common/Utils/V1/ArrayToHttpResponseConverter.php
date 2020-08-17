@@ -18,7 +18,6 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
-use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter as ArrayToHttpResponseConverterInterface;
 use Mcustiel\Phiremock\Domain\BinaryInfo;
 use Mcustiel\Phiremock\Domain\Http\BinaryBody;
 use Mcustiel\Phiremock\Domain\Http\Body;
@@ -32,7 +31,7 @@ use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\Response;
 
-class ArrayToHttpResponseConverter extends ArrayToResponseConverter implements ArrayToHttpResponseConverterInterface
+class ArrayToHttpResponseConverter extends ArrayToResponseConverter
 {
     const ALLOWED_OPTIONS = [
         'statusCode' => null,
@@ -41,11 +40,6 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter implements A
         'delayMillis'=> null,
     ];
     const STRING_START = 0;
-
-    public function convert(array $responseArray): HttpResponse
-    {
-        return parent::convert($responseArray);
-    }
 
     protected function convertResponse(
         array $responseArray,

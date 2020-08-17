@@ -3,9 +3,8 @@
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter as ArrayToExpectationConverterInterface;
-use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter as ArrayToHttpResponseConverterInterface;
-use Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter as ArrayToProxyResponseConverterInterface;
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterInterface;
+use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter as ArrayToResponseConverterInterface;
 use Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter as ArrayToScenarioStateInfoConverterInterface;
 use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter as ArrayToStateConditionsConverterInterface;
 use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter as ExpectationToArrayConverterInterface;
@@ -34,12 +33,12 @@ class Factory implements UtilsFactory
         return new ArrayToResponseConverterLocator($this);
     }
 
-    public function createArrayToHttpResponseConverter(): ArrayToHttpResponseConverterInterface
+    public function createArrayToHttpResponseConverter(): ArrayToResponseConverterInterface
     {
         return new ArrayToHttpResponseConverter();
     }
 
-    public function createArrayToProxyResponseConverter(): ArrayToProxyResponseConverterInterface
+    public function createArrayToProxyResponseConverter(): ArrayToResponseConverterInterface
     {
         return new ArrayToProxyResponseConverter();
     }

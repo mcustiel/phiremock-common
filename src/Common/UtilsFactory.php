@@ -3,9 +3,8 @@
 namespace Mcustiel\Phiremock\Common;
 
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
+use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter;
 use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter;
 use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
@@ -29,9 +28,9 @@ interface UtilsFactory
 
     public function createScenarioStateInfoToArrayConverter(): ScenarioStateInfoToArrayConverter;
 
-    public function createArrayToHttpResponseConverter(): ArrayToHttpResponseConverter;
+    public function createArrayToHttpResponseConverter(): ArrayToResponseConverter;
 
-    public function createArrayToProxyResponseConverter(): ArrayToProxyResponseConverter;
+    public function createArrayToProxyResponseConverter(): ArrayToResponseConverter;
 
     public function createHttpResponseToArrayConverter(): ResponseToArrayConverter;
 
