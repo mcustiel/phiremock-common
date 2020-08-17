@@ -58,7 +58,7 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
     {
         $this->ensureNotInvalidOptionsAreProvided($expectationArray);
         $version = $this->getVersion($expectationArray);
-        $request = $this->convertRequest($expectationArray, $version);
+        $request = $this->convertRequest($expectationArray);
         $response = $this->convertResponse($expectationArray);
         $scenarioName = $this->getScenarioName($expectationArray);
         $priority = $this->getPriority($expectationArray);
@@ -117,7 +117,7 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
             ->convert($expectationArray);
     }
 
-    private function convertRequest(array $expectationArray, Version $version): Conditions
+    private function convertRequest(array $expectationArray): Conditions
     {
         if (!isset($expectationArray['request'])) {
             throw new \InvalidArgumentException('Expectation request is not set');

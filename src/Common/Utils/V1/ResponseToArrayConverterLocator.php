@@ -18,9 +18,9 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
+use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter as ResponseToArrayConverterInterface;
 use Mcustiel\Phiremock\Common\UtilsFactory;
 use Mcustiel\Phiremock\Domain\Response;
-use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter as ResponseToArrayConverterInterface;
 
 class ResponseToArrayConverterLocator
 {

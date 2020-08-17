@@ -18,8 +18,8 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
-use Mcustiel\Phiremock\Common\UtilsFactory;
 use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter as ArrayToResponseConverterInterface;
+use Mcustiel\Phiremock\Common\UtilsFactory;
 
 class ArrayToResponseConverterLocator
 {

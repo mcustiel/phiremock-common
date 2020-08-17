@@ -20,7 +20,7 @@ class Factory implements UtilsFactory
         return new ArrayToExpectationConverter(
             $this->createArrayToRequestConditionConverter(),
             $this->createArrayToResponseConverterLocator()
-            );
+        );
     }
 
     public function createArrayToStateConditionsConverter(): ArrayToStateConditionsConverterInterface
@@ -53,7 +53,7 @@ class Factory implements UtilsFactory
         return new ExpectationToArrayConverter(
             $this->createRequestConditionToArrayConverter(),
             $this->createResponseToArrayConverterLocator()
-            );
+        );
     }
 
     public function createHttpResponseToArrayConverter(): ResponseToArrayConverterInterface

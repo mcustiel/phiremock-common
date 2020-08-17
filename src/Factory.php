@@ -29,12 +29,12 @@ class Factory
 {
     public function createV1UtilsFactory(): FactoryV1
     {
-        return new FactoryV1($this);
+        return new FactoryV1();
     }
 
     public function createV2UtilsFactory(): FactoryV2
     {
-        return new FactoryV2($this);
+        return new FactoryV2();
     }
 
     public function createExpectationToArrayConverterLocator(): ExpectationToArrayConverterLocator
