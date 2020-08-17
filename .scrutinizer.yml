@@ -13,11 +13,10 @@ build:
     coverage:
       tests:
         override:
-          -
-            command: ./vendor/bin/phpunit
+          - command: ./vendor/bin/phpunit
             coverage:
-                file: build/coverage.xml
-                format: clover
+              file: build/coverage.xml
+              format: clover
   environment:
     postgresql: false
     mysql: false
