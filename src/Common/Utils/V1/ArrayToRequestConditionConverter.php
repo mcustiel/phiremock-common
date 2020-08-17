@@ -18,6 +18,7 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
+use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterInterface;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\BodyCondition;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderConditionCollection;
@@ -30,7 +31,7 @@ use Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
-class ArrayToRequestConditionConverter
+class ArrayToRequestConditionConverter implements ArrayToRequestConditionConverterInterface
 {
     const ALLOWED_OPTIONS = [
         'method' => null,

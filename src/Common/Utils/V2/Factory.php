@@ -2,19 +2,29 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
-use Mcustiel\Phiremock\Common\Utils\V1\Factory as FactoryV1;
+use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter as ArrayToExpectationConverterInterface;
+use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter as ArrayToHttpResponseConverterInterface;
+use Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter as ArrayToProxyResponseConverterInterface;
+use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterInterface;
+use Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter as ArrayToScenarioStateInfoConverterInterface;
+use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter as ArrayToStateConditionsConverterInterface;
+use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter as ExpectationToArrayConverterInterface;
+use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter as RequestConditionToArrayConverterInterface;
+use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter as ResponseToArrayConverterInterface;
+use Mcustiel\Phiremock\Common\Utils\ScenarioStateInfoToArrayConverter as ScenarioStateInfoToArrayConverterInterface;
+use Mcustiel\Phiremock\Common\UtilsFactory;
 
-class Factory extends FactoryV1
+class Factory implements UtilsFactory
 {
-    public function createArrayToExpectationConverter(): ArrayToExpectationConverter
+    public function createArrayToExpectationConverter(): ArrayToExpectationConverterInterface
     {
         return new ArrayToExpectationConverter(
             $this->createArrayToRequestConditionConverter(),
             $this->createArrayToResponseConverterLocator()
-        );
+            );
     }
 
-    public function createArrayToStateConditionsConverter(): ArrayToStateConditionsConverter
+    public function createArrayToStateConditionsConverter(): ArrayToStateConditionsConverterInterface
     {
         return new ArrayToStateConditionsConverter();
     }
@@ -24,35 +34,35 @@ class Factory extends FactoryV1
         return new ArrayToResponseConverterLocator($this);
     }
 
-    public function createArrayToHttpResponseConverter(): ArrayToHttpResponseConverter
+    public function createArrayToHttpResponseConverter(): ArrayToHttpResponseConverterInterface
     {
         return new ArrayToHttpResponseConverter();
     }
 
-    public function createArrayToProxyResponseConverter(): ArrayToProxyResponseConverter
+    public function createArrayToProxyResponseConverter(): ArrayToProxyResponseConverterInterface
     {
         return new ArrayToProxyResponseConverter();
     }
 
-    public function createArrayToRequestConditionConverter(): ArrayToRequestConditionConverter
+    public function createArrayToRequestConditionConverter(): ArrayToRequestConditionConverterInterface
     {
         return new ArrayToRequestConditionConverter();
     }
 
-    public function createExpectationToArrayConverter(): ExpectationToArrayConverter
+    public function createExpectationToArrayConverter(): ExpectationToArrayConverterInterface
     {
         return new ExpectationToArrayConverter(
             $this->createRequestConditionToArrayConverter(),
             $this->createResponseToArrayConverterLocator()
-        );
+            );
     }
 
-    public function createHttpResponseToArrayConverter(): HttpResponseToArrayConverter
+    public function createHttpResponseToArrayConverter(): ResponseToArrayConverterInterface
     {
         return new HttpResponseToArrayConverter();
     }
 
-    public function createProxyResponseToArrayConverter(): ProxyResponseToArrayConverter
+    public function createProxyResponseToArrayConverter(): ResponseToArrayConverterInterface
     {
         return new ProxyResponseToArrayConverter();
     }
@@ -62,17 +72,17 @@ class Factory extends FactoryV1
         return new ResponseToArrayConverterLocator($this);
     }
 
-    public function createRequestConditionToArrayConverter(): RequestConditionToArrayConverter
+    public function createRequestConditionToArrayConverter(): RequestConditionToArrayConverterInterface
     {
         return new RequestConditionToArrayConverter();
     }
 
-    public function createArrayToScenarioStateInfoConverter(): ArrayToScenarioStateInfoConverter
+    public function createArrayToScenarioStateInfoConverter(): ArrayToScenarioStateInfoConverterInterface
     {
         return new ArrayToScenarioStateInfoConverter();
     }
 
-    public function createScenarioStateInfoToArrayConverter(): ScenarioStateInfoToArrayConverter
+    public function createScenarioStateInfoToArrayConverter(): ScenarioStateInfoToArrayConverterInterface
     {
         return new ScenarioStateInfoToArrayConverter();
     }

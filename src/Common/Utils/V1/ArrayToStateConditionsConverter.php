@@ -18,11 +18,12 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
+use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter as ArrayToStateConditionsConverterInterface;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\StateConditions;
 
-class ArrayToStateConditionsConverter
+class ArrayToStateConditionsConverter implements ArrayToStateConditionsConverterInterface
 {
     public function convert(array $stateInfoArray): StateConditions
     {

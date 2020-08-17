@@ -18,11 +18,12 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
+use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter as ArrayToResponseConverterInterface;
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\Response;
 
-abstract class ArrayToResponseConverter
+abstract class ArrayToResponseConverter implements ArrayToResponseConverterInterface
 {
     const ALLOWED_OPTIONS = ['delayMillis'=> null];
     const NO_DELAY = 0;

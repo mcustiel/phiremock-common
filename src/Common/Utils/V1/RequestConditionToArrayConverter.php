@@ -18,11 +18,12 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
+use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter as RequestConditionToArrayConverterInterface;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 
-class RequestConditionToArrayConverter
+class RequestConditionToArrayConverter implements RequestConditionToArrayConverterInterface
 {
     public function convert(Conditions $request): array
     {

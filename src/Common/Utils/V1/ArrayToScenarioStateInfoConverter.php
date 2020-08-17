@@ -18,11 +18,12 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
+use Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter as ArrayToScenarioStateInfoConverterInterface;
 use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\ScenarioStateInfo;
 
-class ArrayToScenarioStateInfoConverter
+class ArrayToScenarioStateInfoConverter implements ArrayToScenarioStateInfoConverterInterface
 {
     public function convert(array $expectationArray): ScenarioStateInfo
     {

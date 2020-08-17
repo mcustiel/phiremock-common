@@ -18,6 +18,7 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
+use Mcustiel\Phiremock\Common\UtilsFactory;
 use Mcustiel\Phiremock\Domain\Response;
 
 class ResponseToArrayConverterLocator
@@ -25,7 +26,7 @@ class ResponseToArrayConverterLocator
     /** @var Factory */
     private $factory;
 
-    public function __construct(Factory $factory)
+    public function __construct(UtilsFactory $factory)
     {
         $this->factory = $factory;
     }

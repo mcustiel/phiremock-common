@@ -18,14 +18,20 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
+use Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter as ArrayToProxyResponseConverterInterface;
 use Mcustiel\Phiremock\Domain\Http\Uri;
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\ProxyResponse;
 use Mcustiel\Phiremock\Domain\Response;
 
-class ArrayToProxyResponseConverter extends ArrayToResponseConverter
+class ArrayToProxyResponseConverter extends ArrayToResponseConverter implements ArrayToProxyResponseConverterInterface
 {
+    public function convert(array $responseArray): ProxyResponse
+    {
+        return parent::convert($responseArray);
+    }
+
     protected function convertResponse(
         array $responseArray,
         ?Delay $delay,

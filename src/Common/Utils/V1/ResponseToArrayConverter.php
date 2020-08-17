@@ -18,9 +18,10 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
+use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter as ResponseToArrayConverterInterface;
 use Mcustiel\Phiremock\Domain\Response;
 
-class ResponseToArrayConverter
+class ResponseToArrayConverter implements ResponseToArrayConverterInterface
 {
     public function convert(Response $response): array
     {
