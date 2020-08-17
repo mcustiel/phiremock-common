@@ -6,3 +6,4 @@ composer.phar
 composer.lock
 .phpunit.result.cache
 tests/.phpunit.result.cache
+build/
