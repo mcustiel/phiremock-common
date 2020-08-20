@@ -27,6 +27,7 @@ class StringStream extends Stream
      */
     public function __construct($string)
     {
-        parent::__construct('data://text/plain;base64,' . base64_encode($string));
+        parent::__construct('php://memory');
+        $this->write($string);
     }
 }

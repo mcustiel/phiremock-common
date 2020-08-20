@@ -16,7 +16,7 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Test\Unit\Common\Utils\V1;
+namespace Mcustiel\Phiremock\Tests\Unit\Common\Utils\V1;
 
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverterLocator;
