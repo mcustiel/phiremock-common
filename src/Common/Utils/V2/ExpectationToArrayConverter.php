@@ -56,18 +56,6 @@ class ExpectationToArrayConverter extends ExpectationToArrayConverterV1
         return $expectationArray;
     }
 
-    private function setResponse(Expectation $expectation, array &$expectationArray): void
-    {
-        $response = $expectation->getResponse();
-
-        if ($response->isHttpResponse()) {
-            /* @var \Mcustiel\Phiremock\Domain\HttpResponse $response */
-        } else {
-            /* @var \Mcustiel\Phiremock\Domain\ProxyResponse $response */
-            $expectationArray['response'] = null;
-        }
-    }
-
     private function getScenarioName(Expectation $expectation): ?string
     {
         if ($expectation->hasScenarioName()) {
