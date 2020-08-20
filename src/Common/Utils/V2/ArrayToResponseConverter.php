@@ -18,12 +18,12 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
+use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter as ArrayToResponseConverterInterface;
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\Response;
-use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter as ArrayToResponseConverterInterface;
 
-abstract class ArrayToResponseConverter  implements ArrayToResponseConverterInterface
+abstract class ArrayToResponseConverter implements ArrayToResponseConverterInterface
 {
     const ALLOWED_OPTIONS = ['delayMillis'=> null, 'newScenarioState' => null, 'response' => null, 'proxyTo' => null];
     const NO_DELAY = 0;
@@ -31,6 +31,7 @@ abstract class ArrayToResponseConverter  implements ArrayToResponseConverterInte
     public function convert(array $responseArray): Response
     {
         $this->ensureNotInvalidOptionsAreProvided($responseArray, self::ALLOWED_OPTIONS);
+
         return $this->convertResponse(
             $responseArray,
             $this->getDelay($responseArray),

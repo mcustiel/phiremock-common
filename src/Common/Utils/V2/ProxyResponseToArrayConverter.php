@@ -18,7 +18,6 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
-use Mcustiel\Phiremock\Common\Utils\V1\ProxyResponseToArrayConverter as ProxyResponseToArrayConverterV1;
 use Mcustiel\Phiremock\Domain\Response;
 
 class ProxyResponseToArrayConverter extends ResponseToArrayConverter

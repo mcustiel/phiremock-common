@@ -20,14 +20,14 @@ namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter as ArrayToExpectationConverterInterface;
 use Mcustiel\Phiremock\Common\Utils\V1\ArrayToExpectationConverter as ArrayToExpectationConverterV1;
+use Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\Expectation;
-use Mcustiel\Phiremock\Domain\Version;
-use Mcustiel\Phiremock\Domain\Options\Priority;
-use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Http\StatusCode;
 use Mcustiel\Phiremock\Domain\HttpResponse;
+use Mcustiel\Phiremock\Domain\Options\Priority;
+use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Response;
-use Mcustiel\Phiremock\Domain\Conditions;
+use Mcustiel\Phiremock\Domain\Version;
 
 class ArrayToExpectationConverter implements ArrayToExpectationConverterInterface //extends ArrayToExpectationConverterV1
 {
@@ -35,8 +35,8 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
         'version'         => null,
         'scenarioName'    => null,
         'priority'        => null,
-        'on'         => null,
-        'then'        => null,
+        'on'              => null,
+        'then'            => null,
     ];
 
     /** @var ArrayToRequestConditionConverter */

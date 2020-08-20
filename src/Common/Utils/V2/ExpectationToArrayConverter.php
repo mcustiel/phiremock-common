@@ -62,7 +62,6 @@ class ExpectationToArrayConverter extends ExpectationToArrayConverterV1
 
         if ($response->isHttpResponse()) {
             /* @var \Mcustiel\Phiremock\Domain\HttpResponse $response */
-
         } else {
             /* @var \Mcustiel\Phiremock\Domain\ProxyResponse $response */
             $expectationArray['response'] = null;

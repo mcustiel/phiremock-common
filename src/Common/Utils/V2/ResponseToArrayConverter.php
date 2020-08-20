@@ -19,7 +19,6 @@
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter as ResponseToArrayConverterInterface;
-use Mcustiel\Phiremock\Common\Utils\V1\ResponseToArrayConverter as ResponseToArrayConverterV1;
 use Mcustiel\Phiremock\Domain\Response;
 
 class ResponseToArrayConverter implements ResponseToArrayConverterInterface

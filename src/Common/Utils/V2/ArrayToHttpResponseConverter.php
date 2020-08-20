@@ -19,17 +19,17 @@
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Common\Utils\V1\ArrayToHttpResponseConverter as ArrayToHttpResponseConverterV1;
-use Mcustiel\Phiremock\Domain\Http\HeadersCollection;
-use Mcustiel\Phiremock\Domain\Http\Header;
-use Mcustiel\Phiremock\Domain\Http\HeaderName;
-use Mcustiel\Phiremock\Domain\Http\HeaderValue;
 use Mcustiel\Phiremock\Domain\BinaryInfo;
 use Mcustiel\Phiremock\Domain\Http\BinaryBody;
 use Mcustiel\Phiremock\Domain\Http\Body;
-use Mcustiel\Phiremock\Domain\HttpResponse;
+use Mcustiel\Phiremock\Domain\Http\Header;
+use Mcustiel\Phiremock\Domain\Http\HeaderName;
+use Mcustiel\Phiremock\Domain\Http\HeadersCollection;
+use Mcustiel\Phiremock\Domain\Http\HeaderValue;
 use Mcustiel\Phiremock\Domain\Http\StatusCode;
-use Mcustiel\Phiremock\Domain\Options\ScenarioState;
+use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Options\Delay;
+use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\Response;
 
 class ArrayToHttpResponseConverter extends ArrayToResponseConverter // extends ArrayToHttpResponseConverterV1

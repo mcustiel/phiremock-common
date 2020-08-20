@@ -18,11 +18,10 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
-use Mcustiel\Phiremock\Common\Utils\V1\ArrayToProxyResponseConverter as ArrayToProxyResponseConverterV1;
-use Mcustiel\Phiremock\Domain\ProxyResponse;
 use Mcustiel\Phiremock\Domain\Http\Uri;
-use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\Options\Delay;
+use Mcustiel\Phiremock\Domain\Options\ScenarioState;
+use Mcustiel\Phiremock\Domain\ProxyResponse;
 use Mcustiel\Phiremock\Domain\Response;
 
 class ArrayToProxyResponseConverter extends ArrayToResponseConverter

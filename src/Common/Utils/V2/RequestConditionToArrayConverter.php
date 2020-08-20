@@ -36,18 +36,18 @@ class RequestConditionToArrayConverter extends RequestConditionToArrayConverterV
         return $requestArray;
     }
 
-    private function convertScenarioState(Conditions $request, array &$requestArray): void
-    {
-        $requestArray['scenarioStateIs'] = $request->hasScenarioState()
-            ? $request->getScenarioState()->asString()
-            : null;
-    }
-
     protected function convertMethod(Conditions $request, array &$requestArray): void
     {
         $method = $request->getMethod();
         $requestArray['method'] = null === $method ? null : [
             $method->getMatcher()->getName() => $method->getValue()->asString(),
         ];
+    }
+
+    private function convertScenarioState(Conditions $request, array &$requestArray): void
+    {
+        $requestArray['scenarioStateIs'] = $request->hasScenarioState()
+            ? $request->getScenarioState()->asString()
+            : null;
     }
 }

@@ -18,27 +18,27 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
+use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterInterface;
 use Mcustiel\Phiremock\Common\Utils\V1\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterV1;
-use Mcustiel\Phiremock\Domain\Condition\Conditions\MethodCondition;
-use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\BodyCondition;
-use Mcustiel\Phiremock\Domain\Condition\Conditions\UrlCondition;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderConditionCollection;
-use Mcustiel\Phiremock\Domain\Http\HeaderName;
-use Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderConditionIterator;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\MethodCondition;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\UrlCondition;
 use Mcustiel\Phiremock\Domain\Condition\Matchers\MatcherFactory;
-use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterInterface;
+use Mcustiel\Phiremock\Domain\Conditions;
+use Mcustiel\Phiremock\Domain\Http\HeaderName;
+use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
-class ArrayToRequestConditionConverter implements  ArrayToRequestConditionConverterInterface//  extends ArrayToRequestConditionConverterV1
+class ArrayToRequestConditionConverter implements ArrayToRequestConditionConverterInterface //  extends ArrayToRequestConditionConverterV1
 {
     const ALLOWED_OPTIONS = [
         'scenarioStateIs' => null,
-        'method' => null,
-        'url'    => null,
-        'body'   => null,
-        'headers'=> null,
+        'method'          => null,
+        'url'             => null,
+        'body'            => null,
+        'headers'         => null,
     ];
 
     /** @var MatcherFactory */

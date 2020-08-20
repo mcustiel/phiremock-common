@@ -18,9 +18,9 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
+use Mcustiel\Phiremock\Domain\Http\Header;
 use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Response;
-use Mcustiel\Phiremock\Domain\Http\Header;
 
 class HttpResponseToArrayConverter extends ResponseToArrayConverter
 {
