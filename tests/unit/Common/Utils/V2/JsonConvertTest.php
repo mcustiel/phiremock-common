@@ -25,6 +25,59 @@ use PHPUnit\Framework\TestCase;
 
 class JsonConvertTest extends TestCase
 {
+    private const EMPTY_EXPECTATION = '{
+        "version": "2"
+    }';
+    private const EMPTY_EXPECTATION_EXPECTED = '{
+        "version": "2",
+        "scenarioName": null,
+        "on": {
+            "scenarioStateIs": null,
+            "method": null,
+            "url":null,
+            "body": null,
+            "headers" : null
+        },
+        "then": {
+            "delayMillis": null,
+            "newScenarioState": null,
+            "response": {
+                "statusCode": 200,
+                "body": null,
+                "headers": null
+            }
+        },
+        "priority": 0
+    }';
+    private const EMPTY_REQUEST_AND_RESPONSE = '{
+        "version": "2",
+        "on": {
+        },
+        "then" :{
+            "response": {}
+        }
+    }';
+    private const EMPTY_REQUEST_AND_RESPONSE_EXPECTED = '{
+        "version": "2",
+        "scenarioName": null,
+        "on": {
+            "scenarioStateIs": null,
+            "method": null,
+            "url":null,
+            "body": null,
+            "headers" : null
+        },
+        "then": {
+            "delayMillis": null,
+            "newScenarioState": null,
+            "response": {
+                "statusCode": 200,
+                "body": null,
+                "headers": null
+            }
+        },
+        "priority": 0
+    }';
     private const JSON_CONDITION = '{
         "version": "2",
         "on": {
@@ -174,9 +227,11 @@ class JsonConvertTest extends TestCase
     public function configProvider(): array
     {
         return [
-            'base config'       => [self::BASIC_CONFIG, self::BASIC_CONFIG_EXPECTED],
-            'json body request' => [self::JSON_CONDITION, self::JSON_CONDITION_EXPECTED],
-            'full config'       => [self::FULL_CONFIG, self::FULL_CONFIG_EXPECTED],
+            'empty expectation'          => [self::EMPTY_EXPECTATION, self::EMPTY_EXPECTATION_EXPECTED],
+            'empty request and response' => [self::EMPTY_REQUEST_AND_RESPONSE, self::EMPTY_REQUEST_AND_RESPONSE_EXPECTED],
+            'base config'                => [self::BASIC_CONFIG, self::BASIC_CONFIG_EXPECTED],
+            'json body request'          => [self::JSON_CONDITION, self::JSON_CONDITION_EXPECTED],
+            'full config'                => [self::FULL_CONFIG, self::FULL_CONFIG_EXPECTED],
         ];
     }
 
