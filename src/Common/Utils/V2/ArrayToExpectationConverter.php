@@ -18,8 +18,97 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
+use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter as ArrayToExpectationConverterInterface;
 use Mcustiel\Phiremock\Common\Utils\V1\ArrayToExpectationConverter as ArrayToExpectationConverterV1;
+use Mcustiel\Phiremock\Domain\Expectation;
+use Mcustiel\Phiremock\Domain\Version;
+use Mcustiel\Phiremock\Domain\Options\Priority;
+use Mcustiel\Phiremock\Domain\Options\ScenarioName;
+use Mcustiel\Phiremock\Domain\Http\StatusCode;
+use Mcustiel\Phiremock\Domain\HttpResponse;
+use Mcustiel\Phiremock\Domain\Response;
+use Mcustiel\Phiremock\Domain\Conditions;
 
-class ArrayToExpectationConverter extends ArrayToExpectationConverterV1
+class ArrayToExpectationConverter implements ArrayToExpectationConverterInterface //extends ArrayToExpectationConverterV1
 {
+    const ALLOWED_OPTIONS = [
+        'version'         => null,
+        'scenarioName'    => null,
+        'priority'        => null,
+        'on'         => null,
+        'then'        => null,
+    ];
+
+    /** @var ArrayToRequestConditionConverter */
+    private $arrayToConditionsConverter;
+    /** @var ArrayToResponseConverterLocator */
+    private $arrayToResponseConverterLocator;
+
+    public function __construct(
+        ArrayToRequestConditionConverter $arrayToConditionsConverter,
+        ArrayToResponseConverterLocator $arrayToResponseConverterLocator
+    ) {
+        $this->arrayToConditionsConverter = $arrayToConditionsConverter;
+        $this->arrayToResponseConverterLocator = $arrayToResponseConverterLocator;
+    }
+
+    public function convert(array $expectationArray): Expectation
+    {
+        $this->ensureNotInvalidOptionsAreProvided($expectationArray);
+        $version = new Version('2');
+        $request = $this->convertRequest($expectationArray);
+        $response = $this->convertResponse($expectationArray);
+        $scenarioName = $this->getScenarioName($expectationArray);
+        $priority = $this->getPriority($expectationArray);
+
+        return new Expectation($request, $response, $scenarioName, $priority, $version);
+    }
+
+    private function ensureNotInvalidOptionsAreProvided(array $expectationArray): void
+    {
+        $invalidOptions = array_diff_key($expectationArray, self::ALLOWED_OPTIONS);
+        if (!empty($invalidOptions)) {
+            throw new \Exception('Unknown expectation options: ' . var_export($invalidOptions, true));
+        }
+    }
+
+    private function getPriority(array $expectationArray): ?Priority
+    {
+        $priority = null;
+        if (!empty($expectationArray['priority'])) {
+            $priority = new Priority((int) $expectationArray['priority']);
+        }
+
+        return $priority;
+    }
+
+    private function getScenarioName(array $expectationArray): ?ScenarioName
+    {
+        $scenarioName = null;
+        if (!empty($expectationArray['scenarioName'])) {
+            $scenarioName = new ScenarioName($expectationArray['scenarioName']);
+        }
+
+        return $scenarioName;
+    }
+
+    private function convertResponse(array $expectationArray): Response
+    {
+        if (empty($expectationArray['then'])) {
+            return new HttpResponse(new StatusCode(200), null, null, null, null);
+        }
+
+        return $this->arrayToResponseConverterLocator
+            ->locate($expectationArray['then'])
+            ->convert($expectationArray['then']);
+    }
+
+    private function convertRequest(array $expectationArray): Conditions
+    {
+        if (empty($expectationArray['on'])) {
+            return new Conditions();
+        }
+
+        return $this->arrayToConditionsConverter->convert($expectationArray['on']);
+    }
 }

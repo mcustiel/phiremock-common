@@ -19,7 +19,16 @@
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Common\Utils\V1\ProxyResponseToArrayConverter as ProxyResponseToArrayConverterV1;
+use Mcustiel\Phiremock\Domain\Response;
 
-class ProxyResponseToArrayConverter extends ProxyResponseToArrayConverterV1
+class ProxyResponseToArrayConverter extends ResponseToArrayConverter
 {
+    public function convert(Response $response): array
+    {
+        /** @var \Mcustiel\Phiremock\Domain\ProxyResponse $response */
+        $responseArray = [];
+        $responseArray['proxyTo'] = $response->getUri()->asString();
+
+        return array_merge(parent::convert($response), $responseArray);
+    }
 }

@@ -19,7 +19,89 @@
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Common\Utils\V1\ExpectationToArrayConverter as ExpectationToArrayConverterV1;
+use Mcustiel\Phiremock\Domain\Expectation;
 
 class ExpectationToArrayConverter extends ExpectationToArrayConverterV1
 {
+    /** @var RequestConditionToArrayConverter */
+    private $requestToArrayConverter;
+
+    /** @var ResponseToArrayConverterLocator */
+    private $responseConverterLocator;
+
+    public function __construct(
+        RequestConditionToArrayConverter $requestConverter,
+        ResponseToArrayConverterLocator $responseConverterLocator
+    ) {
+        $this->requestToArrayConverter = $requestConverter;
+        $this->responseConverterLocator = $responseConverterLocator;
+    }
+
+    public function convert(Expectation $expectation): array
+    {
+        $expectationArray = [];
+
+        $expectationArray['version'] = $expectation->getVersion()->asString();
+
+        $expectationArray['scenarioName'] = $this->getScenarioName($expectation);
+        $expectationArray['on'] = $this->requestToArrayConverter->convert($expectation->getRequest());
+
+        $response = $expectation->getResponse();
+        $expectationArray['then'] = $this->responseConverterLocator
+            ->locate($response)
+            ->convert($response);
+
+        $expectationArray['priority'] = $this->getPriority($expectation);
+
+        return $expectationArray;
+    }
+
+    private function setResponse(Expectation $expectation, array &$expectationArray): void
+    {
+        $response = $expectation->getResponse();
+
+        if ($response->isHttpResponse()) {
+            /* @var \Mcustiel\Phiremock\Domain\HttpResponse $response */
+
+        } else {
+            /* @var \Mcustiel\Phiremock\Domain\ProxyResponse $response */
+            $expectationArray['response'] = null;
+        }
+    }
+
+    private function getScenarioName(Expectation $expectation): ?string
+    {
+        if ($expectation->hasScenarioName()) {
+            return $expectation->getScenarioName()->asString();
+        }
+
+        return null;
+    }
+
+    private function getScenarioState(Expectation $expectation): ?string
+    {
+        if ($expectation->getRequest()->hasScenarioState()) {
+            return $expectation->getRequest()->getScenarioState()->asString();
+        }
+
+        return null;
+    }
+
+    private function getNewScenarioState(Expectation $expectation): ?string
+    {
+        if ($expectation->getResponse()->hasNewScenarioState()) {
+            return $expectation->getResponse()->getNewScenarioState()->asString();
+        }
+
+        return null;
+    }
+
+    private function getPriority(Expectation $expectation): int
+    {
+        if ($expectation->hasPriority()) {
+            return $expectation->getPriority()->asInt();
+        }
+
+        return 0;
+    }
 }

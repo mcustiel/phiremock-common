@@ -25,16 +25,78 @@ use PHPUnit\Framework\TestCase;
 
 class JsonConvertTest extends TestCase
 {
-    private const JSON_CONDITION = '{"version": "2","request": {"method": {"isSameString": "GET"}, "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}}, "response": {}}';
-    private const JSON_CONDITION_EXPECTED = '{"version": "2", "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null, "request": {"method": {"isSameString": "GET"}, "url":null, "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}, "headers" : null}, "response": {"statusCode": 200,"body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
-    private const BASIC_CONFIG = '{"version": "2", "request": {"method": {"isSameString": "GET"}}, "response": {"status": 200}}';
-    private const BASIC_CONFIG_EXPECTED = '{"version": "2", "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null, "request": {"method": {"isSameString": "GET"}, "url":null, "body": null, "headers" : null}, "response": {"statusCode": 200, "body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
+    private const JSON_CONDITION = '{
+        "version": "2",
+        "on": {
+            "method": {"isSameString": "GET"},
+            "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}
+        },
+        "then" :{
+            "response": {}
+        }
+    }';
+    private const JSON_CONDITION_EXPECTED = '{
+        "version": "2",
+        "scenarioName": null,
+        "on": {
+            "scenarioStateIs": null,
+            "method": {"isSameString": "GET"},
+            "url":null,
+            "body": {
+                "isSameJsonObject": "{\"Tomato\":\"Potat\"}"
+            },
+            "headers" : null
+        },
+        "then": {
+            "delayMillis": null,
+            "newScenarioState": null,
+            "response": {
+                "statusCode": 200,
+                "body": null,
+                "headers": null
+            }
+        },
+        "priority": 0
+    }';
+    private const BASIC_CONFIG = '{
+        "version": "2",
+        "on": {
+            "method": {"isSameString": "GET"}
+        },
+        "then": {
+            "response": {
+                "statusCode": 200
+            }
+        }
+    }';
+    private const BASIC_CONFIG_EXPECTED = '{
+        "version": "2",
+        "scenarioName": null,
+        "on": {
+            "scenarioStateIs": null,
+            "method": {
+                "isSameString": "GET"
+            },
+            "url":null,
+            "body": null,
+            "headers" : null
+        },
+        "then": {
+            "delayMillis": null,
+            "newScenarioState": null,
+            "response": {
+                "statusCode": 200,
+                "body": null,
+                "headers": null
+            }
+        },
+        "priority": 0
+    }';
     private const FULL_CONFIG = '{
         "version": "2",
     	"scenarioName": "potato",
-    	"scenarioStateIs": "Scenario.START",
-    	"newScenarioState": "tomato",
-    	"request": {
+    	"on": {
+            "scenarioStateIs": "Scenario.START",
     		"method": {
     			"isSameString": "GET"
     		},
@@ -50,23 +112,24 @@ class JsonConvertTest extends TestCase
     			}
     		}
     	},
-    	"response": {
-    		"statusCode": 200,
-    		"body": "Hello world!",
-    		"headers": {
-    			"Content-Type": "text/plain"
-    		},
+    	"then": {
+            "newScenarioState": "tomato",
+            "response": {
+        		"statusCode": 200,
+        		"body": "Hello world!",
+        		"headers": {
+        			"Content-Type": "text/plain"
+        		}
+            },
             "delayMillis": 1000
     	},
-        "proxyTo" : null,
         "priority": 3
     }';
     private const FULL_CONFIG_EXPECTED = '{
         "version": "2",
     	"scenarioName": "potato",
-    	"scenarioStateIs": "Scenario.START",
-    	"newScenarioState": "tomato",
-    	"request": {
+    	"on": {
+            "scenarioStateIs": "Scenario.START",
     		"method": {
     			"isSameString": "GET"
     		},
@@ -82,15 +145,17 @@ class JsonConvertTest extends TestCase
     			}
     		}
     	},
-    	"response": {
-    		"statusCode": 200,
-    		"body": "Hello world!",
-    		"headers": {
-    			"Content-Type": "text/plain"
-    		},
-            "delayMillis": 1000
+    	"then": {
+            "delayMillis": 1000,
+            "newScenarioState": "tomato",
+        	"response": {
+                "statusCode": 200,
+        		"body": "Hello world!",
+        		"headers": {
+        			"Content-Type": "text/plain"
+        		}
+            }
     	},
-        "proxyTo" : null,
         "priority": 3
     }';
 
@@ -119,6 +184,9 @@ class JsonConvertTest extends TestCase
     public function testConvertsConfig(string $config, string $expected)
     {
         $configArray = json_decode($config, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $this->fail(json_last_error_msg());
+        }
         $expectation = $this->arrayToExpectationConverterLocator
             ->locate($configArray)
             ->convert($configArray);

@@ -21,14 +21,16 @@ namespace Mcustiel\Phiremock\Common\Utils\V2;
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\Response;
+use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverter as ArrayToResponseConverterInterface;
 
-abstract class ArrayToResponseConverter
+abstract class ArrayToResponseConverter  implements ArrayToResponseConverterInterface
 {
-    const ALLOWED_OPTIONS = ['delayMillis'=> null];
+    const ALLOWED_OPTIONS = ['delayMillis'=> null, 'newScenarioState' => null, 'response' => null, 'proxyTo' => null];
     const NO_DELAY = 0;
 
     public function convert(array $responseArray): Response
     {
+        $this->ensureNotInvalidOptionsAreProvided($responseArray, self::ALLOWED_OPTIONS);
         return $this->convertResponse(
             $responseArray,
             $this->getDelay($responseArray),
@@ -36,9 +38,11 @@ abstract class ArrayToResponseConverter
         );
     }
 
-    protected function ensureNotInvalidOptionsAreProvided(array $responseArray): void
-    {
-        $invalidOptions = array_diff_key($responseArray, static::ALLOWED_OPTIONS);
+    protected function ensureNotInvalidOptionsAreProvided(
+        array $responseArray,
+        array $validOptions
+    ): void {
+        $invalidOptions = array_diff_key($responseArray, $validOptions);
         if (!empty($invalidOptions)) {
             throw new \Exception('Unknown expectation options: ' . var_export($invalidOptions, true));
         }
@@ -52,11 +56,6 @@ abstract class ArrayToResponseConverter
 
     private function getDelay(array $responseArray): ?Delay
     {
-        if (empty($responseArray['response'])) {
-            return null;
-        }
-
-        $responseArray = $responseArray['response'];
         if (!empty($responseArray['delayMillis'])) {
             return new Delay($responseArray['delayMillis']);
         }

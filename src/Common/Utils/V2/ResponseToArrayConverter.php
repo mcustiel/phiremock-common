@@ -18,8 +18,23 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
+use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverter as ResponseToArrayConverterInterface;
 use Mcustiel\Phiremock\Common\Utils\V1\ResponseToArrayConverter as ResponseToArrayConverterV1;
+use Mcustiel\Phiremock\Domain\Response;
 
-class ResponseToArrayConverter extends ResponseToArrayConverterV1
+class ResponseToArrayConverter implements ResponseToArrayConverterInterface
 {
+    public function convert(Response $response): array
+    {
+        $responseArray = [
+            'delayMillis' => $response->hasDelayMillis()
+                ? $response->getDelayMillis()->asInt()
+                : null,
+            'newScenarioState' => $response->hasNewScenarioState()
+                ? $response->getNewScenarioState()->asString()
+                : null,
+        ];
+
+        return $responseArray;
+    }
 }

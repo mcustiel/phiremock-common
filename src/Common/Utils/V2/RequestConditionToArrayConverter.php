@@ -27,12 +27,20 @@ class RequestConditionToArrayConverter extends RequestConditionToArrayConverterV
     {
         $requestArray = [];
 
+        $this->convertScenarioState($request, $requestArray);
         $this->convertMethod($request, $requestArray);
         $this->convertUrl($request, $requestArray);
         $this->convertBody($request, $requestArray);
         $this->convertHeaders($request, $requestArray);
 
         return $requestArray;
+    }
+
+    private function convertScenarioState(Conditions $request, array &$requestArray): void
+    {
+        $requestArray['scenarioStateIs'] = $request->hasScenarioState()
+            ? $request->getScenarioState()->asString()
+            : null;
     }
 
     protected function convertMethod(Conditions $request, array &$requestArray): void

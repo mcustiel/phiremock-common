@@ -18,8 +18,38 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
-use Mcustiel\Phiremock\Common\Utils\V1\HttpResponseToArrayConverter as HttpResponseToArrayConverterV1;
+use Mcustiel\Phiremock\Domain\HttpResponse;
+use Mcustiel\Phiremock\Domain\Response;
+use Mcustiel\Phiremock\Domain\Http\Header;
 
-class HttpResponseToArrayConverter extends HttpResponseToArrayConverterV1
+class HttpResponseToArrayConverter extends ResponseToArrayConverter
 {
+    public function convert(Response $response): array
+    {
+        /** @var HttpResponse $response */
+        $responseArray = [];
+        $responseArray['statusCode'] = $response->getStatusCode()->asInt();
+        $body = $response->getBody();
+        $responseArray['body'] = $body === null ? null : $body->asString();
+        $headers = $response->getHeaders();
+        if ($headers && !$headers->isEmpty()) {
+            $responseArray['headers'] = $this->convertHeaders($response);
+        } else {
+            $responseArray['headers'] = null;
+        }
+
+        return array_merge(parent::convert($response), ['response' => $responseArray]);
+    }
+
+    private function convertHeaders(HttpResponse $response): array
+    {
+        $headers = $response->getHeaders();
+        $headersArray = [];
+        /** @var Header $header */
+        foreach ($headers as $header) {
+            $headersArray[$header->getName()->asString()] = $header->getValue()->asString();
+        }
+
+        return $headersArray;
+    }
 }
