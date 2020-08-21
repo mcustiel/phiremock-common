@@ -41,6 +41,7 @@ class JsonConvertTest extends TestCase
         "then": {
             "delayMillis": null,
             "newScenarioState": null,
+            "proxyTo": null,
             "response": {
                 "statusCode": 200,
                 "body": null,
@@ -70,6 +71,7 @@ class JsonConvertTest extends TestCase
         "then": {
             "delayMillis": null,
             "newScenarioState": null,
+            "proxyTo": null,
             "response": {
                 "statusCode": 200,
                 "body": null,
@@ -103,6 +105,7 @@ class JsonConvertTest extends TestCase
         "then": {
             "delayMillis": null,
             "newScenarioState": null,
+            "proxyTo": null,
             "response": {
                 "statusCode": 200,
                 "body": null,
@@ -137,6 +140,7 @@ class JsonConvertTest extends TestCase
         "then": {
             "delayMillis": null,
             "newScenarioState": null,
+            "proxyTo": null,
             "response": {
                 "statusCode": 200,
                 "body": null,
@@ -201,6 +205,7 @@ class JsonConvertTest extends TestCase
     	"then": {
             "delayMillis": 1000,
             "newScenarioState": "tomato",
+            "proxyTo": null,
         	"response": {
                 "statusCode": 200,
         		"body": "Hello world!",
