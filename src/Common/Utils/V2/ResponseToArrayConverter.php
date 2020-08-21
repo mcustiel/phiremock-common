@@ -32,6 +32,8 @@ class ResponseToArrayConverter implements ResponseToArrayConverterInterface
             'newScenarioState' => $response->hasNewScenarioState()
                 ? $response->getNewScenarioState()->asString()
                 : null,
+            'proxyTo'  => null,
+            'response' => null,
         ];
 
         return $responseArray;

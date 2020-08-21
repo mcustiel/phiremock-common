@@ -48,6 +48,14 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter // extends A
     ): Response {
         $response = $responseArray['response'];
 
+        if (!isset($responseArray['response'])) {
+            $responseArray['response'] = [];
+        }
+
+        if (!\is_array($responseArray['response'])) {
+            throw new \Exception('Invalid response definition: ' . var_export($responseArray['response'], true));
+        }
+
         $this->ensureNotInvalidOptionsAreProvided(
             $responseArray['response'],
             self::ALLOWED_OPTIONS
