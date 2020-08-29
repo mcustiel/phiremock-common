@@ -27,7 +27,7 @@ class StringStream extends Stream
      */
     public function __construct($string)
     {
-        parent::__construct('php://memory');
+        parent::__construct('php://memory', 'r+');
         $this->write($string);
     }
 }
