@@ -18,9 +18,8 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
+use Mcustiel\Phiremock\Common\Utils\BodyHelper;
 use Mcustiel\Phiremock\Common\Utils\V1\ArrayToHttpResponseConverter as ArrayToHttpResponseConverterV1;
-use Mcustiel\Phiremock\Domain\BinaryInfo;
-use Mcustiel\Phiremock\Domain\Http\BinaryBody;
 use Mcustiel\Phiremock\Domain\Http\Body;
 use Mcustiel\Phiremock\Domain\Http\Header;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
@@ -96,19 +95,11 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter // extends A
             if (\is_array($body)) {
                 $body = json_encode($body);
             }
-            if ($this->isBinaryBody($body)) {
-                return new BinaryBody($body);
-            }
 
-            return new Body($body);
+            return BodyHelper::getBodyObject($body);
         }
 
         return null;
-    }
-
-    private function isBinaryBody(string $body): bool
-    {
-        return BinaryInfo::BINARY_BODY_PREFIX === substr($body, self::STRING_START, BinaryInfo::BINARY_BODY_PREFIX_LENGTH);
     }
 
     private function convertHeaders(array $headers): HeadersCollection
