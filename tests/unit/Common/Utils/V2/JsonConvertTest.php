@@ -36,7 +36,8 @@ class JsonConvertTest extends TestCase
             "method": null,
             "url":null,
             "body": null,
-            "headers" : null
+            "headers" : null,
+            "formData": null
         },
         "then": {
             "delayMillis": null,
@@ -66,7 +67,8 @@ class JsonConvertTest extends TestCase
             "method": null,
             "url":null,
             "body": null,
-            "headers" : null
+            "headers" : null,
+            "formData": null
         },
         "then": {
             "delayMillis": null,
@@ -100,7 +102,8 @@ class JsonConvertTest extends TestCase
             "body": {
                 "isSameJsonObject": "{\"Tomato\":\"Potat\"}"
             },
-            "headers" : null
+            "headers" : null,
+            "formData": null
         },
         "then": {
             "delayMillis": null,
@@ -135,7 +138,8 @@ class JsonConvertTest extends TestCase
             },
             "url":null,
             "body": null,
-            "headers" : null
+            "headers" : null,
+            "formData": null
         },
         "then": {
             "delayMillis": null,
@@ -166,6 +170,11 @@ class JsonConvertTest extends TestCase
     		"headers": {
     			"Content-Type": {
     				"isEqualTo": "text/plain"
+    			}
+    		},
+            "formData": {
+    			"name": {
+    				"isEqualTo": "potato"
     			}
     		}
     	},
@@ -199,6 +208,11 @@ class JsonConvertTest extends TestCase
     		"headers": {
     			"Content-Type": {
     				"isEqualTo": "text/plain"
+    			}
+    		},
+            "formData": {
+    			"name": {
+    				"isEqualTo": "potato"
     			}
     		}
     	},

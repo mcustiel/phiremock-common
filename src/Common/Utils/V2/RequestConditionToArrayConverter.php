@@ -32,6 +32,7 @@ class RequestConditionToArrayConverter extends RequestConditionToArrayConverterV
         $this->convertUrl($request, $requestArray);
         $this->convertBody($request, $requestArray);
         $this->convertHeaders($request, $requestArray);
+        $this->convertFormData($request, $requestArray);
 
         return $requestArray;
     }

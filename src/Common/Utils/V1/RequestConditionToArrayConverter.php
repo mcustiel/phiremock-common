@@ -19,8 +19,10 @@
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
 use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter as RequestConditionToArrayConverterInterface;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\FormFieldCondition;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Conditions;
+use Mcustiel\Phiremock\Domain\Http\FormFieldName;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 
 class RequestConditionToArrayConverter implements RequestConditionToArrayConverterInterface
@@ -33,6 +35,7 @@ class RequestConditionToArrayConverter implements RequestConditionToArrayConvert
         $this->convertUrl($request, $requestArray);
         $this->convertBody($request, $requestArray);
         $this->convertHeaders($request, $requestArray);
+        $this->convertFormData($request, $requestArray);
 
         return $requestArray;
     }
@@ -52,6 +55,24 @@ class RequestConditionToArrayConverter implements RequestConditionToArrayConvert
                 ];
             }
             $requestArray['headers'] = $headersArray;
+        }
+    }
+
+    protected function convertFormData(Conditions $request, array &$requestArray): void
+    {
+        $formFields = $request->getFormFields();
+        if ($formFields === null) {
+            $requestArray['formData'] = null;
+        } else {
+            $fieldsArray = [];
+            /** @var FormFieldName $fieldName */
+            /** @var FormFieldCondition $fieldCondition */
+            foreach ($formFields as $fieldName => $fieldCondition) {
+                $fieldsArray[$fieldName->asString()] = [
+                    $fieldCondition->getMatcher()->getName() => $fieldCondition->getValue()->asString(),
+                ];
+            }
+            $requestArray['formData'] = $fieldsArray;
         }
     }
 

@@ -44,8 +44,6 @@ class MethodsEnum
 
     public static function isValid(string $method): bool
     {
-        var_export('method validator');
-
         return \in_array(strtoupper($method), self::VALID_METHODS, true);
     }
 }

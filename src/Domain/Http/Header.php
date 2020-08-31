@@ -32,14 +32,12 @@ class Header
         $this->value = $value;
     }
 
-    /** @return HeaderName */
-    public function getName()
+    public function getName(): HeaderName
     {
         return $this->name;
     }
 
-    /** @return HeaderValue */
-    public function getValue()
+    public function getValue(): HeaderValue
     {
         return $this->value;
     }

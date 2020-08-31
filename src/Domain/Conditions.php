@@ -19,6 +19,7 @@
 namespace Mcustiel\Phiremock\Domain;
 
 use Mcustiel\Phiremock\Domain\Condition\Conditions\BodyCondition;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\FormFieldConditionIterator;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderConditionIterator;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\MethodCondition;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\UrlCondition;
@@ -34,6 +35,8 @@ class Conditions
     private $body;
     /** @var HeaderConditionIterator|null */
     private $headers;
+    /** @var FormFieldConditionIterator|null */
+    private $formFields;
     /** @var ScenarioState|null */
     private $scenarioState;
 
@@ -42,12 +45,14 @@ class Conditions
         ?UrlCondition $url = null,
         ?BodyCondition $body = null,
         ?HeaderConditionIterator $headers = null,
+        ?FormFieldConditionIterator $formFields = null,
         ?ScenarioState $scenarioState = null
     ) {
         $this->method = $method;
         $this->url = $url;
         $this->body = $body;
         $this->headers = $headers;
+        $this->formFields = $formFields;
         $this->scenarioState = $scenarioState;
     }
 
@@ -89,6 +94,16 @@ class Conditions
     public function getHeaders(): ?HeaderConditionIterator
     {
         return $this->headers;
+    }
+
+    public function hasFormFields(): bool
+    {
+        return null !== $this->formFields && !$this->formFields->isEmpty();
+    }
+
+    public function getFormFields(): ?FormFieldConditionIterator
+    {
+        return $this->formFields;
     }
 
     public function hasScenarioState(): bool

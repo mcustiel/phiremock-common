@@ -26,9 +26,9 @@ use PHPUnit\Framework\TestCase;
 class JsonConvertTest extends TestCase
 {
     private const JSON_CONDITION = '{"request": {"method": "GET", "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}}, "response": {}}';
-    private const JSON_CONDITION_EXPECTED = '{"scenarioName": null, "scenarioStateIs": null, "newScenarioState": null, "request": {"method": "GET", "url":null, "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}, "headers" : null}, "response": {"statusCode": 200,"body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
+    private const JSON_CONDITION_EXPECTED = '{"scenarioName": null, "scenarioStateIs": null, "newScenarioState": null, "request": {"method": "GET", "url":null, "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}, "headers" : null, "formData": null}, "response": {"statusCode": 200,"body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
     private const BASIC_CONFIG = '{"request": {"method": "GET"}, "response": {"statusCode": 200}}';
-    private const BASIC_CONFIG_EXPECTED = '{"scenarioName": null, "scenarioStateIs": null, "newScenarioState": null, "request": {"method": "GET", "url":null, "body": null, "headers" : null}, "response": {"statusCode": 200, "body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
+    private const BASIC_CONFIG_EXPECTED = '{"scenarioName": null, "scenarioStateIs": null, "newScenarioState": null, "request": {"method": "GET", "url":null, "body": null, "headers" : null, "formData": null}, "response": {"statusCode": 200, "body": null, "headers": null, "delayMillis": null}, "proxyTo" : null, "priority": 0, "scenarioName": null, "scenarioStateIs": null, "newScenarioState": null}';
     private const FULL_CONFIG = '{
     	"scenarioName": "potato",
     	"scenarioStateIs": "Scenario.START",
@@ -44,6 +44,11 @@ class JsonConvertTest extends TestCase
     		"headers": {
     			"Content-Type": {
     				"isEqualTo": "text/plain"
+    			}
+    		},
+            "formData": {
+    			"name": {
+    				"isEqualTo": "potato"
     			}
     		}
     	},
@@ -73,6 +78,11 @@ class JsonConvertTest extends TestCase
     		"headers": {
     			"Content-Type": {
     				"isEqualTo": "text/plain"
+    			}
+    		},
+            "formData": {
+    			"name": {
+    				"isEqualTo": "potato"
     			}
     		}
     	},

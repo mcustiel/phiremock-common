@@ -16,33 +16,10 @@
  * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Mcustiel\Phiremock\Domain\Http;
+namespace Mcustiel\Phiremock\Domain\Condition\Conditions;
 
-class HeaderName
+use Mcustiel\Phiremock\Domain\Condition\Condition;
+
+class FormFieldCondition extends Condition
 {
-    /** @var string * */
-    private $headerName;
-
-    public function __construct(string $headerName)
-    {
-        $this->ensureIsNotEmpty($headerName);
-        $this->headerName = $headerName;
-    }
-
-    public function asString(): string
-    {
-        return $this->headerName;
-    }
-
-    public function equals(self $other): bool
-    {
-        return $other->asString() === $this->asString();
-    }
-
-    private function ensureIsNotEmpty(string $headerName): void
-    {
-        if ($headerName === '') {
-            throw new \InvalidArgumentException('Field name can\t be empty');
-        }
-    }
 }

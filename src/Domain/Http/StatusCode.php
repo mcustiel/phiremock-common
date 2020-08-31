@@ -20,46 +20,32 @@ namespace Mcustiel\Phiremock\Domain\Http;
 
 class StatusCode
 {
-    /** @var int * */
+    /** @var int */
     private $statusCode;
 
-    /**
-     * @param int $statusCode
-     */
-    public function __construct($statusCode)
+    public function __construct(int $statusCode)
     {
         $this->ensureIsValidStatusCode($statusCode);
         $this->statusCode = $statusCode;
     }
 
-    public static function createDefault()
+    public static function createDefault(): self
     {
         return new self(200);
     }
 
-    /**
-     * @return int
-     */
-    public function asInt()
+    public function asInt(): int
     {
         return $this->statusCode;
     }
 
-    /**
-     * @param StatusCode $other
-     *
-     * @return bool
-     */
-    public function equals($other)
+    public function equals(self $other): bool
     {
         return $this->asInt() === $other->asInt();
     }
 
-    private function ensureIsValidStatusCode($statusCode)
+    private function ensureIsValidStatusCode(int $statusCode)
     {
-        if (!\is_int($statusCode)) {
-            throw new \InvalidArgumentException(sprintf('Status code must be an integer. Got: %s', \gettype($statusCode)));
-        }
         if ($statusCode < 100 || $statusCode >= 600) {
             throw new \InvalidArgumentException(sprintf('Invalid status code: %d', $statusCode));
         }

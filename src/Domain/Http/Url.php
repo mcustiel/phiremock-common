@@ -25,39 +25,24 @@ class Url
     /** @var string * */
     private $url;
 
-    /**
-     * @param string $url
-     */
-    public function __construct($url)
+    public function __construct(string $url)
     {
         $this->ensureIsValidUrl($url);
         $this->url = $url;
     }
 
-    /**
-     * @return string
-     */
-    public function asString()
+    public function asString(): string
     {
         return $this->url;
     }
 
-    /**
-     * @param Url $other
-     *
-     * @return bool
-     */
-    public function equals($other)
+    public function equals(self $other): bool
     {
         return $this->asString() === $other->asString();
     }
 
-    private function ensureIsValidUrl($url)
+    private function ensureIsValidUrl(string $url)
     {
-        if (!\is_string($url)) {
-            throw new \InvalidArgumentException(sprintf('Url must be a string. Got: %s', \gettype($url)));
-        }
-
         if (!preg_match(self::URL_PATH_REGEX, $url)) {
             throw new \InvalidArgumentException(sprintf('Invalid http url: %s', var_export($url, true)));
         }

@@ -20,6 +20,9 @@ namespace Mcustiel\Phiremock\Common\Utils\V1;
 
 use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter as ArrayToRequestConditionConverterInterface;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\BodyCondition;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\FormDataCondition;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\FormFieldCondition;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\FormFieldConditionIterator;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderConditionCollection;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderConditionIterator;
@@ -28,16 +31,18 @@ use Mcustiel\Phiremock\Domain\Condition\Conditions\UrlCondition;
 use Mcustiel\Phiremock\Domain\Condition\Matchers\MatcherFactory;
 use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
 use Mcustiel\Phiremock\Domain\Conditions;
+use Mcustiel\Phiremock\Domain\Http\FormFieldName;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class ArrayToRequestConditionConverter implements ArrayToRequestConditionConverterInterface
 {
     const ALLOWED_OPTIONS = [
-        'method' => null,
-        'url'    => null,
-        'body'   => null,
-        'headers'=> null,
+        'method'   => null,
+        'url'      => null,
+        'body'     => null,
+        'headers'  => null,
+        'formData' => null,
     ];
 
     /** @var MatcherFactory */
@@ -57,6 +62,7 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
             $this->convertUrlCondition($requestArray['request']),
             $this->convertBodyCondition($requestArray['request']),
             $this->convertHeadersConditions($requestArray['request']),
+            $this->convertFormDataConditions($requestArray['request']),
             $this->convertScenarioState($requestArray)
         );
     }
@@ -90,6 +96,27 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
         return null;
     }
 
+    protected function convertFormDataConditions(array $requestArray): ?FormFieldConditionIterator
+    {
+        if (!empty($requestArray['formData'])) {
+            $formFields = $requestArray['formData'];
+            if (!\is_array($formFields)) {
+                throw new \InvalidArgumentException('Form data condition is invalid: ' . var_export($formFields, true));
+            }
+            $formData = new FormDataCondition();
+            foreach ($formFields as $formFieldName => $condition) {
+                $formData->setFieldCondition(
+                    new FormFieldName($formFieldName),
+                    $this->convertFormFieldCondition($condition)
+                 );
+            }
+
+            return $formData->iterator();
+        }
+
+        return null;
+    }
+
     protected function convertHeaderCondition($headerCondition): HeaderCondition
     {
         if (!\is_array($headerCondition)) {
@@ -102,6 +129,21 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
 
         return new HeaderCondition(
             $this->matcherFactory->createFrom(key($headerCondition), $value)
+        );
+    }
+
+    protected function convertFormFieldCondition($fieldCondition): FormFieldCondition
+    {
+        if (!\is_array($fieldCondition)) {
+            throw new \InvalidArgumentException('Form field condition is invalid: ' . var_export($fieldCondition, true));
+        }
+        $value = current($fieldCondition);
+        if (!\is_string($value)) {
+            throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
+        }
+
+        return new FormFieldCondition(
+            $this->matcherFactory->createFrom(key($fieldCondition), $value)
         );
     }
 
