@@ -34,6 +34,15 @@ class HttpResponseTest extends ResponseTest
         $this->headers = $this->createMock(HeadersCollection::class);
     }
 
+    public function testCreateEmptyResponseWithHelperMethod(): void
+    {
+        $response = HttpResponse::createEmpty();
+        $this->assertTrue($response->isHttpResponse());
+        $this->assertSame('', $response->getBody()->asString());
+        $this->assertSame(200, $response->getStatusCode()->asInt());
+        $this->assertFalse($response->hasHeaders());
+    }
+
     public function testIsHttpResponse(): void
     {
         $response = $this->getResponseInstance();

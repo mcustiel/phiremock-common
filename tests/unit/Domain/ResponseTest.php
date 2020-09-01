@@ -5,13 +5,14 @@ namespace Mcustiel\Phiremock\Tests\Unit\Domain;
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\Response;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 abstract class ResponseTest extends TestCase
 {
-    /** @var Delay|TestCase */
+    /** @var Delay|MockObject */
     private $delay;
-    /** @var ScenarioState|TestCase */
+    /** @var ScenarioState|MockObject */
     private $scenarioState;
 
     protected function setUp(): void

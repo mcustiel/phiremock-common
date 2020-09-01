@@ -52,8 +52,7 @@ class HttpResponse extends Response
     {
         return new self(
             new StatusCode(200),
-            new Body(''),
-            new HeadersCollection()
+            new Body('')
         );
     }
 
