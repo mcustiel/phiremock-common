@@ -20,6 +20,8 @@ namespace Mcustiel\Phiremock\Domain;
 
 class Version
 {
+    private const VALID_VERSIONS = ['1', '2'];
+
     /** @var string */
     private $version;
 
@@ -36,8 +38,7 @@ class Version
 
     private function ensureVersionIsCorrect(string $version): void
     {
-        $numeric = (int) $version;
-        if ($numeric < 1 || $numeric > 2) {
+        if (!\in_array($version, self::VALID_VERSIONS, true)) {
             throw new \InvalidArgumentException(sprintf('Invalid version: %s', $version));
         }
     }

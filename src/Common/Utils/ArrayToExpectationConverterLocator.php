@@ -28,9 +28,7 @@ class ArrayToExpectationConverterLocator
                 case '2':
                     return $this->factoryV2->createArrayToExpectationConverter();
             }
-            throw new \Exception(
-                sprintf('Unimplemented configuration version: %s', $expectationArray['version'])
-            );
+            throw new \Exception(sprintf('Unimplemented configuration version: %s', $expectationArray['version']));
         }
 
         return $this->factoryV1->createArrayToExpectationConverter();

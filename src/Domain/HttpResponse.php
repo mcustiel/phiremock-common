@@ -36,7 +36,7 @@ class HttpResponse extends Response
     private $headers;
 
     public function __construct(
-        StatusCode $statusCode = null,
+        ?StatusCode $statusCode = null,
         ?Body $body = null,
         ?HeadersCollection $headers = null,
         ?Delay $delayMillis = null,

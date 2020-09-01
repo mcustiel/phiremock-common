@@ -89,11 +89,7 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
     }
 
     /**
-     * @param array $headers
-     *
      * @throws \InvalidArgumentException
-     *
-     * @return \Mcustiel\Phiremock\Domain\Http\HeadersCollection
      */
     private function convertHeaders(array $headers): HeadersCollection
     {
