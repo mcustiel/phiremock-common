@@ -15,22 +15,18 @@
             "role": "Developer"
         }
     ],
-    "name": "mcustiel/phiremock-common",
-    "type": "library",
-    "description": "Common libraries for Phiremock",
-    "license": "GPL-3.0-or-later",
-    "require": {
-        "php": "^7.2",
-        "guzzlehttp/guzzle": "^6.0",
-        "laminas/laminas-diactoros": "^2.2"
+    "name" : "mcustiel/phiremock-common",
+    "type" : "library",
+    "description" : "Common libraries for Phiremock",
+    "license" : "GPL-3.0-or-later",
+    "require" : {
+        "php" : "^7.2",
+        "zendframework/zend-diactoros" : "^2.0",
+        "psr/http-client": "^1.0"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^8.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Mcustiel\\Phiremock\\": "src"
-        }
+    "require-dev" : {
+        "phpunit/phpunit": "^8.0",
+        "guzzlehttp/guzzle" : "^7.0"
     },
     "autoload-dev": {
         "psr-4": {
