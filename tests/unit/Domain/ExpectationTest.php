@@ -93,7 +93,7 @@ class ExpectationTest extends TestCase
             $this->requestConditions,
             $this->response,
             null,
-            $this->priority,
+            $this->priority
         );
         $this->assertSame($this->priority, $expectation->getPriority());
         $expectation->setPriority($priority);
