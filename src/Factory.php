@@ -32,91 +32,42 @@ use Mcustiel\Phiremock\Common\Utils\HttpResponseToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\ProxyResponseToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
 use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverterLocator;
+use Mcustiel\Phiremock\Common\Http\RemoteConnectionInterface;
+use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverterLocator;
+use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverterLocator;
+use Mcustiel\Phiremock\Common\Utils\V1\Factory as FactoryV1;
+use Mcustiel\Phiremock\Common\Utils\V2\Factory as FactoryV2;
 
 class Factory
 {
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter */
-    public function createArrayToExpectationConverter()
+    public function createV1UtilsFactory(): FactoryV1
     {
-        return new ArrayToExpectationConverter(
-            $this->createArrayToRequestConditionConverter(),
-            $this->createArrayToResponseConverterLocator(),
-            $this->createArrayToStateConditionsConverter()
+        return new FactoryV1();
+    }
+
+    public function createV2UtilsFactory(): FactoryV2
+    {
+        return new FactoryV2();
+    }
+
+    public function createExpectationToArrayConverterLocator(): ExpectationToArrayConverterLocator
+    {
+        return new ExpectationToArrayConverterLocator(
+            $this->createV1UtilsFactory(),
+            $this->createV2UtilsFactory()
         );
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter */
-    public function createArrayToStateConditionsConverter()
+    public function createArrayToExpectationConverterLocator(): ArrayToExpectationConverterLocator
     {
-        return new ArrayToStateConditionsConverter();
-    }
-
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator */
-    public function createArrayToResponseConverterLocator()
-    {
-        return new ArrayToResponseConverterLocator($this);
-    }
-
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter */
-    public function createArrayToHttpResponseConverter()
-    {
-        return new ArrayToHttpResponseConverter();
-    }
-
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter*/
-    public function createArrayToProxyResponseConverter()
-    {
-        return new ArrayToProxyResponseConverter();
-    }
-
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter */
-    public function createArrayToRequestConditionConverter()
-    {
-        return new ArrayToRequestConditionConverter();
-    }
-
-    /** @return \Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter */
-    public function createExpectationToArrayConverter()
-    {
-        return new ExpectationToArrayConverter(
-            $this->createRequestConditionToArrayConverter(),
-            $this->createResponseToArrayConverterLocator()
+        return new ArrayToExpectationConverterLocator(
+            $this->createV1UtilsFactory(),
+            $this->createV2UtilsFactory()
         );
     }
 
-    /** @return \Mcustiel\Phiremock\Common\Utils\HttpResponseToArrayConverter */
-    public function createHttpResponseToArrayConverter()
+    public function createRemoteConnectionInterface(): RemoteConnectionInterface
     {
-        return new HttpResponseToArrayConverter();
-    }
-
-    /** @return \Mcustiel\Phiremock\Common\Utils\ProxyResponseToArrayConverter */
-    public function createProxyResponseToArrayConverter()
-    {
-        return new ProxyResponseToArrayConverter();
-    }
-
-    /** @return \Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverterLocator */
-    public function createResponseToArrayConverterLocator()
-    {
-        return new ResponseToArrayConverterLocator($this);
-    }
-
-    /** @return \Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter */
-    public function createRequestConditionToArrayConverter()
-    {
-        return new RequestConditionToArrayConverter();
-    }
-
-    /** @return \Mcustiel\Phiremock\Common\Http\Implementation\Psr18Connection */
-    public function createRemoteConnectionInterface()
-    {
-        return new Psr18Connection(new Client());
-    }
-
-    /** @return \Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter */
-    public function createArrayToScenarioStateInfoConverter()
-    {
-        return new ArrayToScenarioStateInfoConverter();
+         return new Psr18Connection(new Client());
     }
 }

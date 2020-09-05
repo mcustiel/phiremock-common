@@ -23,7 +23,7 @@ use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 
 class Expectation
 {
-    /** @var RequestConditions */
+    /** @var Conditions */
     private $requestConditions;
 
     /** @var ScenarioName */
@@ -35,56 +35,62 @@ class Expectation
     /** @var Priority */
     private $priority;
 
+    /** @var Version */
+    private $version;
+
     public function __construct(
-        RequestConditions $requestConditions,
+        Conditions $requestConditions,
         Response $response,
         ScenarioName $scenarioName = null,
-        Priority $priority = null
+        Priority $priority = null,
+        Version $version = null
     ) {
         $this->priority = $priority;
         $this->requestConditions = $requestConditions;
         $this->scenarioName = $scenarioName;
         $this->response = $response;
+        $this->version = $version ?? new Version(1);
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\RequestConditions */
-    public function getRequest()
+    public function getVersion(): Version
+    {
+        return $this->version;
+    }
+
+    public function getRequest(): Conditions
     {
         return $this->requestConditions;
     }
 
-    /** @return bool */
-    public function hasScenarioName()
+    public function hasScenarioName(): bool
     {
         return $this->scenarioName !== null;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\Options\ScenarioName */
-    public function getScenarioName()
+    public function getScenarioName(): ?ScenarioName
     {
         return $this->scenarioName;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\Response */
-    public function getResponse()
+    public function getResponse(): Response
     {
         return $this->response;
     }
 
-    /** @return bool */
-    public function hasPriority()
+    public function hasPriority(): bool
     {
         return null !== $this->priority;
     }
 
-    /** @return Priority|null */
-    public function getPriority()
+    public function getPriority(): ?Priority
     {
         return $this->priority;
     }
 
-    public function setPriority(Priority $priority)
+    public function setPriority(Priority $priority): self
     {
-        return $this->priority = $priority;
+        $this->priority = $priority;
+
+        return $this;
     }
 }

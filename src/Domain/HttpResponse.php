@@ -36,52 +36,52 @@ class HttpResponse extends Response
     private $headers;
 
     public function __construct(
-        StatusCode $statusCode,
-        Body $body,
-        HeadersCollection $headers,
-        Delay $delayMillis = null,
-        ScenarioState $newScenarioState = null
+        ?StatusCode $statusCode = null,
+        ?Body $body = null,
+        ?HeadersCollection $headers = null,
+        ?Delay $delayMillis = null,
+        ?ScenarioState $newScenarioState = null
     ) {
         parent::__construct($delayMillis, $newScenarioState);
-        $this->statusCode = $statusCode;
+        $this->statusCode = $statusCode ?? StatusCode::createDefault();
         $this->headers = $headers;
         $this->body = $body;
     }
 
-    /** @return self */
-    public static function createEmpty()
+    public static function createEmpty(): self
     {
         return new self(
             new StatusCode(200),
-            new Body(''),
-            new HeadersCollection()
+            new Body('')
         );
     }
 
-    /** @return StatusCode */
-    public function getStatusCode()
+    public function getStatusCode(): StatusCode
     {
         return $this->statusCode;
     }
 
-    /** @return Body */
-    public function getBody()
+    public function hasBody(): bool
+    {
+        return $this->body !== null;
+    }
+
+    public function getBody(): ?Body
     {
         return $this->body;
     }
 
-    /** @return HeadersCollection */
-    public function getHeaders()
+    public function hasHeaders(): bool
+    {
+        return $this->headers !== null && !$this->headers->isEmpty();
+    }
+
+    public function getHeaders(): ?HeadersCollection
     {
         return $this->headers;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Mcustiel\Phiremock\Domain\Response::isHttpResponse()
-     */
-    public function isHttpResponse()
+    public function isHttpResponse(): bool
     {
         return true;
     }

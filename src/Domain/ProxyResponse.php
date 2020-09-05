@@ -29,8 +29,8 @@ class ProxyResponse extends Response
 
     public function __construct(
         Uri $uri,
-        Delay $delayMillis = null,
-        ScenarioState $newScenarioState = null
+        ?Delay $delayMillis = null,
+        ?ScenarioState $newScenarioState = null
     ) {
         parent::__construct($delayMillis, $newScenarioState);
         $this->uri = $uri;
@@ -42,18 +42,12 @@ class ProxyResponse extends Response
         return 'proxy to: ' . $this->uri->asString();
     }
 
-    /** @return Uri */
-    public function getUri()
+    public function getUri(): Uri
     {
         return $this->uri;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @see \Mcustiel\Phiremock\Domain\Response::isProxyResponse()
-     */
-    public function isProxyResponse()
+    public function isProxyResponse(): bool
     {
         return true;
     }

@@ -1,47 +1,26 @@
 <?php
+/**
+ * This file is part of Phiremock.
+ *
+ * Phiremock is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Phiremock is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\Options\Delay;
-use Mcustiel\Phiremock\Domain\Options\ScenarioState;
+use Mcustiel\Phiremock\Domain\Response;
 
-abstract class ArrayToResponseConverter
+interface ArrayToResponseConverter
 {
-    const NO_DELAY = 0;
-
-    public function convert(array $responseArray)
-    {
-        return $this->convertResponse(
-            $responseArray,
-            $this->getDelay($responseArray),
-            $this->getNewScenarioState($responseArray)
-        );
-    }
-
-    abstract protected function convertResponse(
-        array $response,
-        Delay $delay = null,
-        ScenarioState $newScenarioState = null
-    );
-
-    /** @return \Mcustiel\Phiremock\Domain\Options\Delay */
-    private function getDelay(array $responseArray)
-    {
-        if (!empty($responseArray['delayMillis'])) {
-            return new Delay($responseArray['delayMillis']);
-        }
-
-        return null;
-    }
-
-    /** @return \Mcustiel\Phiremock\Domain\Options\ScenarioState|null */
-    private function getNewScenarioState(array $expectationArray)
-    {
-        $newScenarioState = null;
-        if (!empty($expectationArray['newScenarioState'])) {
-            $newScenarioState = new ScenarioState($expectationArray['newScenarioState']);
-        }
-
-        return $newScenarioState;
-    }
+    public function convert(array $responseArray): Response;
 }

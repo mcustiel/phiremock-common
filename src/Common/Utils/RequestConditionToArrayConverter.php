@@ -1,64 +1,26 @@
 <?php
+/**
+ * This file is part of Phiremock.
+ *
+ * Phiremock is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Phiremock is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 namespace Mcustiel\Phiremock\Common\Utils;
 
-use Mcustiel\Phiremock\Domain\RequestConditions;
+use Mcustiel\Phiremock\Domain\Conditions;
 
-class RequestConditionToArrayConverter
+interface RequestConditionToArrayConverter
 {
-    public function convert(RequestConditions $request)
-    {
-        $requestArray = [];
-
-        $this->convertMethod($request, $requestArray);
-        $this->convertUrl($request, $requestArray);
-        $this->convertBody($request, $requestArray);
-        $this->convertHeaders($request, $requestArray);
-
-        return $requestArray;
-    }
-
-    private function convertHeaders(RequestConditions $request, array &$requestArray)
-    {
-        $headers = $request->getHeaders();
-        if ($headers !== null && !$headers->isEmpty()) {
-            $headersArray = [];
-            /** @var HeaderName $headerName */
-            /** @var HeaderCondition $headerCondition */
-            foreach ($headers as $headerName => $headerCondition) {
-                $headersArray[$headerName->asString()] = [
-                    $headerCondition->getMatcher()->asString() => $headerCondition->getValue()->asString(),
-                ];
-            }
-            $requestArray['headers'] = $headersArray;
-        }
-    }
-
-    private function convertBody(RequestConditions $request, array &$requestArray)
-    {
-        if (null !== $request->getBody()) {
-            $body = $request->getBody();
-            $requestArray['body'] = [
-                $body->getMatcher()->asString() => $body->getValue()->asString(),
-            ];
-        }
-    }
-
-    private function convertUrl(RequestConditions $request, array &$requestArray)
-    {
-        if (null !== $request->getUrl()) {
-            $url = $request->getUrl();
-            $requestArray['url'] = [
-                $url->getMatcher()->asString() => $url->getValue()->asString(),
-            ];
-        }
-    }
-
-    private function convertMethod(RequestConditions $request, array &$requestArray)
-    {
-        $method = $request->getMethod();
-        $requestArray['method'] = [
-            $method->getMatcher()->asString() => $method->getValue()->asString(),
-        ];
-    }
+    public function convert(Conditions $request): array;
 }

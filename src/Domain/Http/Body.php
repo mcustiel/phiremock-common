@@ -1,51 +1,58 @@
 <?php
+/**
+ * This file is part of Phiremock.
+ *
+ * Phiremock is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Phiremock is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Phiremock.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 namespace Mcustiel\Phiremock\Domain\Http;
+
+use Mcustiel\Phiremock\Common\StringStream;
+use Psr\Http\Message\StreamInterface;
 
 class Body
 {
     /** @var string * */
     private $body;
 
-    /** @param string $body */
-    public function __construct($body)
+    public function __construct(string $body)
     {
-        $this->ensureIsString($body);
         $this->body = $body;
     }
 
-    /** @return bool */
-    public function isTextBody()
+    public function isTextBody(): bool
     {
         return true;
     }
 
-    /** @return Body */
-    public static function createEmpty()
+    public static function createEmpty(): self
     {
-        return new static('');
+        return new self('');
     }
 
-    /** @return string */
-    public function asString()
+    public function asString(): string
     {
         return $this->body;
     }
 
-    /**
-     * @param Body $other
-     *
-     * @return bool
-     */
-    public function equals($other)
+    public function asStream(): StreamInterface
     {
-        return $this->asString() === $other->asString();
+        return new StringStream($this->body);
     }
 
-    private function ensureIsString($body)
+    public function equals(self $other): bool
     {
-        if (!\is_string($body)) {
-            throw new \InvalidArgumentException(sprintf('Body must be a string. Got: %s', \gettype($body)));
-        }
+        return $this->asString() === $other->asString();
     }
 }
