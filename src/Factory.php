@@ -18,21 +18,6 @@
 
 namespace Mcustiel\Phiremock;
 
-use GuzzleHttp\Client;
-use Mcustiel\Phiremock\Common\Http\Implementation\Psr18Connection;
-use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToHttpResponseConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToProxyResponseConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToRequestConditionConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToResponseConverterLocator;
-use Mcustiel\Phiremock\Common\Utils\ArrayToScenarioStateInfoConverter;
-use Mcustiel\Phiremock\Common\Utils\ArrayToStateConditionsConverter;
-use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverter;
-use Mcustiel\Phiremock\Common\Utils\HttpResponseToArrayConverter;
-use Mcustiel\Phiremock\Common\Utils\ProxyResponseToArrayConverter;
-use Mcustiel\Phiremock\Common\Utils\RequestConditionToArrayConverter;
-use Mcustiel\Phiremock\Common\Utils\ResponseToArrayConverterLocator;
-use Mcustiel\Phiremock\Common\Http\RemoteConnectionInterface;
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\V1\Factory as FactoryV1;
@@ -64,10 +49,5 @@ class Factory
             $this->createV1UtilsFactory(),
             $this->createV2UtilsFactory()
         );
-    }
-
-    public function createRemoteConnectionInterface(): RemoteConnectionInterface
-    {
-         return new Psr18Connection(new Client());
     }
 }

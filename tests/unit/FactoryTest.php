@@ -2,7 +2,6 @@
 
 namespace Mcustiel\Phiremock\Tests\Unit;
 
-use Mcustiel\Phiremock\Common\Http\RemoteConnectionInterface;
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\V1\Factory as FactoryV1;
@@ -26,7 +25,6 @@ class FactoryTest
             'createV2UtilsFactory'                     => ['createV2UtilsFactory', FactoryV2::class],
             'createExpectationToArrayConverterLocator' => ['createExpectationToArrayConverterLocator', ExpectationToArrayConverterLocator::class],
             'createArrayToExpectationConverterLocator' => ['createArrayToExpectationConverterLocator', ArrayToExpectationConverterLocator::class],
-            'createRemoteConnectionInterface'          => ['createRemoteConnectionInterface', RemoteConnectionInterface::class],
         ];
     }
 
