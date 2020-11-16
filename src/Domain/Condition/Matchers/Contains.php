@@ -30,7 +30,7 @@ class Contains extends Matcher
 
     public function matches($value): bool
     {
-        return strpos($this->getCheckValue()->get(), $value) !== false;
+        return strpos($value, $this->getCheckValue()->get()) !== false;
     }
 
     public function getName(): string
