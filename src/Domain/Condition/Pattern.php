@@ -30,8 +30,14 @@ class Pattern extends ConditionValue
 
     private function assertRegex(string $pattern): void
     {
-        if ($pattern[0] !== $pattern[\strlen($pattern) - 1]) {
-            throw new InvalidArgumentException(sprintf('Invalid regular expression received: %s', $pattern));
+        /**
+         * The only sane way to validate a regexp is to execute it.
+         * Possible warnings or notices are suppressed.
+         */
+        if (false === @preg_match($pattern, null)) {
+            throw new InvalidArgumentException(
+                sprintf('Invalid regular expression received: `%s`, preg error #%d', $pattern, preg_last_error())
+            );
         }
     }
 }

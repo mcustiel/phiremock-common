@@ -13,6 +13,11 @@
             "email": "jmcustiel@gmail.com",
             "homepage": "https://github.com/mcustiel",
             "role": "Developer"
+        },
+        {
+            "name": "Sergey Gripinskiy",
+            "email": "web-architect@mail.ru",
+            "role": "Contributor"
         }
     ],
     "name" : "mcustiel/phiremock-common",
