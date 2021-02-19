@@ -1,9 +1,10 @@
 <?php
+
 namespace Mcustiel\Phiremock\Tests\Unit\Domain\Condition\Matchers;
 
-use PHPUnit\Framework\TestCase;
 use Mcustiel\Phiremock\Domain\Condition\Matchers\Contains;
 use Mcustiel\Phiremock\Domain\Condition\StringValue;
+use PHPUnit\Framework\TestCase;
 
 class ContainsTest extends TestCase
 {

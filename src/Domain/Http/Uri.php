@@ -41,7 +41,7 @@ class Uri
 
     private function ensureIsValidUri(string $uri): void
     {
-        if (false === filter_var($uri, FILTER_VALIDATE_URL)) {
+        if (false === filter_var($uri, \FILTER_VALIDATE_URL)) {
             throw new \InvalidArgumentException(sprintf('Invalid http uri: %s', var_export($uri, true)));
         }
     }

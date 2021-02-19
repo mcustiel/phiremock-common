@@ -258,7 +258,7 @@ class JsonConvertTest extends TestCase
     public function testConvertsConfig(string $config, string $expected)
     {
         $configArray = json_decode($config, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
+        if (json_last_error() !== \JSON_ERROR_NONE) {
             $this->fail(json_last_error_msg());
         }
         $expectation = $this->arrayToExpectationConverterLocator

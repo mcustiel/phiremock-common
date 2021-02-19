@@ -10,10 +10,6 @@ class PatternTest extends TestCase
 {
     /**
      * @dataProvider correctPatternDataProvider
-     *
-     * @param string $regex
-     *
-     * @return void
      */
     public function testCorrectPattern(string $regex): void
     {
@@ -38,10 +34,6 @@ class PatternTest extends TestCase
 
     /**
      * @dataProvider incorrectPatternDataProvider
-     *
-     * @param string $regex
-     *
-     * @return void
      */
     public function testIncorrectPattern(string $regex): void
     {
