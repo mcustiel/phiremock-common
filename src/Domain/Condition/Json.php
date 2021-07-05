@@ -27,7 +27,10 @@ class Json extends ConditionValue
 
     public function asString(): string
     {
-        return json_encode($this->get());
+        return json_encode(
+            $this->get(),
+            JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_PRESERVE_ZERO_FRACTION
+        );
     }
 
     private function getDecodedJson(string $string): array
