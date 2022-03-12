@@ -35,6 +35,7 @@ class AbstractArrayIterator implements \Iterator, \Countable
      *
      * @see \Iterator::next()
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         next($this->array);
@@ -45,6 +46,7 @@ class AbstractArrayIterator implements \Iterator, \Countable
      *
      * @see \Iterator::valid()
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         $key = key($this->array);
@@ -57,6 +59,7 @@ class AbstractArrayIterator implements \Iterator, \Countable
      *
      * @see \Iterator::current()
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return current($this->array);
@@ -67,6 +70,7 @@ class AbstractArrayIterator implements \Iterator, \Countable
      *
      * @see \Iterator::rewind()
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         reset($this->array);
@@ -77,6 +81,7 @@ class AbstractArrayIterator implements \Iterator, \Countable
      *
      * @see \Iterator::key()
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return key($this->array);
@@ -87,12 +92,14 @@ class AbstractArrayIterator implements \Iterator, \Countable
      *
      * @see \Countable::count()
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return \count($this->array);
     }
 
     /** @return bool */
+    #[\ReturnTypeWillChange]
     public function isEmpty()
     {
         return empty($this->array);
