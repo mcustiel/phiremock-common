@@ -9,6 +9,8 @@ build:
     postgresql: false
     mysql: false
     redis: false
+    variables:
+      XDEBUG_MODE: coverage
   tests:
     override:
       - php-scrutinizer-run
