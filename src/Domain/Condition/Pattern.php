@@ -34,7 +34,7 @@ class Pattern extends ConditionValue
          * The only sane way to validate a regexp is to execute it.
          * Possible warnings or notices are suppressed.
          */
-        if (false === @preg_match($pattern, null)) {
+        if (false === @preg_match($pattern, '')) {
             throw new InvalidArgumentException(sprintf('Invalid regular expression received: `%s`, preg error #%d', $pattern, preg_last_error()));
         }
     }
