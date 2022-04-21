@@ -35,6 +35,10 @@ build:
       environment:
         php:
           version: 8.0
+      tests:
+        override:
+          - php-scrutinizer-run
+          - command: ./vendor/bin/phpunit
     php81:
       environment:
         php:
