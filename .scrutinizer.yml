@@ -19,30 +19,26 @@ build:
           file: build/coverage.xml
           format: clover
   nodes:
-    php72:
-      environment:
-        php:
-          version: 7.2
-    php73:
-      environment:
-        php:
-          version: 7.3
-    php74:
-      environment:
-        php:
-          version: 7.4
-    php80:
-      environment:
-        php:
-          version: 8.0
-      tests:
-        override:
-          - php-scrutinizer-run
-          - command: ./vendor/bin/phpunit
     php81:
       environment:
         php:
           version: 8.1
+      tests:
+        override:
+          - php-scrutinizer-run
+          - command: ./vendor/bin/phpunit
+    php82:
+      environment:
+        php:
+          version: 8.2
+      tests:
+        override:
+          - php-scrutinizer-run
+          - command: ./vendor/bin/phpunit
+    php83:
+      environment:
+        php:
+          version: 8.3
       tests:
         override:
           - php-scrutinizer-run
