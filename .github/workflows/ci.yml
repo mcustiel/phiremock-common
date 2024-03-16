@@ -15,6 +15,7 @@ jobs:
         env:
           XDEBUG_MODE: coverage
         with:
+          version: 'composer'
           configuration: './phpunit.xml'
           php_extensions: "xdebug"
           coverage_clover: "build/coverage.xml"
