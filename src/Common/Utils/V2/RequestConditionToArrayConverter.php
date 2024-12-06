@@ -19,6 +19,7 @@
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Common\Utils\V1\RequestConditionToArrayConverter as RequestConditionToArrayConverterV1;
+use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
 use Mcustiel\Phiremock\Domain\Conditions;
 
 class RequestConditionToArrayConverter extends RequestConditionToArrayConverterV1
@@ -33,6 +34,7 @@ class RequestConditionToArrayConverter extends RequestConditionToArrayConverterV
         $this->convertBody($request, $requestArray);
         $this->convertHeaders($request, $requestArray);
         $this->convertFormData($request, $requestArray);
+        $this->convertJsonPath($request, $requestArray);
 
         return $requestArray;
     }
@@ -50,5 +52,26 @@ class RequestConditionToArrayConverter extends RequestConditionToArrayConverterV
         $requestArray['scenarioStateIs'] = $request->hasScenarioState()
             ? $request->getScenarioState()->asString()
             : null;
+    }
+
+    protected function convertJsonPath(Conditions $request, array &$requestArray): void
+    {
+        $jsonPaths = $request->getJsonPath();
+        if ($jsonPaths === null) {
+            $requestArray['jsonPath'] = null;
+        } else {
+            $pathsArray = [];
+            /** @var JsonPathName $pathName */
+            /** @var JsonPathCondition $pathCondition */
+            foreach ($jsonPaths as $pathName => $pathCondition) {
+                $pathsArray[$pathName->asString()] = [
+                    $pathCondition->getMatcher()->getName() => 
+                        $pathCondition->getMatcher()->getName() === MatchersEnum::EQUAL_TO
+                        ? $pathCondition->getValue()->get()
+                        : $pathCondition->getValue()->asString(),
+                ];
+            }
+            $requestArray['jsonPath'] = $pathsArray;
+        }
     }
 }

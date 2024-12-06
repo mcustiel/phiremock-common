@@ -26,12 +26,16 @@ use Mcustiel\Phiremock\Domain\Condition\Conditions\FormFieldConditionIterator;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderCondition;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderConditionCollection;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderConditionIterator;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\JsonPathCondition;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\JsonPathConditionCollection;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\JsonPathConditionIterator;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\MethodCondition;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\UrlCondition;
 use Mcustiel\Phiremock\Domain\Condition\Matchers\MatcherFactory;
 use Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\Http\FormFieldName;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
+use Mcustiel\Phiremock\Domain\Http\JsonPathName;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class ArrayToRequestConditionConverter implements ArrayToRequestConditionConverterInterface
@@ -43,6 +47,7 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
         'body'            => null,
         'headers'         => null,
         'formData'        => null,
+        'jsonPath'        => null,
     ];
 
     /** @var MatcherFactory */
@@ -63,7 +68,8 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
             $this->convertBodyCondition($requestArray),
             $this->convertHeadersConditions($requestArray),
             $this->convertFormDataConditions($requestArray),
-            $this->convertScenarioState($requestArray)
+            $this->convertScenarioState($requestArray),
+            $this->convertJsonPathConditions($requestArray),
         );
     }
 
@@ -161,7 +167,7 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
 
             return new UrlCondition(
                 $this->matcherFactory->createFrom(key($urlCondition), $value)
-                );
+            );
         }
 
         return null;
@@ -218,6 +224,35 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
             );
         }
 
+        return null;
+    }
+
+    protected function convertJsonPathConditions(array $requestArray): ?JsonPathConditionIterator
+    {
+        if (!empty($requestArray['jsonPath'])) {
+            $jsonPaths = $requestArray['jsonPath'];
+            if (!\is_array($jsonPaths)) {
+                throw new \InvalidArgumentException('Json path condition is invalid: ' . var_export($jsonPaths, true));
+            }
+            $collection = new JsonPathConditionCollection();
+            foreach ($jsonPaths as $path => $condition) {
+                if (!\is_array($condition)) {
+                    throw new \InvalidArgumentException('Json path condition is invalid: ' . var_export($condition, true));
+                }
+                $value = current($condition);
+                if (!\is_scalar($value)) {
+                    throw new \InvalidArgumentException('Invalid condition value. Expected scalar value, got: ' . \gettype($value));
+                }
+                
+                $collection->setPathCondition(
+                    new JsonPathName($path),
+                    new JsonPathCondition(
+                        $this->getMatcherFactory()->createFrom(key($condition), $value)
+                    )
+                );
+            }
+            return $collection->iterator();
+        }
         return null;
     }
 }

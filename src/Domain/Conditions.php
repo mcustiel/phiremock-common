@@ -21,6 +21,7 @@ namespace Mcustiel\Phiremock\Domain;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\BodyCondition;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\FormFieldConditionIterator;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\HeaderConditionIterator;
+use Mcustiel\Phiremock\Domain\Condition\Conditions\JsonPathConditionIterator;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\MethodCondition;
 use Mcustiel\Phiremock\Domain\Condition\Conditions\UrlCondition;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
@@ -39,6 +40,8 @@ class Conditions
     private $formFields;
     /** @var ScenarioState|null */
     private $scenarioState;
+    /** @var JsonPathConditionIterator|null */
+    private $jsonPath;
 
     public function __construct(
         ?MethodCondition $method = null,
@@ -46,7 +49,8 @@ class Conditions
         ?BodyCondition $body = null,
         ?HeaderConditionIterator $headers = null,
         ?FormFieldConditionIterator $formFields = null,
-        ?ScenarioState $scenarioState = null
+        ?ScenarioState $scenarioState = null,
+        ?JsonPathConditionIterator $jsonPath = null
     ) {
         $this->method = $method;
         $this->url = $url;
@@ -54,6 +58,7 @@ class Conditions
         $this->headers = $headers;
         $this->formFields = $formFields;
         $this->scenarioState = $scenarioState;
+        $this->jsonPath = $jsonPath;
     }
 
     public function hasMethod(): bool
@@ -114,5 +119,15 @@ class Conditions
     public function getScenarioState(): ?ScenarioState
     {
         return $this->scenarioState;
+    }
+
+    public function hasJsonPath(): bool 
+    {
+        return null !== $this->jsonPath;
+    }
+
+    public function getJsonPath(): ?JsonPathConditionIterator
+    {
+        return $this->jsonPath;
     }
 }

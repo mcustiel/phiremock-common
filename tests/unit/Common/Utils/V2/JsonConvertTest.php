@@ -37,7 +37,8 @@ class JsonConvertTest extends TestCase
             "url":null,
             "body": null,
             "headers" : null,
-            "formData": null
+            "formData": null,
+            "jsonPath": null
         },
         "then": {
             "delayMillis": null,
@@ -68,7 +69,8 @@ class JsonConvertTest extends TestCase
             "url":null,
             "body": null,
             "headers" : null,
-            "formData": null
+            "formData": null,
+            "jsonPath": null
         },
         "then": {
             "delayMillis": null,
@@ -103,7 +105,8 @@ class JsonConvertTest extends TestCase
                 "isSameJsonObject": "{\"Tomato\":\"Potat\"}"
             },
             "headers" : null,
-            "formData": null
+            "formData": null,
+            "jsonPath": null
         },
         "then": {
             "delayMillis": null,
@@ -139,7 +142,8 @@ class JsonConvertTest extends TestCase
             "url":null,
             "body": null,
             "headers" : null,
-            "formData": null
+            "formData": null,
+            "jsonPath": null
         },
         "then": {
             "delayMillis": null,
@@ -176,7 +180,12 @@ class JsonConvertTest extends TestCase
     			"name": {
     				"isEqualTo": "potato"
     			}
-    		}
+    		},
+            "jsonPath": {
+                "user.id": {
+                    "isEqualTo": "123"
+                }
+            }
     	},
     	"then": {
             "newScenarioState": "tomato",
@@ -214,7 +223,12 @@ class JsonConvertTest extends TestCase
     			"name": {
     				"isEqualTo": "potato"
     			}
-    		}
+    		},
+            "jsonPath": {
+                "user.id": {
+                    "isEqualTo": "123"
+                }
+            }
     	},
     	"then": {
             "delayMillis": 1000,
@@ -229,6 +243,59 @@ class JsonConvertTest extends TestCase
             }
     	},
         "priority": 3
+    }';
+    private const JSON_PATH_CONDITION = '{
+        "version": "2",
+        "on": {
+            "jsonPath": {
+                "store.book.0.price": {
+                    "isEqualTo": 10
+                },
+                "store.bicycle.color": {
+                    "matches": "/^(red|blue)$/"
+                },
+                "store.basket.items.length": {
+                    "isEqualTo": 3
+                }
+            }
+        },
+        "then": {
+            "response": {"statusCode": 200}
+        }
+    }';
+    private const JSON_PATH_CONDITION_EXPECTED = '{
+        "version": "2",
+        "scenarioName": null,
+        "on": {
+            "scenarioStateIs": null,
+            "method": null,
+            "url": null,
+            "body": null,
+            "headers": null,
+            "formData": null,
+            "jsonPath": {
+                "store.book.0.price": {
+                    "isEqualTo": 10
+                },
+                "store.bicycle.color": {
+                    "matches": "/^(red|blue)$/"
+                },
+                "store.basket.items.length": {
+                    "isEqualTo": 3
+                }
+            }
+        },
+        "then": {
+            "delayMillis": null,
+            "newScenarioState": null,
+            "proxyTo": null,
+            "response": {
+                "statusCode": 200,
+                "body": null,
+                "headers": null
+            }
+        },
+        "priority": 0
     }';
 
     /** @var ArrayToExpectationConverterLocator */
@@ -251,6 +318,7 @@ class JsonConvertTest extends TestCase
             'base config'                => [self::BASIC_CONFIG, self::BASIC_CONFIG_EXPECTED],
             'json body request'          => [self::JSON_CONDITION, self::JSON_CONDITION_EXPECTED],
             'full config'                => [self::FULL_CONFIG, self::FULL_CONFIG_EXPECTED],
+            'json path condition'        => [self::JSON_PATH_CONDITION, self::JSON_PATH_CONDITION_EXPECTED],
         ];
     }
 
