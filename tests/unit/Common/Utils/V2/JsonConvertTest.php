@@ -248,7 +248,7 @@ class JsonConvertTest extends TestCase
         "version": "2",
         "on": {
             "jsonPath": {
-                "store.book[0].price": {
+                "store.book.0.price": {
                     "isEqualTo": 10
                 },
                 "store.bicycle.color": {
@@ -274,7 +274,7 @@ class JsonConvertTest extends TestCase
             "headers": null,
             "formData": null,
             "jsonPath": {
-                "store.book[0].price": {
+                "store.book.0.price": {
                     "isEqualTo": 10
                 },
                 "store.bicycle.color": {
