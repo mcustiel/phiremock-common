@@ -69,7 +69,7 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
             $this->convertHeadersConditions($requestArray),
             $this->convertFormDataConditions($requestArray),
             $this->convertScenarioState($requestArray),
-            $this->convertJsonPathConditions($requestArray),
+            $this->convertJsonPathConditions($requestArray)
         );
     }
 
