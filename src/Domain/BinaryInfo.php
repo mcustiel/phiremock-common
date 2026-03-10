@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -20,6 +21,6 @@ namespace Mcustiel\Phiremock\Domain;
 
 class BinaryInfo
 {
-    const BINARY_BODY_PREFIX = 'phiremock.base64:';
-    const BINARY_BODY_PREFIX_LENGTH = 17;
+    public const BINARY_BODY_PREFIX = 'phiremock.base64:';
+    public const BINARY_BODY_PREFIX_LENGTH = 17;
 }

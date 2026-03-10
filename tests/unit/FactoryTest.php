@@ -7,8 +7,14 @@ use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverterLocator;
 use Mcustiel\Phiremock\Common\Utils\V1\Factory as FactoryV1;
 use Mcustiel\Phiremock\Common\Utils\V2\Factory as FactoryV2;
 use Mcustiel\Phiremock\Factory;
+use PHPUnit\Framework\TestCase;
 
-class FactoryTest
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+class FactoryTest extends TestCase
 {
     /** @var Factory */
     private $factory;
@@ -18,19 +24,19 @@ class FactoryTest
         $this->factory = new Factory();
     }
 
-    public function methodAndClassProvider(): array
-    {
-        return [
-            'createV1UtilsFactory'                     => ['createV1UtilsFactory', FactoryV1::class],
-            'createV2UtilsFactory'                     => ['createV2UtilsFactory', FactoryV2::class],
-            'createExpectationToArrayConverterLocator' => ['createExpectationToArrayConverterLocator', ExpectationToArrayConverterLocator::class],
-            'createArrayToExpectationConverterLocator' => ['createArrayToExpectationConverterLocator', ArrayToExpectationConverterLocator::class],
-        ];
-    }
-
     /** @dataProvider methodAndClassProvider */
     public function testCreatesObjectsCorrectly($factoryMethod, $expectedClass): void
     {
         $this->assertInstanceOf($expectedClass, $this->factory->{$factoryMethod}());
+    }
+
+    public static function methodAndClassProvider(): array
+    {
+        return [
+            'createV1UtilsFactory' => ['createV1UtilsFactory', FactoryV1::class],
+            'createV2UtilsFactory' => ['createV2UtilsFactory', FactoryV2::class],
+            'createExpectationToArrayConverterLocator' => ['createExpectationToArrayConverterLocator', ExpectationToArrayConverterLocator::class],
+            'createArrayToExpectationConverterLocator' => ['createArrayToExpectationConverterLocator', ArrayToExpectationConverterLocator::class],
+        ];
     }
 }

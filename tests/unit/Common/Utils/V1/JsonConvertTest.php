@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -23,6 +24,11 @@ use Mcustiel\Phiremock\Common\Utils\ExpectationToArrayConverterLocator;
 use Mcustiel\Phiremock\Factory;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class JsonConvertTest extends TestCase
 {
     private const JSON_CONDITION = '{"request": {"method": "GET", "body": {"isSameJsonObject": "{\"Tomato\":\"Potat\"}"}}, "response": {}}';
@@ -100,6 +106,7 @@ class JsonConvertTest extends TestCase
 
     /** @var ArrayToExpectationConverterLocator */
     private $arrayToExpectationConverterLocator;
+
     /** @var ExpectationToArrayConverterLocator */
     private $expectationToArrayConverterLocator;
 
@@ -110,22 +117,14 @@ class JsonConvertTest extends TestCase
         $this->expectationToArrayConverterLocator = $factory->createExpectationToArrayConverterLocator();
     }
 
-    public function configProvider(): array
-    {
-        return [
-            'base config'       => [self::BASIC_CONFIG, self::BASIC_CONFIG_EXPECTED],
-            'json body request' => [self::JSON_CONDITION, self::JSON_CONDITION_EXPECTED],
-            'full config'       => [self::FULL_CONFIG, self::FULL_CONFIG_EXPECTED],
-        ];
-    }
-
     /** @dataProvider configProvider */
-    public function testConvertsConfig(string $config, string $expected)
+    public function testConvertsConfig(string $config, string $expected): void
     {
         $configArray = json_decode($config, true);
         $expectation = $this->arrayToExpectationConverterLocator
             ->locate($configArray)
-            ->convert($configArray);
+            ->convert($configArray)
+        ;
         $expectedArray = json_decode($expected, true);
         $this->assertSame(
             $expectedArray,
@@ -135,12 +134,22 @@ class JsonConvertTest extends TestCase
         );
         $expectation = $this->arrayToExpectationConverterLocator
             ->locate($expectedArray)
-            ->convert($expectedArray);
+            ->convert($expectedArray)
+        ;
         $this->assertSame(
             $expectedArray,
             $this->expectationToArrayConverterLocator
                 ->locate($expectation)
                 ->convert($expectation)
         );
+    }
+
+    public static function configProvider(): array
+    {
+        return [
+            'base config' => [self::BASIC_CONFIG, self::BASIC_CONFIG_EXPECTED],
+            'json body request' => [self::JSON_CONDITION, self::JSON_CONDITION_EXPECTED],
+            'full config' => [self::FULL_CONFIG, self::FULL_CONFIG_EXPECTED],
+        ];
     }
 }

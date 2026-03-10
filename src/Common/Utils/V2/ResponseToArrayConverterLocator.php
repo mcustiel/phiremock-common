@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -20,6 +21,4 @@ namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Common\Utils\V1\ResponseToArrayConverterLocator as ResponseToArrayConverterLocatorV1;
 
-class ResponseToArrayConverterLocator extends ResponseToArrayConverterLocatorV1
-{
-}
+class ResponseToArrayConverterLocator extends ResponseToArrayConverterLocatorV1 {}

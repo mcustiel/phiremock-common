@@ -11,22 +11,26 @@ use Mcustiel\Phiremock\Domain\Version;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/** @covers \Mcustiel\Phiremock\Domain\Expectation */
+/**
+ * @covers \Mcustiel\Phiremock\Domain\Expectation
+ *
+ * @internal
+ */
 class ExpectationTest extends TestCase
 {
     /** @var Conditions|MockObject */
     private $requestConditions;
 
-    /** @var ScenarioName|MockObject */
+    /** @var MockObject|ScenarioName */
     private $scenarioName;
 
-    /** @var Response|MockObject */
+    /** @var MockObject|Response */
     private $response;
 
-    /** @var Priority|MockObject */
+    /** @var MockObject|Priority */
     private $priority;
 
-    /** @var Version|MockObject */
+    /** @var MockObject|Version */
     private $version;
 
     protected function setUp(): void
@@ -46,7 +50,7 @@ class ExpectationTest extends TestCase
             $this->scenarioName,
             $this->priority,
             $this->version
-            );
+        );
         $this->assertSame($this->requestConditions, $expectation->getRequest());
         $this->assertSame($this->response, $expectation->getResponse());
         $this->assertSame($this->scenarioName, $expectation->getScenarioName());

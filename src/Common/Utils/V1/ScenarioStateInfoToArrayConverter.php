@@ -10,7 +10,7 @@ class ScenarioStateInfoToArrayConverter implements ScenarioStateInfoToArrayConve
     public function convert(ScenarioStateInfo $scenarioStateInfo): array
     {
         return [
-            'scenarioName'  => $scenarioStateInfo->getScenarioName()->asString(),
+            'scenarioName' => $scenarioStateInfo->getScenarioName()->asString(),
             'scenarioState' => $scenarioStateInfo->getScenarioState()->asString(),
         ];
     }

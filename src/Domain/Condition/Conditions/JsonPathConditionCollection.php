@@ -11,11 +11,13 @@ final class JsonPathConditionCollection extends AbstractArrayCollection
     public function __toString()
     {
         $string = '';
+
         /** @var JsonPathName $pathName */
         /** @var JsonPathCondition $condition */
         foreach ($this as $pathName => $condition) {
-            $string .= $pathName->asString() . ' => ' . $condition->__toString();
+            $string .= $pathName->asString().' => '.$condition->__toString();
         }
+
         return $string;
     }
 

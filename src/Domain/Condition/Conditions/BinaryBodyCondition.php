@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -42,7 +43,7 @@ class BinaryBodyCondition extends BodyCondition
 
     private function ensureIsValidMatcher(string $matcherName): void
     {
-        if ($matcherName !== MatchersEnum::EQUAL_TO) {
+        if (MatchersEnum::EQUAL_TO !== $matcherName) {
             throw new \InvalidArgumentException(sprintf('%s is not an allowed condition matcher for Binary Body.', $matcherName));
         }
     }

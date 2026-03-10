@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -63,7 +64,7 @@ class HttpResponse extends Response
 
     public function hasBody(): bool
     {
-        return $this->body !== null;
+        return null !== $this->body;
     }
 
     public function getBody(): ?Body
@@ -73,7 +74,7 @@ class HttpResponse extends Response
 
     public function hasHeaders(): bool
     {
-        return $this->headers !== null && !$this->headers->isEmpty();
+        return null !== $this->headers && !$this->headers->isEmpty();
     }
 
     public function getHeaders(): ?HeadersCollection

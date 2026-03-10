@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -30,8 +31,8 @@ class StateConditions
     private $scenarioStateIs;
 
     public function __construct(
-        ScenarioName $scenarioName = null,
-        ScenarioState $currentScenarioState = null
+        ?ScenarioName $scenarioName = null,
+        ?ScenarioState $currentScenarioState = null
     ) {
         $this->scenarioName = $scenarioName;
         $this->scenarioStateIs = $currentScenarioState;
@@ -43,7 +44,7 @@ class StateConditions
         return null !== $this->scenarioName;
     }
 
-    /** @return ScenarioName|null */
+    /** @return null|ScenarioName */
     public function getScenarioName()
     {
         return $this->scenarioName;
@@ -55,7 +56,7 @@ class StateConditions
         return null !== $this->scenarioStateIs;
     }
 
-    /** @return ScenarioState|null */
+    /** @return null|ScenarioState */
     public function getScenarioStateIs()
     {
         return $this->scenarioStateIs;

@@ -12,20 +12,29 @@ use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/** @covers \Mcustiel\Phiremock\Domain\Conditions */
+/**
+ * @covers \Mcustiel\Phiremock\Domain\Conditions
+ *
+ * @internal
+ */
 class ConditionsTest extends TestCase
 {
     /** @var MethodCondition|MockObject */
     private $method;
-    /** @var UrlCondition|MockObject */
+
+    /** @var MockObject|UrlCondition */
     private $url;
+
     /** @var BodyCondition|MockObject */
     private $body;
+
     /** @var HeaderConditionIterator|MockObject */
     private $headers;
+
     /** @var FormFieldConditionIterator|MockObject */
     private $formFields;
-    /** @var ScenarioState|MockObject */
+
+    /** @var MockObject|ScenarioState */
     private $scenarioState;
 
     protected function setUp(): void

@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: [ '7.2', '7.3', '7,4', '8.0', '8.1', '8.2', '8.3' ]
+        php-versions: ['8.2', '8.3', '8.4', '8.5' ]
     steps:
       - uses: actions/checkout@v3
       - uses: php-actions/composer@v6
@@ -15,8 +15,8 @@ jobs:
         env:
           XDEBUG_MODE: coverage
         with:
-          version: 9
+          version: 11
           configuration: phpunit.xml
           php_extensions: "xdebug"
           coverage_clover: "build/coverage.xml"
-    
+          test_suffix: Test.php

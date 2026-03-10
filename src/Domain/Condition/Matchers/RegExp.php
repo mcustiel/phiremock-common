@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -30,7 +31,7 @@ class RegExp extends Matcher
 
     public function matches($value): bool
     {
-        return preg_match($this->getCheckValue()->get(), $value) !== 0;
+        return 0 !== preg_match($this->getCheckValue()->get(), $value);
     }
 
     public function getName(): string

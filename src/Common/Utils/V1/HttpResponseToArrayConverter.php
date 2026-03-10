@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -30,7 +31,7 @@ class HttpResponseToArrayConverter extends ResponseToArrayConverter
         $responseArray = [];
         $responseArray['statusCode'] = $response->getStatusCode()->asInt();
         $body = $response->getBody();
-        $responseArray['body'] = $body === null ? null : $body->asString();
+        $responseArray['body'] = null === $body ? null : $body->asString();
         $headers = $response->getHeaders();
         if ($headers && !$headers->isEmpty()) {
             $responseArray['headers'] = $this->convertHeaders($response);
@@ -45,6 +46,7 @@ class HttpResponseToArrayConverter extends ResponseToArrayConverter
     {
         $headers = $response->getHeaders();
         $headersArray = [];
+
         /** @var Header $header */
         foreach ($headers as $header) {
             $headersArray[$header->getName()->asString()] = $header->getValue()->asString();

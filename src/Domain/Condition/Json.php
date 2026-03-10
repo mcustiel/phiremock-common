@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -36,7 +37,7 @@ class Json extends ConditionValue
     private function getDecodedJson(string $string): array
     {
         $decodedJson = json_decode($string, true);
-        if (json_last_error() !== \JSON_ERROR_NONE) {
+        if (\JSON_ERROR_NONE !== json_last_error()) {
             throw new \InvalidArgumentException(sprintf('Invalid json: %s. Parsing error: %s', $string, json_last_error_msg()));
         }
 

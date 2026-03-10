@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -20,7 +21,7 @@ namespace Mcustiel\Phiremock\Domain\Options;
 
 class ScenarioState
 {
-    const INITIAL_SCENARIO = 'Scenario.START';
+    public const INITIAL_SCENARIO = 'Scenario.START';
 
     /** @var string * */
     private $state;

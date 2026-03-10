@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -49,7 +50,8 @@ class ExpectationToArrayConverter extends ExpectationToArrayConverterV1
         $response = $expectation->getResponse();
         $expectationArray['then'] = $this->responseConverterLocator
             ->locate($response)
-            ->convert($response);
+            ->convert($response)
+        ;
 
         $expectationArray['priority'] = $this->getPriority($expectation);
 

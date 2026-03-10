@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -27,10 +28,11 @@ final class FormFieldConditionIterator extends AbstractArrayIterator
     public function __toString()
     {
         $string = '';
+
         /** @var FormFieldName $parameterName */
         /** @var FormFieldCondition $fieldCondition */
         foreach ($this as $parameterName => $fieldCondition) {
-            $string .= $parameterName->asString() . ' => ' . $fieldCondition->__toString();
+            $string .= $parameterName->asString().' => '.$fieldCondition->__toString();
         }
 
         return $string;

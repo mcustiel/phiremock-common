@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -31,16 +32,21 @@ class MatcherFactory
         switch ($identifier) {
             case MatchersEnum::CONTAINS:
                 return self::contains($value);
+
             case MatchersEnum::EQUAL_TO:
                 return self::equalsTo($value);
+
             case MatchersEnum::MATCHES:
                 return self::matches($value);
+
             case MatchersEnum::SAME_JSON:
                 return self::jsonEquals($value);
+
             case MatchersEnum::SAME_STRING:
                 return self::sameString($value);
         }
-        throw new \InvalidArgumentException('Invalid condition matcher specified: ' . $identifier);
+
+        throw new \InvalidArgumentException('Invalid condition matcher specified: '.$identifier);
     }
 
     public static function contains($value): Contains

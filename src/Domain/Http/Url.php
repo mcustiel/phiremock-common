@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -20,7 +21,7 @@ namespace Mcustiel\Phiremock\Domain\Http;
 
 class Url
 {
-    const URL_PATH_REGEX = '~^/(?:[^/?#]*)?(?:[^?#]*)(?:\?(?:[^#]*))?~';
+    public const URL_PATH_REGEX = '~^/(?:[^/?#]*)?(?:[^?#]*)(?:\?(?:[^#]*))?~';
 
     /** @var string * */
     private $url;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -27,10 +28,11 @@ final class HeaderConditionIterator extends AbstractArrayIterator
     public function __toString()
     {
         $string = '';
+
         /** @var HeaderName $headerName */
         /** @var HeaderCondition $headerCondition */
         foreach ($this as $headerName => $headerCondition) {
-            $string .= $headerName->asString() . ' => ' . $headerCondition->__toString();
+            $string .= $headerName->asString().' => '.$headerCondition->__toString();
         }
 
         return $string;

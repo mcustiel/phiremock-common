@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -41,7 +42,7 @@ class ExpectationToArrayConverter implements ExpectationToArrayConverterInterfac
     {
         $expectationArray = [];
 
-        if ($expectation->getVersion()->asString() !== '1') {
+        if ('1' !== $expectation->getVersion()->asString()) {
             $expectationArray['version'] = $expectation->getVersion()->asString();
         }
 
@@ -62,13 +63,14 @@ class ExpectationToArrayConverter implements ExpectationToArrayConverterInterfac
         $response = $expectation->getResponse();
 
         if ($response->isHttpResponse()) {
-            /* @var \Mcustiel\Phiremock\Domain\HttpResponse $response */
+            // @var \Mcustiel\Phiremock\Domain\HttpResponse $response
             $expectationArray['response'] = $this->responseConverterLocator
                 ->locate($response)
-                ->convert($response);
+                ->convert($response)
+            ;
             $expectationArray['proxyTo'] = null;
         } else {
-            /* @var \Mcustiel\Phiremock\Domain\ProxyResponse $response */
+            // @var \Mcustiel\Phiremock\Domain\ProxyResponse $response
             $expectationArray['response'] = null;
             $expectationArray['proxyTo'] = $response->getUri()->asString();
         }

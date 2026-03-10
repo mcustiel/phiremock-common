@@ -25,7 +25,7 @@ class FormFieldName
 
     private function ensureIsNotEmpty(string $fieldName): void
     {
-        if ($fieldName === '') {
+        if ('' === $fieldName) {
             throw new \InvalidArgumentException('Field name can\t be empty');
         }
     }

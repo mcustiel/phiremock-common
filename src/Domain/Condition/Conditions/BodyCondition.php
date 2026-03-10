@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -22,13 +23,13 @@ use Mcustiel\Phiremock\Domain\Condition\Condition;
 
 class BodyCondition extends Condition
 {
-    const LONG_CONTENT = '--VERY LONG CONTENTS--';
+    public const LONG_CONTENT = '--VERY LONG CONTENTS--';
 
     public function __toString()
     {
         $value = $this->getValue()->asString();
 
-        return $this->getMatcher()->getName() . ' => ' .
-            (isset($value[2000]) ? self::LONG_CONTENT : $value);
+        return $this->getMatcher()->getName().' => '
+            .(isset($value[2000]) ? self::LONG_CONTENT : $value);
     }
 }

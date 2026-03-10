@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -30,7 +31,7 @@ class Priority
         $this->priority = $priority;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\Options\Priority */
+    /** @return Priority */
     public static function createDefault()
     {
         return new self(0);

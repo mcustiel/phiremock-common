@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -47,31 +48,31 @@ class RequestConditionToArrayConverter extends RequestConditionToArrayConverterV
         ];
     }
 
-    private function convertScenarioState(Conditions $request, array &$requestArray): void
-    {
-        $requestArray['scenarioStateIs'] = $request->hasScenarioState()
-            ? $request->getScenarioState()->asString()
-            : null;
-    }
-
     protected function convertJsonPath(Conditions $request, array &$requestArray): void
     {
         $jsonPaths = $request->getJsonPath();
-        if ($jsonPaths === null) {
+        if (null === $jsonPaths) {
             $requestArray['jsonPath'] = null;
         } else {
             $pathsArray = [];
+
             /** @var JsonPathName $pathName */
             /** @var JsonPathCondition $pathCondition */
             foreach ($jsonPaths as $pathName => $pathCondition) {
                 $pathsArray[$pathName->asString()] = [
-                    $pathCondition->getMatcher()->getName() => 
-                        $pathCondition->getMatcher()->getName() === MatchersEnum::EQUAL_TO
+                    $pathCondition->getMatcher()->getName() => MatchersEnum::EQUAL_TO === $pathCondition->getMatcher()->getName()
                         ? $pathCondition->getValue()->get()
                         : $pathCondition->getValue()->asString(),
                 ];
             }
             $requestArray['jsonPath'] = $pathsArray;
         }
+    }
+
+    private function convertScenarioState(Conditions $request, array &$requestArray): void
+    {
+        $requestArray['scenarioStateIs'] = $request->hasScenarioState()
+            ? $request->getScenarioState()->asString()
+            : null;
     }
 }

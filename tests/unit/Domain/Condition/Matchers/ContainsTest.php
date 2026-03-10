@@ -6,6 +6,11 @@ use Mcustiel\Phiremock\Domain\Condition\Matchers\Contains;
 use Mcustiel\Phiremock\Domain\Condition\StringValue;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class ContainsTest extends TestCase
 {
     /** @var Contains */

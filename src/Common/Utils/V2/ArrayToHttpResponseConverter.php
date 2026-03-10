@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -33,12 +34,12 @@ use Mcustiel\Phiremock\Domain\Response;
 
 class ArrayToHttpResponseConverter extends ArrayToResponseConverter // extends ArrayToHttpResponseConverterV1
 {
-    const ALLOWED_OPTIONS = [
+    public const ALLOWED_OPTIONS = [
         'statusCode' => null,
-        'body'       => null,
-        'headers'    => null,
+        'body' => null,
+        'headers' => null,
     ];
-    const STRING_START = 0;
+    public const STRING_START = 0;
 
     protected function convertResponse(
         array $responseArray,
@@ -52,7 +53,7 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter // extends A
         }
 
         if (!\is_array($responseArray['response'])) {
-            throw new \Exception('Invalid response definition: ' . var_export($responseArray['response'], true));
+            throw new \Exception('Invalid response definition: '.var_export($responseArray['response'], true));
         }
 
         $this->ensureNotInvalidOptionsAreProvided(
@@ -78,7 +79,7 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter // extends A
             $headers = $responseArray['headers'];
             if (!empty($headers)) {
                 if (!\is_array($headers)) {
-                    throw new \InvalidArgumentException('Response headers are invalid: ' . var_export($headers, true));
+                    throw new \InvalidArgumentException('Response headers are invalid: '.var_export($headers, true));
                 }
 
                 return $this->convertHeaders($headers);

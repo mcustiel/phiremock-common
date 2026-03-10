@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -30,7 +31,7 @@ class Contains extends Matcher
 
     public function matches($value): bool
     {
-        return strpos($value, $this->getCheckValue()->get()) !== false;
+        return false !== strpos($value, $this->getCheckValue()->get());
     }
 
     public function getName(): string

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -39,7 +40,7 @@ class ProxyResponse extends Response
     /** @return string */
     public function __toString()
     {
-        return 'proxy to: ' . $this->uri->asString();
+        return 'proxy to: '.$this->uri->asString();
     }
 
     public function getUri(): Uri

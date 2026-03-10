@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -30,19 +31,20 @@ use Mcustiel\Phiremock\Domain\Version;
 
 class ArrayToExpectationConverter implements ArrayToExpectationConverterInterface
 {
-    const ALLOWED_OPTIONS = [
-        'version'         => null,
-        'scenarioName'    => null,
+    public const ALLOWED_OPTIONS = [
+        'version' => null,
+        'scenarioName' => null,
         'scenarioStateIs' => null,
-        'newScenarioState'=> null,
-        'priority'        => null,
-        'proxyTo'         => null,
-        'request'         => null,
-        'response'        => null,
+        'newScenarioState' => null,
+        'priority' => null,
+        'proxyTo' => null,
+        'request' => null,
+        'response' => null,
     ];
 
     /** @var ArrayToRequestConditionConverter */
     private $arrayToConditionsConverter;
+
     /** @var ArrayToResponseConverterLocator */
     private $arrayToResponseConverterLocator;
 
@@ -70,7 +72,7 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
     {
         $invalidOptions = array_diff_key($expectationArray, self::ALLOWED_OPTIONS);
         if (!empty($invalidOptions)) {
-            throw new \Exception('Unknown expectation options: ' . var_export($invalidOptions, true));
+            throw new \Exception('Unknown expectation options: '.var_export($invalidOptions, true));
         }
     }
 
@@ -109,12 +111,13 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
             return new HttpResponse(new StatusCode(200), null, null, null, null);
         }
         if (!isset($expectationArray['proxyTo']) && !\is_array($expectationArray['response'])) {
-            throw new \InvalidArgumentException('Invalid response definition: ' . var_export($expectationArray['response'], true));
+            throw new \InvalidArgumentException('Invalid response definition: '.var_export($expectationArray['response'], true));
         }
 
         return $this->arrayToResponseConverterLocator
             ->locate($expectationArray)
-            ->convert($expectationArray);
+            ->convert($expectationArray)
+        ;
     }
 
     private function convertRequest(array $expectationArray): Conditions

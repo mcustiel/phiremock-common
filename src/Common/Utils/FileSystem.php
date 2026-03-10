@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -34,7 +35,7 @@ class FileSystem
         return str_replace(
             \DIRECTORY_SEPARATOR,
             '/',
-            $existentPath . '/' . implode(\DIRECTORY_SEPARATOR, $tail)
+            $existentPath.'/'.implode(\DIRECTORY_SEPARATOR, $tail)
         );
     }
 
@@ -42,7 +43,7 @@ class FileSystem
     {
         $path = str_replace(\DIRECTORY_SEPARATOR, '/', $path);
         if ('/' !== $path[0]) {
-            $path = getcwd() . '/' . $path;
+            $path = getcwd().'/'.$path;
         }
 
         return $path;
