@@ -41,7 +41,9 @@ class ProxyResponseTest extends TestCase
         $testCase = new /**
          * @coversNothing
          */
-        class('dummy') extends TestCase {};
+        class('dummy') extends TestCase {
+            public function dummy(): void {}
+        };
         $uri = $testCase->createMock(Uri::class);
 
         $response = new ProxyResponse($uri, $delay, $scenarioState);
@@ -55,7 +57,9 @@ class ProxyResponseTest extends TestCase
         $testCase = new /**
          * @coversNothing
          */
-        class('dummy') extends TestCase {};
+        class('dummy') extends TestCase {
+            public function dummy(): void {}
+        };
         $delay = $testCase->createMock(Delay::class);
         $scenarioState = $testCase->createMock(ScenarioState::class);
 

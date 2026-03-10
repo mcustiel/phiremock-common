@@ -68,7 +68,9 @@ class HttpResponseTest extends TestCase
         $testCase = new /**
          * @coversNothing
          */
-        class('dummy') extends TestCase {};
+        class('dummy') extends TestCase {
+            public function dummy(): void {}
+        };
         $statusCode = $testCase->createMock(StatusCode::class);
         $body = $testCase->createMock(Body::class);
         $headers = $testCase->createMock(HeadersCollection::class);
@@ -128,7 +130,9 @@ class HttpResponseTest extends TestCase
         $testCase = new /**
          * @coversNothing
          */
-        class('dummy') extends TestCase {};
+        class('dummy') extends TestCase {
+            public function dummy(): void {}
+        };
         $statusCode = $testCase->createMock(StatusCode::class);
         $body = $testCase->createMock(Body::class);
         $headers = $testCase->createMock(HeadersCollection::class);
@@ -151,7 +155,9 @@ class HttpResponseTest extends TestCase
         $testCase = new /**
          * @coversNothing
          */
-        class('dummy') extends TestCase {};
+        class('dummy') extends TestCase {
+            public function dummy(): void {}
+        };
         $delay = $testCase->createMock(Delay::class);
         $scenarioState = $testCase->createMock(ScenarioState::class);
 
