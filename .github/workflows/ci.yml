@@ -19,3 +19,4 @@ jobs:
           configuration: phpunit.xml
           php_extensions: "xdebug"
           coverage_clover: "build/coverage.xml"
+          test_suffix: Test.php
