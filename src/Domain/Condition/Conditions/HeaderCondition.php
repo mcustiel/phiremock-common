@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -20,6 +21,4 @@ namespace Mcustiel\Phiremock\Domain\Condition\Conditions;
 
 use Mcustiel\Phiremock\Domain\Condition\Condition;
 
-class HeaderCondition extends Condition
-{
-}
+class HeaderCondition extends Condition {}

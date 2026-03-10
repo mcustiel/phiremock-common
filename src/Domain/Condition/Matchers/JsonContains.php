@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -52,8 +53,8 @@ class JsonContains extends Matcher
     private function decodeJson(string $value): array
     {
         $decodedValue = json_decode($value, true);
-        if (\JSON_ERROR_NONE !== json_last_error() || $decodedValue === null) {
-            throw new \InvalidArgumentException('JSON parsing error: ' . json_last_error_msg());
+        if (\JSON_ERROR_NONE !== json_last_error() || null === $decodedValue) {
+            throw new \InvalidArgumentException('JSON parsing error: '.json_last_error_msg());
         }
 
         return $decodedValue;

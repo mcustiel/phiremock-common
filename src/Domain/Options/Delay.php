@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -30,7 +31,7 @@ class Delay
         $this->delay = $delay;
     }
 
-    /** @return \Mcustiel\Phiremock\Domain\Options\Delay */
+    /** @return Delay */
     public static function createDefault()
     {
         return new self(0);

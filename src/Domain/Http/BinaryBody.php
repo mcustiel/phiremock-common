@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -24,7 +25,7 @@ class BinaryBody extends Body
 {
     public function asString(): string
     {
-        return BinaryInfo::BINARY_BODY_PREFIX . base64_encode(parent::asString());
+        return BinaryInfo::BINARY_BODY_PREFIX.base64_encode(parent::asString());
     }
 
     public function isTextBody(): bool

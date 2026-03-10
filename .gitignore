@@ -7,3 +7,5 @@ composer.lock
 .phpunit.result.cache
 tests/.phpunit.result.cache
 build/
+.php-cs-fixer.cache
+.phpunit.cache/

@@ -5,17 +5,13 @@ namespace Mcustiel\Phiremock\Tests\Unit\Domain;
 use Mcustiel\Phiremock\Domain\Version;
 use PHPUnit\Framework\TestCase;
 
-/** @covers \Mcustiel\Phiremock\Domain\Version */
+/**
+ * @covers \Mcustiel\Phiremock\Domain\Version
+ *
+ * @internal
+ */
 class VersionTest extends TestCase
 {
-    public function validVersionProvider(): array
-    {
-        return [
-            'version 1' => ['1'],
-            'version 2' => ['2'],
-        ];
-    }
-
     /** @dataProvider validVersionProvider */
     public function testRetrievesValue($versionString): void
     {
@@ -23,15 +19,11 @@ class VersionTest extends TestCase
         $this->assertSame($versionString, $version->asString());
     }
 
-    public function invalidVersionProvider(): array
+    public static function validVersionProvider(): array
     {
         return [
-            'empty'       => [''],
-            'version 0'   => ['0'],
-            'version 1.1' => ['1.1'],
-            'version 2.0' => ['2.0'],
-            'version 3'   => ['3'],
-            'alphabetic'  => ['a'],
+            'version 1' => ['1'],
+            'version 2' => ['2'],
         ];
     }
 
@@ -41,5 +33,17 @@ class VersionTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf('Invalid version: %s', $versionString));
         new Version($versionString);
+    }
+
+    public static function invalidVersionProvider(): array
+    {
+        return [
+            'empty' => [''],
+            'version 0' => ['0'],
+            'version 1.1' => ['1.1'],
+            'version 2.0' => ['2.0'],
+            'version 3' => ['3'],
+            'alphabetic' => ['a'],
+        ];
     }
 }

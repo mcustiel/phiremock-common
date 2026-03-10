@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -25,12 +26,10 @@ class ResponseToArrayConverter implements ResponseToArrayConverterInterface
 {
     public function convert(Response $response): array
     {
-        $responseArray = [
+        return [
             'delayMillis' => $response->hasDelayMillis()
                 ? $response->getDelayMillis()->asInt()
                 : null,
-            ];
-
-        return $responseArray;
+        ];
     }
 }

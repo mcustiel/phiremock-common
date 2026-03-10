@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -18,8 +19,6 @@
 
 namespace Mcustiel\Phiremock\Domain\Condition;
 
-use InvalidArgumentException;
-
 class Pattern extends ConditionValue
 {
     public function __construct(string $pattern)
@@ -35,7 +34,7 @@ class Pattern extends ConditionValue
          * Possible warnings or notices are suppressed.
          */
         if (false === @preg_match($pattern, '')) {
-            throw new InvalidArgumentException(sprintf('Invalid regular expression received: `%s`, preg error #%d', $pattern, preg_last_error()));
+            throw new \InvalidArgumentException(sprintf('Invalid regular expression received: `%s`, preg error #%d', $pattern, preg_last_error()));
         }
     }
 }

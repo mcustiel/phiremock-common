@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -31,7 +32,7 @@ abstract class Condition
 
     public function __toString()
     {
-        return $this->getMatcher()->getName() . ' ' . $this->getValue()->asString();
+        return $this->getMatcher()->getName().' '.$this->getValue()->asString();
     }
 
     public function getMatcher(): Matcher

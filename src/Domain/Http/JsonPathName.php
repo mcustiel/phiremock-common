@@ -9,7 +9,7 @@ class JsonPathName
 
     public function __construct(string $path)
     {
-        $this->ensureIsNotEmpty($path); 
+        $this->ensureIsNotEmpty($path);
         $this->path = $path;
     }
 
@@ -20,7 +20,7 @@ class JsonPathName
 
     private function ensureIsNotEmpty(string $path): void
     {
-        if ($path === '') {
+        if ('' === $path) {
             throw new \InvalidArgumentException('JSON path can\'t be empty');
         }
     }

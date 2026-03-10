@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -40,14 +41,14 @@ use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class ArrayToRequestConditionConverter implements ArrayToRequestConditionConverterInterface
 {
-    const ALLOWED_OPTIONS = [
+    public const ALLOWED_OPTIONS = [
         'scenarioStateIs' => null,
-        'method'          => null,
-        'url'             => null,
-        'body'            => null,
-        'headers'         => null,
-        'formData'        => null,
-        'jsonPath'        => null,
+        'method' => null,
+        'url' => null,
+        'body' => null,
+        'headers' => null,
+        'formData' => null,
+        'jsonPath' => null,
     ];
 
     /** @var MatcherFactory */
@@ -77,7 +78,7 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
     {
         $invalidOptions = array_diff_key($requestArray, static::ALLOWED_OPTIONS);
         if (!empty($invalidOptions)) {
-            throw new \Exception('Unknown request conditions: ' . var_export($invalidOptions, true));
+            throw new \Exception('Unknown request conditions: '.var_export($invalidOptions, true));
         }
     }
 
@@ -86,7 +87,7 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
         if (!empty($requestArray['headers'])) {
             $headers = $requestArray['headers'];
             if (!\is_array($headers)) {
-                throw new \InvalidArgumentException('Headers condition is invalid: ' . var_export($headers, true));
+                throw new \InvalidArgumentException('Headers condition is invalid: '.var_export($headers, true));
             }
             $headersCollection = new HeaderConditionCollection();
             foreach ($headers as $headerName => $header) {
@@ -105,11 +106,11 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
     protected function convertHeaderCondition($headerCondition): HeaderCondition
     {
         if (!\is_array($headerCondition)) {
-            throw new \InvalidArgumentException('Headers condition is invalid: ' . var_export($headerCondition, true));
+            throw new \InvalidArgumentException('Headers condition is invalid: '.var_export($headerCondition, true));
         }
         $value = current($headerCondition);
         if (!\is_string($value)) {
-            throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
+            throw new \InvalidArgumentException('Invalid condition value. Expected string, got: '.\gettype($value));
         }
 
         return new HeaderCondition(
@@ -122,7 +123,7 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
         if (!empty($requestArray['formData'])) {
             $formFields = $requestArray['formData'];
             if (!\is_array($formFields)) {
-                throw new \InvalidArgumentException('Form data condition is invalid: ' . var_export($formFields, true));
+                throw new \InvalidArgumentException('Form data condition is invalid: '.var_export($formFields, true));
             }
             $formData = new FormDataCondition();
             foreach ($formFields as $formFieldName => $condition) {
@@ -141,11 +142,11 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
     protected function convertFormFieldCondition($fieldCondition): FormFieldCondition
     {
         if (!\is_array($fieldCondition)) {
-            throw new \InvalidArgumentException('Form field condition is invalid: ' . var_export($fieldCondition, true));
+            throw new \InvalidArgumentException('Form field condition is invalid: '.var_export($fieldCondition, true));
         }
         $value = current($fieldCondition);
         if (!\is_string($value)) {
-            throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
+            throw new \InvalidArgumentException('Invalid condition value. Expected string, got: '.\gettype($value));
         }
 
         return new FormFieldCondition(
@@ -158,11 +159,11 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
         if (!empty($requestArray['url'])) {
             $urlCondition = $requestArray['url'];
             if (!\is_array($urlCondition)) {
-                throw new \InvalidArgumentException('Url condition is invalid: ' . var_export($urlCondition, true));
+                throw new \InvalidArgumentException('Url condition is invalid: '.var_export($urlCondition, true));
             }
             $value = current($urlCondition);
             if (!\is_string($value)) {
-                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: '.\gettype($value));
             }
 
             return new UrlCondition(
@@ -178,11 +179,11 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
         if (!empty($requestArray['body'])) {
             $bodyCondition = $requestArray['body'];
             if (!\is_array($bodyCondition)) {
-                throw new \InvalidArgumentException('Body condition is invalid: ' . var_export($bodyCondition, true));
+                throw new \InvalidArgumentException('Body condition is invalid: '.var_export($bodyCondition, true));
             }
             $value = current($bodyCondition);
             if (!\is_string($value)) {
-                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: '.\gettype($value));
             }
 
             return new BodyCondition(
@@ -212,11 +213,11 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
         if (!empty($requestArray['method'])) {
             $methodCondition = $requestArray['method'];
             if (!\is_array($methodCondition)) {
-                throw new \InvalidArgumentException('Method condition is invalid: ' . var_export($methodCondition, true));
+                throw new \InvalidArgumentException('Method condition is invalid: '.var_export($methodCondition, true));
             }
             $value = current($methodCondition);
             if (!\is_string($value)) {
-                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: ' . \gettype($value));
+                throw new \InvalidArgumentException('Invalid condition value. Expected string, got: '.\gettype($value));
             }
 
             return new MethodCondition(
@@ -232,18 +233,18 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
         if (!empty($requestArray['jsonPath'])) {
             $jsonPaths = $requestArray['jsonPath'];
             if (!\is_array($jsonPaths)) {
-                throw new \InvalidArgumentException('Json path condition is invalid: ' . var_export($jsonPaths, true));
+                throw new \InvalidArgumentException('Json path condition is invalid: '.var_export($jsonPaths, true));
             }
             $collection = new JsonPathConditionCollection();
             foreach ($jsonPaths as $path => $condition) {
                 if (!\is_array($condition)) {
-                    throw new \InvalidArgumentException('Json path condition is invalid: ' . var_export($condition, true));
+                    throw new \InvalidArgumentException('Json path condition is invalid: '.var_export($condition, true));
                 }
                 $value = current($condition);
                 if (!\is_scalar($value)) {
-                    throw new \InvalidArgumentException('Invalid condition value. Expected scalar value, got: ' . \gettype($value));
+                    throw new \InvalidArgumentException('Invalid condition value. Expected scalar value, got: '.\gettype($value));
                 }
-                
+
                 $collection->setPathCondition(
                     new JsonPathName($path),
                     new JsonPathCondition(
@@ -251,8 +252,10 @@ class ArrayToRequestConditionConverter implements ArrayToRequestConditionConvert
                     )
                 );
             }
+
             return $collection->iterator();
         }
+
         return null;
     }
 }

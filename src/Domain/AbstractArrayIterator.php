@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -31,8 +32,6 @@ class AbstractArrayIterator implements \Iterator, \Countable
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see \Iterator::next()
      */
     #[\ReturnTypeWillChange]
@@ -42,8 +41,6 @@ class AbstractArrayIterator implements \Iterator, \Countable
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see \Iterator::valid()
      */
     #[\ReturnTypeWillChange]
@@ -55,8 +52,6 @@ class AbstractArrayIterator implements \Iterator, \Countable
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see \Iterator::current()
      */
     #[\ReturnTypeWillChange]
@@ -66,8 +61,6 @@ class AbstractArrayIterator implements \Iterator, \Countable
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see \Iterator::rewind()
      */
     #[\ReturnTypeWillChange]
@@ -77,8 +70,6 @@ class AbstractArrayIterator implements \Iterator, \Countable
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see \Iterator::key()
      */
     #[\ReturnTypeWillChange]
@@ -88,8 +79,6 @@ class AbstractArrayIterator implements \Iterator, \Countable
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see \Countable::count()
      */
     #[\ReturnTypeWillChange]

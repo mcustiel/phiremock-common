@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -29,18 +30,19 @@ use Mcustiel\Phiremock\Domain\Options\ScenarioName;
 use Mcustiel\Phiremock\Domain\Response;
 use Mcustiel\Phiremock\Domain\Version;
 
-class ArrayToExpectationConverter implements ArrayToExpectationConverterInterface //extends ArrayToExpectationConverterV1
+class ArrayToExpectationConverter implements ArrayToExpectationConverterInterface // extends ArrayToExpectationConverterV1
 {
-    const ALLOWED_OPTIONS = [
-        'version'         => null,
-        'scenarioName'    => null,
-        'priority'        => null,
-        'on'              => null,
-        'then'            => null,
+    public const ALLOWED_OPTIONS = [
+        'version' => null,
+        'scenarioName' => null,
+        'priority' => null,
+        'on' => null,
+        'then' => null,
     ];
 
     /** @var ArrayToRequestConditionConverter */
     private $arrayToConditionsConverter;
+
     /** @var ArrayToResponseConverterLocator */
     private $arrayToResponseConverterLocator;
 
@@ -68,7 +70,7 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
     {
         $invalidOptions = array_diff_key($expectationArray, self::ALLOWED_OPTIONS);
         if (!empty($invalidOptions)) {
-            throw new \Exception('Unknown expectation options: ' . var_export($invalidOptions, true));
+            throw new \Exception('Unknown expectation options: '.var_export($invalidOptions, true));
         }
     }
 
@@ -100,7 +102,8 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
 
         return $this->arrayToResponseConverterLocator
             ->locate($expectationArray['then'])
-            ->convert($expectationArray['then']);
+            ->convert($expectationArray['then'])
+        ;
     }
 
     private function convertRequest(array $expectationArray): Conditions

@@ -10,14 +10,23 @@ use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 use Mcustiel\Phiremock\Domain\Response;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Mcustiel\Phiremock\Domain\HttpResponse
  * @covers \Mcustiel\Phiremock\Domain\Response
+ *
+ * @internal
  */
-class HttpResponseTest extends ResponseTest
+class HttpResponseTest extends TestCase
 {
-    /** @var StatusCode|MockObject */
+    /** @var Delay|MockObject */
+    private $delay;
+
+    /** @var MockObject|ScenarioState */
+    private $scenarioState;
+
+    /** @var MockObject|StatusCode */
     private $statusCode;
 
     /** @var Body|MockObject */
@@ -32,6 +41,8 @@ class HttpResponseTest extends ResponseTest
         $this->statusCode = $this->createMock(StatusCode::class);
         $this->body = $this->createMock(Body::class);
         $this->headers = $this->createMock(HeadersCollection::class);
+        $this->delay = $this->createMock(Delay::class);
+        $this->scenarioState = $this->createMock(ScenarioState::class);
     }
 
     public function testCreateEmptyResponseWithHelperMethod(): void
@@ -43,26 +54,6 @@ class HttpResponseTest extends ResponseTest
         $this->assertFalse($response->hasHeaders());
     }
 
-    public function testIsHttpResponse(): void
-    {
-        $response = $this->getResponseInstance();
-        $this->assertTrue($response->isHttpResponse());
-    }
-
-    public function initDataProvider(): array
-    {
-        $statusCode = $this->createMock(StatusCode::class);
-        $body = $this->createMock(Body::class);
-        $headers = $this->createMock(HeadersCollection::class);
-
-        return [
-            'all null'         => [$statusCode, null, null],
-            'only body set'    => [$statusCode, $body, null],
-            'only headers set' => [$statusCode, null, $headers],
-            'all set '         => [$statusCode, $body, $headers],
-        ];
-    }
-
     /** @dataProvider initDataProvider */
     public function testReturnsHttpResponseCreationData($statusCode, $body, $headers): void
     {
@@ -70,6 +61,24 @@ class HttpResponseTest extends ResponseTest
         $this->assertSame($statusCode, $response->getStatusCode());
         $this->assertSame($body, $response->getBody());
         $this->assertSame($headers, $response->getHeaders());
+    }
+
+    public static function initDataProvider(): array
+    {
+        $testCase = new /**
+         * @coversNothing
+         */
+        class('dummy') extends TestCase {};
+        $statusCode = $testCase->createMock(StatusCode::class);
+        $body = $testCase->createMock(Body::class);
+        $headers = $testCase->createMock(HeadersCollection::class);
+
+        return [
+            'all null' => [$statusCode, null, null],
+            'only body set' => [$statusCode, $body, null],
+            'only headers set' => [$statusCode, null, $headers],
+            'all set ' => [$statusCode, $body, $headers],
+        ];
     }
 
     public function testUsesDefaultStatusCodeIfNotProvided(): void
@@ -97,7 +106,8 @@ class HttpResponseTest extends ResponseTest
     {
         $this->headers->expects($this->once())
             ->method('isEmpty')
-            ->willReturn(true);
+            ->willReturn(true)
+        ;
         $response = new HttpResponse($this->statusCode, $this->body, $this->headers);
         $this->assertFalse($response->hasHeaders());
     }
@@ -106,12 +116,84 @@ class HttpResponseTest extends ResponseTest
     {
         $this->headers->expects($this->once())
             ->method('isEmpty')
-            ->willReturn(false);
+            ->willReturn(false)
+        ;
         $response = new HttpResponse($this->statusCode, $this->body, $this->headers);
         $this->assertTrue($response->hasHeaders());
     }
 
-    protected function getResponseInstance(
+    /** @dataProvider creationDataProvider */
+    public function testReturnsCreationData($delay, $scenarioState): void
+    {
+        $testCase = new /**
+         * @coversNothing
+         */
+        class('dummy') extends TestCase {};
+        $statusCode = $testCase->createMock(StatusCode::class);
+        $body = $testCase->createMock(Body::class);
+        $headers = $testCase->createMock(HeadersCollection::class);
+
+        $response = new HttpResponse(
+            $statusCode,
+            $body,
+            $headers,
+            $delay,
+            $scenarioState
+        );
+        static::getResponseInstance($delay, $scenarioState);
+
+        $this->assertSame($delay, $response->getDelayMillis());
+        $this->assertSame($scenarioState, $response->getNewScenarioState());
+    }
+
+    public static function creationDataProvider(): array
+    {
+        $testCase = new /**
+         * @coversNothing
+         */
+        class('dummy') extends TestCase {};
+        $delay = $testCase->createMock(Delay::class);
+        $scenarioState = $testCase->createMock(ScenarioState::class);
+
+        return [
+            'all null' => [null, null],
+            'delay null' => [null, $scenarioState],
+            'scenario state null' => [$delay, null],
+            'all set' => [$delay, $scenarioState],
+        ];
+    }
+
+    public function testReportsDelayPresent(): void
+    {
+        $response = $this->getResponseInstance(null, $this->scenarioState);
+        $this->assertFalse($response->hasDelayMillis());
+
+        $response = $this->getResponseInstance($this->delay, $this->scenarioState);
+        $this->assertTrue($response->hasDelayMillis());
+    }
+
+    public function testReportsScenarioStatePresent(): void
+    {
+        $response = $this->getResponseInstance($this->delay, null);
+        $this->assertFalse($response->hasNewScenarioState());
+
+        $response = $this->getResponseInstance($this->delay, $this->scenarioState);
+        $this->assertTrue($response->hasNewScenarioState());
+    }
+
+    public function testIsHttpResponse(): void
+    {
+        $response = $this->getResponseInstance();
+        $this->assertTrue($response->isHttpResponse());
+    }
+
+    public function testIsProxyResponse(): void
+    {
+        $response = $this->getResponseInstance();
+        $this->assertFalse($response->isProxyResponse());
+    }
+
+    private function getResponseInstance(
         ?Delay $delay = null,
         ?ScenarioState $scenarioState = null
     ): Response {
@@ -119,7 +201,8 @@ class HttpResponseTest extends ResponseTest
             $this->statusCode,
             $this->body,
             $this->headers,
-            $delay, $scenarioState
+            $delay,
+            $scenarioState
         );
     }
 }

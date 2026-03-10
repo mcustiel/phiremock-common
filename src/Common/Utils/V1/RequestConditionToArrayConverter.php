@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -43,10 +44,11 @@ class RequestConditionToArrayConverter implements RequestConditionToArrayConvert
     protected function convertHeaders(Conditions $request, array &$requestArray): void
     {
         $headers = $request->getHeaders();
-        if ($headers === null) {
+        if (null === $headers) {
             $requestArray['headers'] = null;
         } else {
             $headersArray = [];
+
             /** @var HeaderName $headerName */
             /** @var HeaderCondition $headerCondition */
             foreach ($headers as $headerName => $headerCondition) {
@@ -61,10 +63,11 @@ class RequestConditionToArrayConverter implements RequestConditionToArrayConvert
     protected function convertFormData(Conditions $request, array &$requestArray): void
     {
         $formFields = $request->getFormFields();
-        if ($formFields === null) {
+        if (null === $formFields) {
             $requestArray['formData'] = null;
         } else {
             $fieldsArray = [];
+
             /** @var FormFieldName $fieldName */
             /** @var FormFieldCondition $fieldCondition */
             foreach ($formFields as $fieldName => $fieldCondition) {

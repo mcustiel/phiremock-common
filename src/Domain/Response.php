@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -25,6 +26,7 @@ class Response
 {
     /** @var ScenarioState */
     private $newScenarioState;
+
     /** @var Delay */
     private $delayMillis;
 
@@ -48,7 +50,7 @@ class Response
 
     public function hasDelayMillis(): bool
     {
-        return $this->delayMillis !== null;
+        return null !== $this->delayMillis;
     }
 
     public function getDelayMillis(): ?Delay

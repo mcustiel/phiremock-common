@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -20,15 +21,15 @@ namespace Mcustiel\Phiremock\Domain\Http;
 
 class MethodsEnum
 {
-    const GET = 'GET';
-    const POST = 'POST';
-    const PUT = 'PUT';
-    const DELETE = 'DELETE';
-    const FETCH = 'FETCH';
-    const HEAD = 'HEAD';
-    const OPTIONS = 'OPTIONS';
-    const PATCH = 'PATCH';
-    const LINK = 'LINK';
+    public const GET = 'GET';
+    public const POST = 'POST';
+    public const PUT = 'PUT';
+    public const DELETE = 'DELETE';
+    public const FETCH = 'FETCH';
+    public const HEAD = 'HEAD';
+    public const OPTIONS = 'OPTIONS';
+    public const PATCH = 'PATCH';
+    public const LINK = 'LINK';
 
     private const VALID_METHODS = [
         self::GET,

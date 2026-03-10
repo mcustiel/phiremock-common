@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -41,7 +42,7 @@ class HeaderName
 
     private function ensureIsNotEmpty(string $headerName): void
     {
-        if ($headerName === '') {
+        if ('' === $headerName) {
             throw new \InvalidArgumentException('Field name can\t be empty');
         }
     }

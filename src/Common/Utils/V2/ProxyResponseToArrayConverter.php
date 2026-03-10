@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -18,13 +19,14 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
+use Mcustiel\Phiremock\Domain\ProxyResponse;
 use Mcustiel\Phiremock\Domain\Response;
 
 class ProxyResponseToArrayConverter extends ResponseToArrayConverter
 {
     public function convert(Response $response): array
     {
-        /** @var \Mcustiel\Phiremock\Domain\ProxyResponse $response */
+        /** @var ProxyResponse $response */
         $responseArray = [];
         $responseArray['proxyTo'] = $response->getUri()->asString();
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -28,19 +29,25 @@ use Mcustiel\Phiremock\Domain\Options\ScenarioState;
 
 class Conditions
 {
-    /** @var MethodCondition|null */
+    /** @var null|MethodCondition */
     private $method;
-    /** @var UrlCondition|null */
+
+    /** @var null|UrlCondition */
     private $url;
-    /** @var BodyCondition|null */
+
+    /** @var null|BodyCondition */
     private $body;
-    /** @var HeaderConditionIterator|null */
+
+    /** @var null|HeaderConditionIterator */
     private $headers;
-    /** @var FormFieldConditionIterator|null */
+
+    /** @var null|FormFieldConditionIterator */
     private $formFields;
-    /** @var ScenarioState|null */
+
+    /** @var null|ScenarioState */
     private $scenarioState;
-    /** @var JsonPathConditionIterator|null */
+
+    /** @var null|JsonPathConditionIterator */
     private $jsonPath;
 
     public function __construct(
@@ -113,7 +120,7 @@ class Conditions
 
     public function hasScenarioState(): bool
     {
-        return $this->scenarioState !== null;
+        return null !== $this->scenarioState;
     }
 
     public function getScenarioState(): ?ScenarioState
@@ -121,7 +128,7 @@ class Conditions
         return $this->scenarioState;
     }
 
-    public function hasJsonPath(): bool 
+    public function hasJsonPath(): bool
     {
         return null !== $this->jsonPath;
     }

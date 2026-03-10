@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -25,8 +26,8 @@ use Mcustiel\Phiremock\Domain\Response;
 
 abstract class ArrayToResponseConverter implements ArrayToResponseConverterInterface
 {
-    const ALLOWED_OPTIONS = ['delayMillis'=> null];
-    const NO_DELAY = 0;
+    public const ALLOWED_OPTIONS = ['delayMillis' => null];
+    public const NO_DELAY = 0;
 
     public function convert(array $responseArray): Response
     {
@@ -41,7 +42,7 @@ abstract class ArrayToResponseConverter implements ArrayToResponseConverterInter
     {
         $invalidOptions = array_diff_key($responseArray, static::ALLOWED_OPTIONS);
         if (!empty($invalidOptions)) {
-            throw new \Exception('Unknown expectation options: ' . var_export($invalidOptions, true));
+            throw new \Exception('Unknown expectation options: '.var_export($invalidOptions, true));
         }
     }
 

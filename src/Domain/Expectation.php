@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Phiremock.
  *
@@ -41,9 +42,9 @@ class Expectation
     public function __construct(
         Conditions $requestConditions,
         Response $response,
-        ScenarioName $scenarioName = null,
-        Priority $priority = null,
-        Version $version = null
+        ?ScenarioName $scenarioName = null,
+        ?Priority $priority = null,
+        ?Version $version = null
     ) {
         $this->priority = $priority;
         $this->requestConditions = $requestConditions;
@@ -64,7 +65,7 @@ class Expectation
 
     public function hasScenarioName(): bool
     {
-        return $this->scenarioName !== null;
+        return null !== $this->scenarioName;
     }
 
     public function getScenarioName(): ?ScenarioName
