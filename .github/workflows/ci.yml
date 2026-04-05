@@ -18,5 +18,6 @@ jobs:
           version: 11
           configuration: phpunit.xml
           php_extensions: "xdebug"
+          php_version: ${{ matrix.php-versions }}
           coverage_clover: "build/coverage.xml"
           test_suffix: Test.php
