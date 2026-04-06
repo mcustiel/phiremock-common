@@ -1,0 +1,14 @@
+filter:
+    paths: [src/*]
+    excluded_paths: [vendor/*, test/*]
+
+build:
+  environment:
+    postgresql: false
+    mysql: false
+    redis: false
+  nodes:
+    php82:
+      environment:
+        php:
+          version: 8.2
