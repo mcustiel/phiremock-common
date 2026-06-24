@@ -77,8 +77,8 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
     private function getPriority(array $expectationArray): ?Priority
     {
         $priority = null;
-        if (!empty($expectationArray['priority'])) {
-            $priority = new Priority((int) $expectationArray['priority']);
+        if (isset($expectationArray['priority'])) {
+            $priority = new Priority($expectationArray['priority']);
         }
 
         return $priority;

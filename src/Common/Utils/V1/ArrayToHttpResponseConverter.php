@@ -51,7 +51,7 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
         }
 
         return new HttpResponse(
-            new StatusCode((int) $responseArray['response']['statusCode']),
+            $this->getStatusCode($responseArray['response']),
             $this->getBody($responseArray['response']),
             $this->getHeaders($responseArray['response']),
             $delay,
@@ -87,6 +87,16 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
         }
 
         return null;
+    }
+
+    private function getStatusCode(array $responseArray): StatusCode
+    {
+        $statusCode = $responseArray['statusCode'] ?? 200;
+        if (!\is_int($statusCode)) {
+            throw new \InvalidArgumentException(sprintf('Status code must be an integer. Got: %s', \gettype($statusCode)));
+        }
+
+        return new StatusCode($statusCode);
     }
 
     /**

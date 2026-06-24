@@ -19,7 +19,12 @@ class BodyHelper
 
     private static function decodeNetworkSafeBinaryBody(string $body): string
     {
-        return base64_decode(substr($body, BinaryInfo::BINARY_BODY_PREFIX_LENGTH), true);
+        $decodedBody = base64_decode(substr($body, BinaryInfo::BINARY_BODY_PREFIX_LENGTH), true);
+        if (false === $decodedBody) {
+            throw new \InvalidArgumentException('Invalid base64 encoded binary body');
+        }
+
+        return $decodedBody;
     }
 
     private static function isBinaryBody(string $body): bool

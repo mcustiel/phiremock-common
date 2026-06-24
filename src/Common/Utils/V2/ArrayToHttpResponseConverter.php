@@ -20,7 +20,6 @@
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Common\Utils\BodyHelper;
-use Mcustiel\Phiremock\Common\Utils\V1\ArrayToHttpResponseConverter as ArrayToHttpResponseConverterV1;
 use Mcustiel\Phiremock\Domain\Http\Body;
 use Mcustiel\Phiremock\Domain\Http\Header;
 use Mcustiel\Phiremock\Domain\Http\HeaderName;
@@ -46,8 +45,6 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter // extends A
         ?Delay $delay,
         ?ScenarioState $newScenarioState
     ): Response {
-        $response = $responseArray['response'];
-
         if (!isset($responseArray['response'])) {
             $responseArray['response'] = [];
         }
@@ -60,12 +57,13 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter // extends A
             $responseArray['response'],
             self::ALLOWED_OPTIONS
         );
+        $response = $responseArray['response'];
         if (!isset($response['statusCode'])) {
             $response['statusCode'] = 200;
         }
 
         return new HttpResponse(
-            new StatusCode((int) $response['statusCode']),
+            $this->getStatusCode($response),
             $this->getBody($response),
             $this->getHeaders($response),
             $delay,
@@ -101,6 +99,16 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter // extends A
         }
 
         return null;
+    }
+
+    private function getStatusCode(array $responseArray): StatusCode
+    {
+        $statusCode = $responseArray['statusCode'] ?? 200;
+        if (!\is_int($statusCode)) {
+            throw new \InvalidArgumentException(sprintf('Status code must be an integer. Got: %s', \gettype($statusCode)));
+        }
+
+        return new StatusCode($statusCode);
     }
 
     private function convertHeaders(array $headers): HeadersCollection

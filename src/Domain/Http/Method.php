@@ -82,7 +82,6 @@ class Method
 
     private function ensureIsValidHttpMethod(string $method): void
     {
-        var_export('ensurer');
         if (!MethodsEnum::isValid($method)) {
             throw new \InvalidArgumentException(sprintf('Invalid http method: %s', var_export($method, true)));
         }
