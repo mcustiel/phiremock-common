@@ -20,7 +20,6 @@
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter as ArrayToExpectationConverterInterface;
-use Mcustiel\Phiremock\Common\Utils\V1\ArrayToExpectationConverter as ArrayToExpectationConverterV1;
 use Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\Expectation;
 use Mcustiel\Phiremock\Domain\Http\StatusCode;
@@ -40,11 +39,9 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
         'then' => null,
     ];
 
-    /** @var ArrayToRequestConditionConverter */
-    private $arrayToConditionsConverter;
+    private readonly ArrayToRequestConditionConverter $arrayToConditionsConverter;
 
-    /** @var ArrayToResponseConverterLocator */
-    private $arrayToResponseConverterLocator;
+    private readonly ArrayToResponseConverterLocator $arrayToResponseConverterLocator;
 
     public function __construct(
         ArrayToRequestConditionConverter $arrayToConditionsConverter,

@@ -7,11 +7,9 @@ use Mcustiel\Phiremock\Common\Utils\V2\Factory as FactoryV2;
 
 class ArrayToExpectationConverterLocator
 {
-    /** @var FactoryV1 */
-    private $factoryV1;
+    private readonly FactoryV1 $factoryV1;
 
-    /** @var FactoryV2 */
-    private $factoryV2;
+    private readonly FactoryV2 $factoryV2;
 
     public function __construct(FactoryV1 $factoryV1, FactoryV2 $factoryV2)
     {

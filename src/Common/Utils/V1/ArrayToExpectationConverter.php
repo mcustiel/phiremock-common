@@ -42,11 +42,9 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
         'response' => null,
     ];
 
-    /** @var ArrayToRequestConditionConverter */
-    private $arrayToConditionsConverter;
+    private readonly ArrayToRequestConditionConverter $arrayToConditionsConverter;
 
-    /** @var ArrayToResponseConverterLocator */
-    private $arrayToResponseConverterLocator;
+    private readonly ArrayToResponseConverterLocator $arrayToResponseConverterLocator;
 
     public function __construct(
         ArrayToRequestConditionConverter $arrayToConditionsConverter,

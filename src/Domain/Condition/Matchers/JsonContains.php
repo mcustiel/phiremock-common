@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -25,6 +27,8 @@ use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
 
 class JsonContains extends Matcher
 {
+    use ParsesJsonValues;
+
     public function __construct(Json $json)
     {
         parent::__construct($json);
@@ -33,8 +37,8 @@ class JsonContains extends Matcher
     public function matches($value): bool
     {
         if (\is_string($value)) {
-            $requestValue = $this->getParsedValue($value);
-            if (null === $requestValue && 'null' !== trim($value)) {
+            $requestValue = $this->getParsedJsonValue($value);
+            if ($this->isInvalidNonNullJson($value, $requestValue)) {
                 return false;
             }
         } else {
@@ -52,26 +56,5 @@ class JsonContains extends Matcher
     public function getName(): string
     {
         return MatchersEnum::JSON_CONTAINS;
-    }
-
-    private function decodeJson(string $value)
-    {
-        $decodedValue = json_decode($value, true);
-        if (\JSON_ERROR_NONE !== json_last_error()) {
-            throw new \InvalidArgumentException('JSON parsing error: '.json_last_error_msg());
-        }
-
-        return $decodedValue;
-    }
-
-    private function getParsedValue(string $value)
-    {
-        try {
-            $requestValue = $this->decodeJson($value);
-        } catch (\Throwable $e) {
-            $requestValue = null;
-        }
-
-        return $requestValue;
     }
 }

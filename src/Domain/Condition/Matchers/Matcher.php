@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -23,8 +25,7 @@ use Mcustiel\Phiremock\Domain\Condition\ConditionValue;
 
 abstract class Matcher
 {
-    /** @var ConditionValue */
-    private $checkValue;
+    private readonly ConditionValue $checkValue;
 
     public function __construct(ConditionValue $checkValue)
     {
