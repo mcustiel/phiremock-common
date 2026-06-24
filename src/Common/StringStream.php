@@ -30,5 +30,6 @@ class StringStream extends Stream
     {
         parent::__construct('php://memory', 'r+');
         $this->write($string);
+        $this->rewind();
     }
 }
