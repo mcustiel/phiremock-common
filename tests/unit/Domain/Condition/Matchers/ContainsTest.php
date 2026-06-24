@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mcustiel\Phiremock\Tests\Unit\Domain\Condition\Matchers;
 
 use Mcustiel\Phiremock\Domain\Condition\Matchers\Contains;

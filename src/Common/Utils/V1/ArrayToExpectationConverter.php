@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -77,10 +79,10 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
     private function getVersion(array $expectationArray): Version
     {
         if (isset($expectationArray['version'])) {
-            return new Version((int) $expectationArray['version']);
+            return new Version((string) $expectationArray['version']);
         }
 
-        return new Version(1);
+        return new Version('1');
     }
 
     private function getPriority(array $expectationArray): ?Priority
