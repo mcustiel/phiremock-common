@@ -26,10 +26,12 @@ class MatchersEnum
     public const SAME_STRING = 'isSameString';
     public const CONTAINS = 'contains';
     public const SAME_JSON = 'isSameJsonObject';
+    public const JSON_CONTAINS = 'jsonContains';
 
     private const VALID_MATCHERS = [
         self::CONTAINS,
         self::EQUAL_TO,
+        self::JSON_CONTAINS,
         self::MATCHES,
         self::SAME_JSON,
         self::SAME_STRING,

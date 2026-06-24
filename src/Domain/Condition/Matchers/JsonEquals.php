@@ -34,16 +34,19 @@ class JsonEquals extends Matcher
     {
         if (\is_string($value)) {
             $requestValue = $this->getParsedValue($value);
+            if (null === $requestValue && 'null' !== trim($value)) {
+                return false;
+            }
         } else {
             $requestValue = $value;
         }
         $configValue = $this->getCheckValue()->get();
 
-        if (!\is_array($requestValue)) {
-            return false;
+        if (\is_array($requestValue) && \is_array($configValue)) {
+            return ArraysHelper::areRecursivelyEquals($requestValue, $configValue);
         }
 
-        return ArraysHelper::areRecursivelyEquals($requestValue, $configValue);
+        return $requestValue === $configValue;
     }
 
     public function getName(): string
@@ -51,10 +54,10 @@ class JsonEquals extends Matcher
         return MatchersEnum::SAME_JSON;
     }
 
-    private function decodeJson(string $value): array
+    private function decodeJson(string $value)
     {
         $decodedValue = json_decode($value, true);
-        if (\JSON_ERROR_NONE !== json_last_error() || null === $decodedValue) {
+        if (\JSON_ERROR_NONE !== json_last_error()) {
             throw new \InvalidArgumentException('JSON parsing error: '.json_last_error_msg());
         }
 
@@ -66,7 +69,7 @@ class JsonEquals extends Matcher
         try {
             $requestValue = $this->decodeJson($value);
         } catch (\Throwable $e) {
-            $requestValue = $value;
+            $requestValue = null;
         }
 
         return $requestValue;

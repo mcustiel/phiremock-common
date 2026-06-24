@@ -36,7 +36,16 @@ class ArraysHelper
             return false;
         }
 
-        return self::arrayIsContained($array1, $array2);
+        foreach ($array1 as $key => $value1) {
+            if (!\array_key_exists($key, $array2)) {
+                return false;
+            }
+            if (!self::haveTheSameTypeAndValue($value1, $array2[$key])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public static function arrayIsContained(array $array1, array $array2): bool
@@ -44,6 +53,13 @@ class ArraysHelper
         foreach ($array1 as $key => $value1) {
             if (!\array_key_exists($key, $array2)) {
                 return false;
+            }
+            if (\is_array($value1) && \is_array($array2[$key])) {
+                if (!self::arrayIsContained($value1, $array2[$key])) {
+                    return false;
+                }
+
+                continue;
             }
             if (!self::haveTheSameTypeAndValue($value1, $array2[$key])) {
                 return false;

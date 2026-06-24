@@ -28,13 +28,18 @@ class Json extends ConditionValue
 
     public function asString(): string
     {
-        return json_encode(
+        $encodedJson = json_encode(
             $this->get(),
             JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_PRESERVE_ZERO_FRACTION
         );
+        if (false === $encodedJson) {
+            throw new \InvalidArgumentException('Error encoding json: '.json_last_error_msg());
+        }
+
+        return $encodedJson;
     }
 
-    private function getDecodedJson(string $string): array
+    private function getDecodedJson(string $string)
     {
         $decodedJson = json_decode($string, true);
         if (\JSON_ERROR_NONE !== json_last_error()) {

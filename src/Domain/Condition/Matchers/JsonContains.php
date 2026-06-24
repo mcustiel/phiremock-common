@@ -20,40 +20,44 @@
 namespace Mcustiel\Phiremock\Domain\Condition\Matchers;
 
 use Mcustiel\Phiremock\Common\Utils\ArraysHelper;
-use Mcustiel\Phiremock\Domain\Condition\StringValue;
+use Mcustiel\Phiremock\Domain\Condition\Json;
+use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
 
 class JsonContains extends Matcher
 {
-    public function __construct(StringValue $string)
+    public function __construct(Json $json)
     {
-        parent::__construct($string);
+        parent::__construct($json);
     }
 
     public function matches($value): bool
     {
         if (\is_string($value)) {
             $requestValue = $this->getParsedValue($value);
+            if (null === $requestValue && 'null' !== trim($value)) {
+                return false;
+            }
         } else {
             $requestValue = $value;
         }
-        $configValue = $this->decodeJson($this->getCheckValue()->get());
+        $configValue = $this->getCheckValue()->get();
 
         if (!\is_array($requestValue) || !\is_array($configValue)) {
             return false;
         }
 
-        return ArraysHelper::arrayIsContained($requestValue, $configValue);
+        return ArraysHelper::arrayIsContained($configValue, $requestValue);
     }
 
     public function getName(): string
     {
-        return 'jsonContains';
+        return MatchersEnum::JSON_CONTAINS;
     }
 
-    private function decodeJson(string $value): array
+    private function decodeJson(string $value)
     {
         $decodedValue = json_decode($value, true);
-        if (\JSON_ERROR_NONE !== json_last_error() || null === $decodedValue) {
+        if (\JSON_ERROR_NONE !== json_last_error()) {
             throw new \InvalidArgumentException('JSON parsing error: '.json_last_error_msg());
         }
 
@@ -65,7 +69,7 @@ class JsonContains extends Matcher
         try {
             $requestValue = $this->decodeJson($value);
         } catch (\Throwable $e) {
-            $requestValue = $value;
+            $requestValue = null;
         }
 
         return $requestValue;
