@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -82,7 +84,6 @@ class Method
 
     private function ensureIsValidHttpMethod(string $method): void
     {
-        var_export('ensurer');
         if (!MethodsEnum::isValid($method)) {
             throw new \InvalidArgumentException(sprintf('Invalid http method: %s', var_export($method, true)));
         }

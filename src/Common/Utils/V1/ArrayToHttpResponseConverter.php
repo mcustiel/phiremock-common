@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -19,13 +21,7 @@
 
 namespace Mcustiel\Phiremock\Common\Utils\V1;
 
-use Mcustiel\Phiremock\Common\Utils\BodyHelper;
-use Mcustiel\Phiremock\Domain\Http\Body;
-use Mcustiel\Phiremock\Domain\Http\Header;
-use Mcustiel\Phiremock\Domain\Http\HeaderName;
-use Mcustiel\Phiremock\Domain\Http\HeadersCollection;
-use Mcustiel\Phiremock\Domain\Http\HeaderValue;
-use Mcustiel\Phiremock\Domain\Http\StatusCode;
+use Mcustiel\Phiremock\Common\Utils\HttpResponseArrayParsing;
 use Mcustiel\Phiremock\Domain\HttpResponse;
 use Mcustiel\Phiremock\Domain\Options\Delay;
 use Mcustiel\Phiremock\Domain\Options\ScenarioState;
@@ -33,6 +29,8 @@ use Mcustiel\Phiremock\Domain\Response;
 
 class ArrayToHttpResponseConverter extends ArrayToResponseConverter
 {
+    use HttpResponseArrayParsing;
+
     public const ALLOWED_OPTIONS = [
         'statusCode' => null,
         'body' => null,
@@ -51,59 +49,11 @@ class ArrayToHttpResponseConverter extends ArrayToResponseConverter
         }
 
         return new HttpResponse(
-            new StatusCode((int) $responseArray['response']['statusCode']),
+            $this->getStatusCode($responseArray['response']),
             $this->getBody($responseArray['response']),
             $this->getHeaders($responseArray['response']),
             $delay,
             $newScenarioState
         );
-    }
-
-    private function getHeaders(array $responseArray): ?HeadersCollection
-    {
-        if (isset($responseArray['headers'])) {
-            $headers = $responseArray['headers'];
-            if (!empty($headers)) {
-                if (!\is_array($headers)) {
-                    throw new \InvalidArgumentException('Response headers are invalid: '.var_export($headers, true));
-                }
-
-                return $this->convertHeaders($headers);
-            }
-        }
-
-        return null;
-    }
-
-    private function getBody(array $responseArray): ?Body
-    {
-        if (isset($responseArray['body'])) {
-            $body = $responseArray['body'];
-            if (\is_array($body)) {
-                $body = json_encode($body);
-            }
-
-            return BodyHelper::getBodyObject($body);
-        }
-
-        return null;
-    }
-
-    /**
-     * @throws \InvalidArgumentException
-     */
-    private function convertHeaders(array $headers): HeadersCollection
-    {
-        $headerCollection = new HeadersCollection();
-        foreach ($headers as $headerName => $headerValue) {
-            $headerCollection->setHeader(
-                new Header(
-                    new HeaderName($headerName),
-                    new HeaderValue($headerValue)
-                )
-            );
-        }
-
-        return $headerCollection;
     }
 }

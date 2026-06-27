@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -42,6 +44,9 @@ class MatcherFactory
             case MatchersEnum::SAME_JSON:
                 return self::jsonEquals($value);
 
+            case MatchersEnum::JSON_CONTAINS:
+                return self::jsonContains($value);
+
             case MatchersEnum::SAME_STRING:
                 return self::sameString($value);
         }
@@ -67,6 +72,11 @@ class MatcherFactory
     public static function jsonEquals($value): JsonEquals
     {
         return new JsonEquals(new Json($value));
+    }
+
+    public static function jsonContains($value): JsonContains
+    {
+        return new JsonContains(new Json($value));
     }
 
     public static function sameString($value): CaseInsensitiveEquals

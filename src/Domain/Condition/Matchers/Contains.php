@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -31,7 +33,11 @@ class Contains extends Matcher
 
     public function matches($value): bool
     {
-        return false !== strpos($value, $this->getCheckValue()->get());
+        if (!\is_scalar($value) && !$value instanceof \Stringable) {
+            return false;
+        }
+
+        return str_contains((string) $value, $this->getCheckValue()->get());
     }
 
     public function getName(): string

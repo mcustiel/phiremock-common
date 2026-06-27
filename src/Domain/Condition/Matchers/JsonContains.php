@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -20,54 +22,39 @@
 namespace Mcustiel\Phiremock\Domain\Condition\Matchers;
 
 use Mcustiel\Phiremock\Common\Utils\ArraysHelper;
-use Mcustiel\Phiremock\Domain\Condition\StringValue;
+use Mcustiel\Phiremock\Domain\Condition\Json;
+use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
 
 class JsonContains extends Matcher
 {
-    public function __construct(StringValue $string)
+    use ParsesJsonValues;
+
+    public function __construct(Json $json)
     {
-        parent::__construct($string);
+        parent::__construct($json);
     }
 
     public function matches($value): bool
     {
         if (\is_string($value)) {
-            $requestValue = $this->getParsedValue($value);
+            $requestValue = $this->getParsedJsonValue($value);
+            if ($this->isInvalidNonNullJson($value, $requestValue)) {
+                return false;
+            }
         } else {
             $requestValue = $value;
         }
-        $configValue = $this->decodeJson($this->getCheckValue()->get());
+        $configValue = $this->getCheckValue()->get();
 
         if (!\is_array($requestValue) || !\is_array($configValue)) {
             return false;
         }
 
-        return ArraysHelper::arrayIsContained($requestValue, $configValue);
+        return ArraysHelper::arrayIsContained($configValue, $requestValue);
     }
 
     public function getName(): string
     {
-        return 'jsonContains';
-    }
-
-    private function decodeJson(string $value): array
-    {
-        $decodedValue = json_decode($value, true);
-        if (\JSON_ERROR_NONE !== json_last_error() || null === $decodedValue) {
-            throw new \InvalidArgumentException('JSON parsing error: '.json_last_error_msg());
-        }
-
-        return $decodedValue;
-    }
-
-    private function getParsedValue(string $value)
-    {
-        try {
-            $requestValue = $this->decodeJson($value);
-        } catch (\Throwable $e) {
-            $requestValue = $value;
-        }
-
-        return $requestValue;
+        return MatchersEnum::JSON_CONTAINS;
     }
 }

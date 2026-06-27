@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -30,5 +32,6 @@ class StringStream extends Stream
     {
         parent::__construct('php://memory', 'r+');
         $this->write($string);
+        $this->rewind();
     }
 }

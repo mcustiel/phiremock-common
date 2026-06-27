@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mcustiel\Phiremock\Common;
 
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter;

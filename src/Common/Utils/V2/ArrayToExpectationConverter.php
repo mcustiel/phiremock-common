@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -20,7 +22,6 @@
 namespace Mcustiel\Phiremock\Common\Utils\V2;
 
 use Mcustiel\Phiremock\Common\Utils\ArrayToExpectationConverter as ArrayToExpectationConverterInterface;
-use Mcustiel\Phiremock\Common\Utils\V1\ArrayToExpectationConverter as ArrayToExpectationConverterV1;
 use Mcustiel\Phiremock\Domain\Conditions;
 use Mcustiel\Phiremock\Domain\Expectation;
 use Mcustiel\Phiremock\Domain\Http\StatusCode;
@@ -40,11 +41,9 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
         'then' => null,
     ];
 
-    /** @var ArrayToRequestConditionConverter */
-    private $arrayToConditionsConverter;
+    private readonly ArrayToRequestConditionConverter $arrayToConditionsConverter;
 
-    /** @var ArrayToResponseConverterLocator */
-    private $arrayToResponseConverterLocator;
+    private readonly ArrayToResponseConverterLocator $arrayToResponseConverterLocator;
 
     public function __construct(
         ArrayToRequestConditionConverter $arrayToConditionsConverter,
@@ -77,8 +76,8 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
     private function getPriority(array $expectationArray): ?Priority
     {
         $priority = null;
-        if (!empty($expectationArray['priority'])) {
-            $priority = new Priority((int) $expectationArray['priority']);
+        if (isset($expectationArray['priority'])) {
+            $priority = new Priority($expectationArray['priority']);
         }
 
         return $priority;

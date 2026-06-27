@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -26,26 +28,40 @@ class FileSystem
         $existentPath = $this->normalizePath($path);
         $tail = [];
 
-        $pathArray = explode('/', $existentPath);
         while (!file_exists($existentPath)) {
-            array_unshift($tail, array_pop($pathArray));
-            $existentPath = implode('/', $pathArray);
+            $parentPath = \dirname($existentPath);
+            if ($parentPath === $existentPath) {
+                break;
+            }
+
+            array_unshift($tail, \basename($existentPath));
+            $existentPath = $parentPath;
         }
 
-        return str_replace(
-            \DIRECTORY_SEPARATOR,
-            '/',
-            $existentPath.'/'.implode(\DIRECTORY_SEPARATOR, $tail)
-        );
+        return $this->normalizePathSeparators($this->joinPath($existentPath, $tail));
     }
 
     private function normalizePath(string $path): string
     {
-        $path = str_replace(\DIRECTORY_SEPARATOR, '/', $path);
+        $path = $this->normalizePathSeparators($path);
         if ('/' !== $path[0]) {
             $path = getcwd().'/'.$path;
         }
 
         return $path;
+    }
+
+    private function normalizePathSeparators(string $path): string
+    {
+        return str_replace(\DIRECTORY_SEPARATOR, '/', $path);
+    }
+
+    private function joinPath(string $existentPath, array $tail): string
+    {
+        if (empty($tail)) {
+            return $existentPath;
+        }
+
+        return rtrim($existentPath, '/').'/'.implode('/', $tail);
     }
 }

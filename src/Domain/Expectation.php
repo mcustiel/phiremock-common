@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -50,7 +52,7 @@ class Expectation
         $this->requestConditions = $requestConditions;
         $this->scenarioName = $scenarioName;
         $this->response = $response;
-        $this->version = $version ?? new Version(1);
+        $this->version = $version ?? new Version('1');
     }
 
     public function getVersion(): Version

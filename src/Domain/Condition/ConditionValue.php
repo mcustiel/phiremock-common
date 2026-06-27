@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -21,8 +23,7 @@ namespace Mcustiel\Phiremock\Domain\Condition;
 
 class ConditionValue
 {
-    /** @var mixed */
-    private $value;
+    private readonly mixed $value;
 
     /** @param mixed $value */
     public function __construct($value)

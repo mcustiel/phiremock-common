@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mcustiel\Phiremock\Common\Utils;
 
 use Mcustiel\Phiremock\Common\Utils\V1\Factory as FactoryV1;
@@ -8,11 +10,9 @@ use Mcustiel\Phiremock\Domain\Expectation;
 
 class ExpectationToArrayConverterLocator
 {
-    /** @var FactoryV1 */
-    private $factoryV1;
+    private readonly FactoryV1 $factoryV1;
 
-    /** @var FactoryV2 */
-    private $factoryV2;
+    private readonly FactoryV2 $factoryV2;
 
     public function __construct(FactoryV1 $factoryV1, FactoryV2 $factoryV2)
     {

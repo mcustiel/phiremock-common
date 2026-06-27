@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Phiremock.
  *
@@ -42,11 +44,9 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
         'response' => null,
     ];
 
-    /** @var ArrayToRequestConditionConverter */
-    private $arrayToConditionsConverter;
+    private readonly ArrayToRequestConditionConverter $arrayToConditionsConverter;
 
-    /** @var ArrayToResponseConverterLocator */
-    private $arrayToResponseConverterLocator;
+    private readonly ArrayToResponseConverterLocator $arrayToResponseConverterLocator;
 
     public function __construct(
         ArrayToRequestConditionConverter $arrayToConditionsConverter,
@@ -79,17 +79,17 @@ class ArrayToExpectationConverter implements ArrayToExpectationConverterInterfac
     private function getVersion(array $expectationArray): Version
     {
         if (isset($expectationArray['version'])) {
-            return new Version((int) $expectationArray['version']);
+            return new Version((string) $expectationArray['version']);
         }
 
-        return new Version(1);
+        return new Version('1');
     }
 
     private function getPriority(array $expectationArray): ?Priority
     {
         $priority = null;
-        if (!empty($expectationArray['priority'])) {
-            $priority = new Priority((int) $expectationArray['priority']);
+        if (isset($expectationArray['priority'])) {
+            $priority = new Priority($expectationArray['priority']);
         }
 
         return $priority;
