@@ -11,6 +11,9 @@ use Mcustiel\Phiremock\Domain\Condition\MatchersEnum;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 #[CoversClass(Json::class)]
 #[CoversClass(JsonContains::class)]
 #[CoversClass(MatcherFactory::class)]

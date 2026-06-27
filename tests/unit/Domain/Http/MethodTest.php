@@ -8,6 +8,9 @@ use Mcustiel\Phiremock\Domain\Http\Method;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 #[CoversClass(Method::class)]
 class MethodTest extends TestCase
 {

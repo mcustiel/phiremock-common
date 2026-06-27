@@ -9,6 +9,9 @@ use Mcustiel\Phiremock\Domain\Condition\Matchers\JsonEquals;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 #[CoversClass(Json::class)]
 #[CoversClass(JsonEquals::class)]
 class JsonEqualsTest extends TestCase

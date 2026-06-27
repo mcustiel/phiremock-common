@@ -9,6 +9,9 @@ use Mcustiel\Phiremock\Domain\Condition\StringValue;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 #[CoversNothing]
 class ContainsTest extends TestCase
 {

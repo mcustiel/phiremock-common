@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Mcustiel\Phiremock\Tests\Unit\Common\Utils;
 
+use Mcustiel\Phiremock\Common\Utils\HttpResponseArrayParsing;
 use Mcustiel\Phiremock\Common\Utils\V1\ArrayToHttpResponseConverter as V1ArrayToHttpResponseConverter;
 use Mcustiel\Phiremock\Common\Utils\V2\ArrayToHttpResponseConverter as V2ArrayToHttpResponseConverter;
-use Mcustiel\Phiremock\Common\Utils\HttpResponseArrayParsing;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 #[CoversClass(V1ArrayToHttpResponseConverter::class)]
 #[CoversClass(V2ArrayToHttpResponseConverter::class)]
 #[CoversClass(HttpResponseArrayParsing::class)]

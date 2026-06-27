@@ -8,6 +8,9 @@ use Mcustiel\Phiremock\Common\Utils\ArraysHelper;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 #[CoversClass(ArraysHelper::class)]
 class ArraysHelperTest extends TestCase
 {

@@ -9,6 +9,9 @@ use Mcustiel\Phiremock\Domain\BinaryInfo;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 #[CoversClass(BodyHelper::class)]
 class BodyHelperTest extends TestCase
 {

@@ -11,6 +11,9 @@ use Mcustiel\Phiremock\Factory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 #[CoversClass(ArrayToExpectationConverterLocator::class)]
 #[CoversClass(V1ArrayToExpectationConverter::class)]
 #[CoversClass(V2ArrayToExpectationConverter::class)]

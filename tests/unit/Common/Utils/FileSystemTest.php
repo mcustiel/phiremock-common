@@ -8,6 +8,9 @@ use Mcustiel\Phiremock\Common\Utils\FileSystem;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 #[CoversClass(FileSystem::class)]
 class FileSystemTest extends TestCase
 {

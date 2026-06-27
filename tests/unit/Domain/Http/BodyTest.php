@@ -9,6 +9,9 @@ use Mcustiel\Phiremock\Domain\Http\Body;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 #[CoversClass(Body::class)]
 #[CoversClass(StringStream::class)]
 class BodyTest extends TestCase
